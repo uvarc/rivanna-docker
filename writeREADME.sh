@@ -68,7 +68,7 @@ Note: We may need to structure this repo as \`/app/version/Dockerfile\` later.
 
 (Link to Docker Hub repository)
 
-|App|Short Description|Compressed Size|Last Updated|By|
+|App|Short Description|Compressed Size|Last Updated (UTC)|By|
 |---|---|---:|---|---|
 EOF
 
