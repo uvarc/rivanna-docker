@@ -62,10 +62,12 @@ cat >>$README <<EOF
 
 ## $LIST
 
+(Link to Docker Hub repository)
+
 EOF
 
 for i in *;  do
     if [ -e $i/Dockerfile ]; then
-        echo "- $i - $(head -1 $i/README.md)" >>$README
+        echo "- [$i](https://hub.docker.com/r/uvarc/$i) - $(head -1 $i/README.md)" >>$README
     fi
 done
