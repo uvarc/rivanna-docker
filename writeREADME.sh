@@ -21,9 +21,11 @@ Each Dockerfile should reside in its own directory with a \`README.md\` of the f
 
 The first line is reproduced under \"$LIST\" in the main \`README.md\` on GitHub.
 
-Individual \`README.md\` files are shown in the Docker Hub repository description.
+Individual \`README.md\` files are used as the Docker Hub repository description.
 
-## Instructions
+Note: We may need to structure this repo as \`/app/version/Dockerfile\` later.
+
+## Instructions for Contribution
 
 1. Clone this repository
 1. Build and test
@@ -34,7 +36,7 @@ Individual \`README.md\` files are shown in the Docker Hub repository descriptio
 1. Write \`README.md\` for the app
 1. Deploy
     1. Login to Docker Hub: \`docker login\`
-    1. Push image to Docker Hub: \`docker push uvarc/<app>\`
+    1. Push image to Docker Hub: \`docker push uvarc/<app>:<tag>\`
     1. Push \`README.md\` to Docker Hub (in subdirectory): \`docker pushrm uvarc/<app>\`
     1. Push to GitHub: \`git add . && git commit -m "your message" && git push\`
 1. Run on Rivanna
