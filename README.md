@@ -34,8 +34,9 @@ Individual `README.md` files are shown in the Docker Hub repository description.
     1. Push to GitHub: `git add . && git commit -m "your message" && git push`
 1. Run on Rivanna
     1. `module load singularity`
-    1. `singularity pull docker://uvarc/<app>:<tag>
-    1. To run the default command specified in `ENTRYPOINT`: `./<app>_<tag>.sif`  
+    1. `singularity pull docker://uvarc/<app>:<tag>`
+    1. To run the default command specified in `ENTRYPOINT`:  
+       `./<app>_<tag>.sif`  
        Otherwise:  
        `singularity exec <app>_<tag>.sif <command>`
        `singularity shell <app>_<tag>.sif`
