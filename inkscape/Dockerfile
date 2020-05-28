@@ -5,4 +5,4 @@ RUN apk add --no-cache ttf-freefont inkscape
 
 ENV LC_ALL C
 
-ENTRYPOINT ['inkscape']
+ENTRYPOINT ["inkscape"]
