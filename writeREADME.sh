@@ -21,6 +21,7 @@ Each Dockerfile should reside in its own directory with a \`README.md\` of the f
 Individual \`README.md\` files are shown as the description on Docker Hub.
 
 ## Instructions
+
 1. Clone this repository
 1. Build and test
     1. Prepare a \`Dockerfile\`
@@ -32,6 +33,15 @@ Individual \`README.md\` files are shown as the description on Docker Hub.
     1. Push image to Docker Hub: \`docker push uvarc/<app>\`
     1. Push \`README.md\` to Docker Hub (in subdirectory): \`docker pushrm uvarc/<app>\`
     1. Push to GitHub: \`git add . && git commit -m "your message" && git push\`
+
+## Utilities
+
+Install the following if not on our machine:
+* \`docker\`
+* \`docker-pushrm\` - add-on to push \`README.md\`  
+https://github.com/christian-korneck/docker-pushrm
+* \`git\`
+
 EOF
 
 cat >>$README <<EOF
