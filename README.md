@@ -56,4 +56,7 @@ https://github.com/christian-korneck/docker-pushrm
 
 (Link to Docker Hub repository)
 
-- [inkscape](https://hub.docker.com/r/uvarc/inkscape) - Inkscape 0.92.4 on Alpine 3.11
+|App|Short Description|Compressed Size (MB)|Last Updated|By|
+|---|---|---|---|---|
+| [inkscape](https://hub.docker.com/r/uvarc/inkscape) | Inkscape 0.92.4 on Alpine 3.11 | 35.476 | 2020-05-28 11:40:21.37022 | rsdmse |
+
