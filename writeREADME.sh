@@ -47,13 +47,14 @@ Note: We may need to structure this repo as \`/app/version/Dockerfile\` later.
     1. Prepare a \`Dockerfile\`
     1. Build with explicit tag (do not use \`latest\`): \`docker build -t uvarc/<app>:<tag>\`  
        Use the app version (and suffix if needed) as the tag
-    1. Test locally
+    1. Test locally (or on Rivanna - see below)
 1. Write \`README.md\` for the app
 1. Deploy
     1. Login to Docker Hub: \`docker login\`
     1. Push image to Docker Hub: \`docker push uvarc/<app>:<tag>\`
     1. Push \`README.md\` to Docker Hub (in subdirectory): \`docker pushrm uvarc/<app>\`
     1. Push to GitHub: \`git add . && git commit -m "your message" && git push\`
+    1. Remember to logout: \`docker logout\`
 1. Run on Rivanna
     1. \`module load singularity\`
     1. \`singularity pull docker://uvarc/<app>:<tag>\`
