@@ -2,6 +2,16 @@
 README="README.md"
 LIST="List of Docker images" 
 
+TMP=$(mktemp)
+
+function get_image_info {
+    if [ $# -ne 1 ]; then
+        echo "get_image_info app"
+        exit 1
+    fi
+    curl -slSL https://hub.docker.com/v2/repositories/uvarc/$1/tags/ | tr ',' '\n' >$TMP
+}
+
 cat >$README <<EOF
 # rivanna-docker
 
@@ -64,10 +74,27 @@ cat >>$README <<EOF
 
 (Link to Docker Hub repository)
 
+|App|Short Description|Compressed Size (MB)|Last Updated|By|
+|---|---|---|---|---|
 EOF
 
 for i in *;  do
     if [ -e $i/Dockerfile ]; then
-        echo "- [$i](https://hub.docker.com/r/uvarc/$i) - $(head -1 $i/README.md)" >>$README
+        get_image_info $i
+
+        # size in MB
+        size=$(awk -F':' '/full_size/ {print $2/1024/1024}' $TMP)
+
+        # last updated
+        lastup=$(sed -n 's/"last_updated":"\(.*\)T\(.*\)Z"$/\1 \2/p' $TMP)
+
+        # last updated by
+        lastby=$(sed -n 's/"last_updater_username":"\(.*\)"$/\1/p' $TMP)
+
+        echo "| [$i](https://hub.docker.com/r/uvarc/$i) | $(head -1 $i/README.md) | $size | $lastup | $lastby |" >>$README
     fi
 done
+
+echo >>$README
+
+rm $TMP
