@@ -28,7 +28,8 @@ Individual \`README.md\` files are shown in the Docker Hub repository descriptio
 1. Clone this repository
 1. Build and test
     1. Prepare a \`Dockerfile\`
-    1. Build with explicit tag (do not use \`latest\`): \`docker build -t uvarc/<app>:tag\`
+    1. Build with explicit tag (do not use \`latest\`): \`docker build -t uvarc/<app>:<tag>\`  
+       Use the app version (and suffix if needed) as the tag
     1. Test locally
 1. Write \`README.md\` for the app
 1. Deploy
@@ -36,6 +37,13 @@ Individual \`README.md\` files are shown in the Docker Hub repository descriptio
     1. Push image to Docker Hub: \`docker push uvarc/<app>\`
     1. Push \`README.md\` to Docker Hub (in subdirectory): \`docker pushrm uvarc/<app>\`
     1. Push to GitHub: \`git add . && git commit -m "your message" && git push\`
+1. Run on Rivanna
+    1. \`module load singularity\`
+    1. \`singularity pull docker://uvarc/<app>:<tag>
+    1. To run the default command specified in \`ENTRYPOINT\`: \`./<app>_<tag>.sif\`  
+       Otherwise:  
+       \`singularity exec <app>_<tag>.sif <command>\`
+       \`singularity shell <app>_<tag>.sif\`
 
 ## Utilities
 
