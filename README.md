@@ -54,4 +54,6 @@ https://github.com/christian-korneck/docker-pushrm
 
 ## List of Docker images
 
-- inkscape - Inkscape 0.92.4 on Alpine 3.11
+(Link to Docker Hub repository)
+
+- [inkscape](https://hub.docker.com/r/uvarc/inkscape) - Inkscape 0.92.4 on Alpine 3.11
