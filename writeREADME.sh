@@ -37,6 +37,11 @@ Note: We may need to structure this repo as \`/app/version/Dockerfile\` later.
 
 ## Instructions for Contribution
 
+1. Install the following utilities if not on our machine:
+    * \`docker\`
+    * \`docker-pushrm\` - add-on to push \`README.md\`  
+    https://github.com/christian-korneck/docker-pushrm
+    * \`git\`
 1. Clone this repository
 1. Build and test
     1. Prepare a \`Dockerfile\`
@@ -58,24 +63,12 @@ Note: We may need to structure this repo as \`/app/version/Dockerfile\` later.
        \`singularity exec <app>_<tag>.sif <command>\` or  
        \`singularity shell <app>_<tag>.sif\`
 
-## Utilities
-
-Install the following if not on our machine:
-* \`docker\`
-* \`docker-pushrm\` - add-on to push \`README.md\`  
-https://github.com/christian-korneck/docker-pushrm
-* \`git\`
-
-EOF
-
-cat >>$README <<EOF
-
 ## $LIST
 
 (Link to Docker Hub repository)
 
-|App|Short Description|Compressed Size (MB)|Last Updated|By|
-|---|---|---|---|---|
+|App|Short Description|Compressed Size|Last Updated|By|
+|---|---|---:|---|---|
 EOF
 
 for i in *;  do
@@ -83,7 +76,10 @@ for i in *;  do
         get_image_info $i
 
         # size in MB
-        size=$(awk -F':' '/full_size/ {print $2/1024/1024}' $TMP)
+        size=$(awk -F':' '/full_size/ {
+            if ($2>1e9) printf "%.3f GB", $2/1024/1024/1024
+            else printf "%.3f MB", $2/1024/1024
+        }' $TMP)
 
         # last updated
         lastup=$(sed -n 's/"last_updated":"\(.*\)T\(.*\)Z"$/\1 \2/p' $TMP)
