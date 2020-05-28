@@ -19,7 +19,7 @@ Each Dockerfile should reside in its own directory with a \`README.md\` of the f
 <usage>
 \`\`\`
 
-The first line is reproduced under \\"$LIST\\" in the main \`README.md\` on GitHub.
+The first line is reproduced under \"$LIST\" in the main \`README.md\` on GitHub.
 
 Individual \`README.md\` files are shown in the Docker Hub repository description.
 

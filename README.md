@@ -14,7 +14,7 @@ Each Dockerfile should reside in its own directory with a `README.md` of the for
 <usage>
 ```
 
-The first line is reproduced under List of Docker images in the main `README.md` on GitHub.
+The first line is reproduced under \"List of Docker images\" in the main `README.md` on GitHub.
 
 Individual `README.md` files are shown in the Docker Hub repository description.
 
