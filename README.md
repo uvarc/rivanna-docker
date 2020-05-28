@@ -38,7 +38,7 @@ Individual `README.md` files are shown in the Docker Hub repository description.
     1. To run the default command specified in `ENTRYPOINT`:  
        `./<app>_<tag>.sif`  
        Otherwise:  
-       `singularity exec <app>_<tag>.sif <command>`
+       `singularity exec <app>_<tag>.sif <command>` or  
        `singularity shell <app>_<tag>.sif`
 
 ## Utilities
