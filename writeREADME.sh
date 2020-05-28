@@ -1,5 +1,6 @@
 #!/bin/bash
 README="README.md"
+LIST="List of Docker images" 
 
 cat >$README <<EOF
 # rivanna-docker
@@ -13,12 +14,14 @@ This repository contains Dockerfiles for Rivanna.
 
 Each Dockerfile should reside in its own directory with a \`README.md\` of the form:
 \`\`\`
-<name and version of main app> # this line will be reproduced in the main README.md on GitHub
+<name and version of main app>
 <homepage of main app>
 <usage>
 \`\`\`
 
-Individual \`README.md\` files are shown as the description on Docker Hub.
+The first line is reproduced under $LIST in the main \`README.md\` on GitHub.
+
+Individual \`README.md\` files are shown in the Docker Hub repository description.
 
 ## Instructions
 
@@ -46,7 +49,7 @@ EOF
 
 cat >>$README <<EOF
 
-## List of Docker images
+## $LIST
 
 EOF
 
