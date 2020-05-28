@@ -22,6 +22,11 @@ Note: We may need to structure this repo as `/app/version/Dockerfile` later.
 
 ## Instructions for Contribution
 
+1. Install the following utilities if not on our machine:
+    * `docker`
+    * `docker-pushrm` - add-on to push `README.md`  
+    https://github.com/christian-korneck/docker-pushrm
+    * `git`
 1. Clone this repository
 1. Build and test
     1. Prepare a `Dockerfile`
@@ -43,20 +48,11 @@ Note: We may need to structure this repo as `/app/version/Dockerfile` later.
        `singularity exec <app>_<tag>.sif <command>` or  
        `singularity shell <app>_<tag>.sif`
 
-## Utilities
-
-Install the following if not on our machine:
-* `docker`
-* `docker-pushrm` - add-on to push `README.md`  
-https://github.com/christian-korneck/docker-pushrm
-* `git`
-
-
 ## List of Docker images
 
 (Link to Docker Hub repository)
 
-|App|Short Description|Compressed Size (MB)|Last Updated|By|
-|---|---|---|---|---|
-| [inkscape](https://hub.docker.com/r/uvarc/inkscape) | Inkscape 0.92.4 on Alpine 3.11 | 35.476 | 2020-05-28 11:40:21.37022 | rsdmse |
+|App|Short Description|Compressed Size|Last Updated|By|
+|---|---|---:|---|---|
+| [inkscape](https://hub.docker.com/r/uvarc/inkscape) | Inkscape 0.92.4 on Alpine 3.11 | 35.476 MB | 2020-05-28 11:40:21.37022 | rsdmse |
 
