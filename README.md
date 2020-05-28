@@ -54,5 +54,6 @@ Note: We may need to structure this repo as `/app/version/Dockerfile` later.
 
 |App|Short Description|Compressed Size|Last Updated|By|
 |---|---|---:|---|---|
+| [hydrator](https://hub.docker.com/r/uvarc/hydrator) | Hydrator 0.0.10 | 178.869 MB | 2020-05-28 22:30:50.776306 | rsdmse |
 | [inkscape](https://hub.docker.com/r/uvarc/inkscape) | Inkscape 0.92.4 on Alpine 3.11 | 35.476 MB | 2020-05-28 11:40:21.37022 | rsdmse |
 
