@@ -9,5 +9,5 @@ Usage on Rivanna:
 ```
 module load singularity
 singularity pull docker://uvarc/hydrator:0.0.10
-./hydrator_0.0.10.sif
+./hydrator_0.0.10.sif --no-sandbox
 ```
