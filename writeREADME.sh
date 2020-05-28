@@ -28,10 +28,10 @@ Individual \`README.md\` files are shown as the description on Docker Hub.
     1. Test locally
 1. Write \`README.md\` for the app
 1. Deploy
-    1. Login to Docker Hub: `docker login`
-    1. Push image to Docker Hub: `docker push uvarc/<app>`
-    1. Push `README.md` to Docker Hub (in subdirectory): `docker pushrm uvarc/<app>`
-    1. Push to GitHub: `git add . && git commit -m "your message" && git push`
+    1. Login to Docker Hub: \`docker login\`
+    1. Push image to Docker Hub: \`docker push uvarc/<app>\`
+    1. Push \`README.md\` to Docker Hub (in subdirectory): \`docker pushrm uvarc/<app>\`
+    1. Push to GitHub: \`git add . && git commit -m "your message" && git push\`
 EOF
 
 cat >>$README <<EOF
