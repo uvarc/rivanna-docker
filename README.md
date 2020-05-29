@@ -58,4 +58,5 @@ Note: We may need to structure this repo as `/app/version/Dockerfile` later.
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
 | [hydrator](https://hub.docker.com/r/uvarc/hydrator) | `node:14.3.0-slim` | 178.980 MB | 2020-05-29 00:13:16.099426 | `rsdmse` |
 | [inkscape](https://hub.docker.com/r/uvarc/inkscape) | `alpine:3.11.6` | 35.476 MB | 2020-05-28 11:40:21.37022 | `rsdmse` |
+| [sumo](https://hub.docker.com/r/uvarc/sumo) | `debian:bullseye-slim` | 176.588 MB | 2020-05-29 17:49:29.088243 | `rsdmse` |
 
