@@ -31,11 +31,13 @@ Each Dockerfile should reside in its own directory with a `README.md` with this 
 <homepage of main app>
 
 Usage on Rivanna:
-```` ```
+````
+```
 module load singularity
 singularity pull docker://uvarc/<app>:<tag>
 ./<app>_<tag>.sif
-``` ````
+```
+````
 ```
 
 Individual `README.md` files are used as the Docker Hub repository description.
