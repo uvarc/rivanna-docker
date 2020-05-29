@@ -53,8 +53,9 @@ Note: We may need to structure this repo as `/app/version/Dockerfile` later.
 
 (Link to Docker Hub repository)
 
-|App|Short Description|Compressed Size|Last Updated (UTC)|By|
+|App|Base Image|Compressed Size|Last Updated (UTC)|By|
 |---|---|---:|---|---|
-| [hydrator](https://hub.docker.com/r/uvarc/hydrator) | Hydrator 0.0.10 | 178.980 MB | 2020-05-29 00:13:16.099426 | rsdmse |
-| [inkscape](https://hub.docker.com/r/uvarc/inkscape) | Inkscape 0.92.4 on Alpine 3.11 | 35.476 MB | 2020-05-28 11:40:21.37022 | rsdmse |
+| [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
+| [hydrator](https://hub.docker.com/r/uvarc/hydrator) | `node:14.3.0-slim` | 178.980 MB | 2020-05-29 00:13:16.099426 | `rsdmse` |
+| [inkscape](https://hub.docker.com/r/uvarc/inkscape) | `alpine:3.11.6` | 35.476 MB | 2020-05-28 11:40:21.37022 | `rsdmse` |
 

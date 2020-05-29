@@ -1,0 +1,69 @@
+FROM continuumio/miniconda2:4.7.12
+LABEL maintainer=rs7wz@virginia.edu
+
+RUN mkdir -p /usr/share/man/man1/ && \
+    apt-get update && apt-get install -y --no-install-recommends \
+        software-properties-common python-gpg && \
+    wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - && \ 
+    add-apt-repository -y https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ && \
+    apt-get update && apt-get install -y --no-install-recommends \
+        adoptopenjdk-8-hotspot \
+        gcc curl \
+        build-essential \
+        cython \
+        libmariadb-dev-compat libmariadb-dev \
+        libhdf5-dev \
+        libxml2-dev \
+        libxslt1-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN conda install -c anaconda -c goodman -c bioconda -c cyclus -c conda-forge -c daf \
+        appdirs \
+        boto3 \
+        centrosome \
+        cython \
+        h5py \
+        inflect \
+        ipywidgets \
+        java-jdk \
+        javabridge \
+        joblib \
+        libtiff \
+        libxml2 \
+        libxslt \
+        lxml \
+        packaging \
+        pillow \
+        prokaryote \
+        python-bioformats \
+        pyzmq \
+        mahotas \
+        matplotlib \
+        mysqlclient \
+        numpy \
+        raven \
+        requests \
+        scikit-image \
+        scikit-learn \
+        scipy \
+        sphinx \
+        tifffile \
+        wxpython=3.0.2.0 && \
+    conda clean --all
+
+RUN pip install --no-cache-dir cellh5
+
+ARG VERSION=3.1.9
+
+RUN cd /opt && \
+    curl -LO https://github.com/CellProfiler/CellProfiler/archive/v${VERSION}.tar.gz${TARBALL} && \
+    tar xf v${VERSION}.tar.gz && \
+    cd CellProfiler-${VERSION} && \
+    pip install --no-cache-dir --editable . && \
+    rm /opt/v${VERSION}.tar.gz
+
+ENV PATH /opt/CellProfiler-${VERSION}:$PATH
+ENV JAVA_TOOL_OPTIONS "-Xss1280k $JAVA_TOOL_OPTIONS"
+ENV LC_ALL C
+
+ENTRYPOINT ["cellprofiler"]
