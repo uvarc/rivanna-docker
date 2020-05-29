@@ -68,13 +68,16 @@ Note: We may need to structure this repo as \`/app/version/Dockerfile\` later.
 
 (Link to Docker Hub repository)
 
-|App|Short Description|Compressed Size|Last Updated (UTC)|By|
+|App|Base Image|Compressed Size|Last Updated (UTC)|By|
 |---|---|---:|---|---|
 EOF
 
 for i in *;  do
     if [ -e $i/Dockerfile ]; then
         get_image_info $i
+
+        # base image
+        base=$(awk '{if(NR==1) print $2}' $i/Dockerfile)
 
         # size in MB
         size=$(awk -F':' '/full_size/ {
@@ -88,7 +91,7 @@ for i in *;  do
         # last updated by
         lastby=$(sed -n 's/"last_updater_username":"\(.*\)"$/\1/p' $TMP)
 
-        echo "| [$i](https://hub.docker.com/r/uvarc/$i) | $(head -1 $i/README.md) | $size | $lastup | $lastby |" >>$README
+        echo "| [$i](https://hub.docker.com/r/uvarc/$i) | \`$base\` | $size | $lastup | \`$lastby\` |" >>$README
     fi
 done
 
