@@ -15,13 +15,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libatspi2.0-0 \
         libappindicator3-1 \
         libsecret-1-0 && \
-    cd /opt && \
-    wget https://github.com/DocNow/hydrator/releases/download/v${VERSION}/hydrator_${VERSION}_amd64.deb && \
-    dpkg --add-architecture amd64 && dpkg -i *.deb && \
-    rm *.deb && \
     rm -rf /var/lib/apt/lists/*
+
+RUN cd /opt && \
+    wget https://github.com/DocNow/hydrator/releases/download/v${VERSION}/hydrator_${VERSION}_amd64.deb && \
+    dpkg -i *.deb && \
+    rm *.deb
 
 ENV PATH /opt/Hydrator:$PATH
 ENV LC_ALL C
 
-ENTRYPOINT ["/opt/Hydrator/hydrator"]
+ENTRYPOINT ["/opt/Hydrator/hydrator", "--no-sandbox"]
