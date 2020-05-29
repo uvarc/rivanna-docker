@@ -1,3 +1,5 @@
+# This results in an image size of 1.2 GB
+
 FROM continuumio/miniconda2:4.7.12
 LABEL maintainer=rs7wz@virginia.edu
 
