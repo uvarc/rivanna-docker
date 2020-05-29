@@ -25,18 +25,20 @@ This repository contains Dockerfiles for Rivanna.
 </pre>
 
 Each Dockerfile should reside in its own directory with a `README.md` with this template:
-```
-<name of main app> <version> <suffix or other important info>
+````
+<name of main app> <version> <any other important info>
 
 <homepage of main app>
 
+<any other apps/packages>
+
 Usage on Rivanna:
-    ```
-    module load singularity
-    singularity pull docker://uvarc/<app>:<tag>
-    ./<app>_<tag>.sif
-    ```
 ```
+module load singularity
+singularity pull docker://uvarc/<app>:<tag>
+./<app>_<tag>.sif
+```
+````
 
 Individual `README.md` files are used as the Docker Hub repository description.
 
