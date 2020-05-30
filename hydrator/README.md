@@ -1,14 +1,7 @@
-Hydrator 0.0.10
-
-https://github.com/DocNow/hydrator
-
-Usage on Rivanna:
-- [Start a MATE session on FastX Web](https://www.rc.virginia.edu/userinfo/rivanna/logintools/fastx)
-- Open terminal
-- Run command:
-```
-module load singularity
-singularity pull docker://uvarc/hydrator:0.0.10
-./hydrator_0.0.10.sif
-```
-- For custom commands you may need to add `--no-sandbox`
+| [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.980 MB | 2020-05-29 00:13:16.099426 | `rsdmse` |
+| [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.980 MB | 2020-05-29 00:13:16.099426 | `rsdmse` |
+| [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.980 MB | 2020-05-29 00:13:16.099426 | `rsdmse` |
+| [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.980 MB | 2020-05-29 00:13:16.099426 | `rsdmse` |
+| [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.980 MB | 2020-05-29 00:13:16.099426 | `rsdmse` |
+| [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.980 MB | 2020-05-29 00:13:16.099426 | `rsdmse` |
+                hi

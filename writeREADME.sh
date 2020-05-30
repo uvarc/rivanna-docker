@@ -5,11 +5,11 @@ LIST="List of Docker images"
 TMP=$(mktemp)
 
 function get_image_info {
-    if [ $# -ne 1 ]; then
-        echo "get_image_info app"
+    if [ $# -ne 2 ]; then
+        echo "get_image_info app version"
         exit 1
     fi
-    curl -slSL https://hub.docker.com/v2/repositories/uvarc/$1/tags/ | tr ',' '\n' >$TMP
+    curl -slSL https://hub.docker.com/v2/repositories/uvarc/$1/tags/$2 | tr ',' '\n' >$TMP
 }
 
 cat >$README <<EOF
@@ -57,8 +57,6 @@ singularity pull docker://uvarc/<app>:<tag>
 
 Individual \`README.md\` files are used as the Docker Hub repository description.
 
-Note: We may need to structure this repo as \`/app/version/Dockerfile\` later.
-
 ## Instructions for Contribution
 
 1. Install the following utilities if not on our machine:
@@ -92,32 +90,38 @@ Note: We may need to structure this repo as \`/app/version/Dockerfile\` later.
 
 (Link to Docker Hub repository)
 
-|App|Base Image|Compressed Size|Last Updated (UTC)|By|
-|---|---|---:|---|---|
+|App|Version|Base Image|Compressed Size|Last Updated (UTC)|By|
+|---|---|----|---:|---|---|
 EOF
 
 for i in *;  do
-    if [ -e $i/Dockerfile ]; then
-        get_image_info $i
+    if [ -d $i ]; then
+        cd $i
+        for j in *; do
+            if [ -e $j/Dockerfile ]; then
+                get_image_info $i $j
 
-        # base image
-        base=$(awk '{if(NR==1) print $2}' $i/Dockerfile)
+                # base image
+                base=$(awk '{if(NR==1) print $2}' $j/Dockerfile)
 
-        # size in MB
-        size=$(awk -F':' '/full_size/ {
-            if ($2>1e9) printf "%.3f GB", $2/1024/1024/1024
-            else printf "%.3f MB", $2/1024/1024
-        }' $TMP)
+                # size in MB
+                size=$(awk -F':' '/full_size/ {
+                    if ($2>=1e9) printf "%.3f GB", $2/1024/1024/1024
+                    else         printf "%.3f MB", $2/1024/1024
+                }' $TMP)
 
-        # last updated
-        lastup=$(sed -n 's/"last_updated":"\(.*\)T\(.*\)Z"$/\1 \2/p' $TMP)
+                # last updated
+                lastup=$(sed -n 's/"last_updated":"\(.*\)T\(.*\)Z"$/\1 \2/p' $TMP)
 
-        # last updated by
-        lastby=$(sed -n 's/"last_updater_username":"\(.*\)"$/\1/p' $TMP)
+                # last updated by
+                lastby=$(sed -n 's/"last_updater_username":"\(.*\)"$/\1/p' $TMP)
 
-        echo "| [$i](https://hub.docker.com/r/uvarc/$i) | \`$base\` | $size | $lastup | \`$lastby\` |" >>$README
+                echo "| [$i](https://hub.docker.com/r/uvarc/$i) | $j | \`$base\` | $size | $lastup | \`$lastby\` |"
+            fi
+        done
+        cd ..
     fi
-done
+done >>$README
 
 echo >>$README
 
