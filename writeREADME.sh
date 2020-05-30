@@ -88,8 +88,6 @@ Individual \`README.md\` files are used as the Docker Hub repository description
 
 ## $LIST
 
-(Link to Docker Hub repository)
-
 |App|Version|Base Image|Compressed Size|Last Updated (UTC)|By|
 |---|---|----|---:|---|---|
 EOF
@@ -123,6 +121,12 @@ for i in *;  do
     fi
 done >>$README
 
-echo >>$README
+cat >>$README <<EOF
+
+Note:
+- App link redirects to Docker Hub repository.
+- The \`*.sif\` Singularity image size (created after \`singularity pull\`) is about the same as the compressed size.
+
+EOF
 
 rm $TMP
