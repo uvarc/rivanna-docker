@@ -57,34 +57,7 @@ singularity pull docker://uvarc/<app>:<tag>
 
 Individual \`README.md\` files are used as the Docker Hub repository description.
 
-## Instructions for Contribution
-
-1. Install the following utilities if not on our machine:
-    * \`docker\`
-    * \`docker-pushrm\` - add-on to push \`README.md\`  
-    https://github.com/christian-korneck/docker-pushrm
-    * \`git\`
-1. Clone this repository
-1. Build and test
-    1. Prepare a \`Dockerfile\`
-    1. Build with explicit tag (do not use \`latest\`): \`docker build -t uvarc/<app>:<tag>\`  
-       Use the app version (and suffix if needed) as the tag
-    1. Test locally (or on Rivanna - see below)
-1. Write \`README.md\` for the app
-1. Deploy
-    1. Login to Docker Hub: \`docker login\`
-    1. Push image to Docker Hub: \`docker push uvarc/<app>:<tag>\`
-    1. Push \`README.md\` to Docker Hub (in subdirectory): \`docker pushrm uvarc/<app>\`
-    1. Push to GitHub: \`git add . && git commit -m "your message" && git push\`
-    1. Remember to logout: \`docker logout\`
-1. Run on Rivanna
-    1. \`module load singularity\`
-    1. \`singularity pull docker://uvarc/<app>:<tag>\`
-    1. To run the default command specified in \`ENTRYPOINT\`:  
-       \`./<app>_<tag>.sif\`  
-       Otherwise:  
-       \`singularity exec <app>_<tag>.sif <command>\` or  
-       \`singularity shell <app>_<tag>.sif\`
+To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/wiki) for instructions and tips.
 
 ## $LIST
 
