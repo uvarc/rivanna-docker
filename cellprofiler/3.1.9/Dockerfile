@@ -22,7 +22,7 @@ RUN pip install --no-cache-dir \
         docutils==0.15
 
 RUN cd /opt && \
-    curl -LO https://github.com/CellProfiler/CellProfiler/archive/v${VERSION}.tar.gz${TARBALL} && \
+    curl -LO https://github.com/CellProfiler/CellProfiler/archive/v${VERSION}.tar.gz && \
     tar xf v${VERSION}.tar.gz && \
     cd CellProfiler-${VERSION} && \
     pip install --no-cache-dir --editable . && \
