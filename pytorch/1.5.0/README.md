@@ -25,5 +25,5 @@ Usage on Rivanna:
 ```
 module load singularity
 singularity pull docker://uvarc/pytorch:1.5.0
-singularity run --nv cellprofiler_3.1.9.sif your_script.py
+singularity run --nv pytorch_1.5.0.sif your_script.py
 ```
