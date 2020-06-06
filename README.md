@@ -54,6 +54,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [patric](https://hub.docker.com/r/uvarc/patric) | 1.027 | `centos:8.1.1911` | 115.069 MB | 2020-06-02 10:53:43.716121 | `rsdmse` |
 | [pytorch](https://hub.docker.com/r/uvarc/pytorch) | 1.5.0 | `pytorch/pytorch:1.5-cuda10.1-cudnn7-runtime` | 1.849 GB | 2020-06-04 01:37:53.368777 | `rsdmse` |
 | [sumo](https://hub.docker.com/r/uvarc/sumo) | 1.4.0 | `debian:bullseye-slim` | 176.588 MB | 2020-05-29 17:49:29.088243 | `rsdmse` |
+| [tensorflow](https://hub.docker.com/r/uvarc/tensorflow) | 2.2.0 | `tensorflow/tensorflow:2.2.0-gpu-jupyter` | 1.742 GB | 2020-06-06 12:24:33.418708 | `rsdmse` |
 
 Note:
 - App link redirects to Docker Hub repository.
