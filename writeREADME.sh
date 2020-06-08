@@ -73,7 +73,7 @@ for i in *;  do
                 get_image_info $i $j
 
                 # base image
-                base=$(awk '{if(NR==1) print $2}' $j/Dockerfile)
+                base=$(awk '{if($1 ~ "^FROM") print $2}' $j/Dockerfile)
 
                 # size in MB
                 size=$(awk -F':' '/full_size/ {
