@@ -18,3 +18,9 @@ module load singularity
 singularity pull docker://uvarc/tensorflow:2.2.0
 singularity run --nv tensorflow_2.2.0.sif your_script.py
 ```
+
+If you need other Python packages, please run:
+```
+singularity shell tensorflow_2.2.0.sif
+python -m pip install --user <package>
+```
