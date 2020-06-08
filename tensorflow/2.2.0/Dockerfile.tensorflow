@@ -1,3 +1,5 @@
+# Results in 2.2 GB image size due to duplicate Python 3.6 packages
+
 FROM tensorflow/tensorflow:2.2.0-gpu-jupyter
 LABEL maintainer=rs7wz@virginia.edu
 
