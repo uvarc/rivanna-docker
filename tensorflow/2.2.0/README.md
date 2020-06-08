@@ -2,8 +2,8 @@ TensorFlow 2.2.0
 
 https://tensorflow.org/
 
-This container includes the following Python 3.7.5 packages:
-- NumPy 1.18.4
+This container includes the following Python 3.7.7 packages:
+- NumPy 1.18.5
 - SciPy 1.4.1
 - Matplotlib 3.2.1
 - Seaborn 0.10.1
@@ -22,5 +22,5 @@ singularity run --nv tensorflow_2.2.0.sif your_script.py
 If you need other Python packages, please run:
 ```
 singularity shell tensorflow_2.2.0.sif
-python -m pip install --user <package>
+pip install --user <package>
 ```
