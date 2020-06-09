@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 RUN conda install -c conda-forge \
-        sox ipykernel ipywidgets \
+        sox jupyter ipykernel ipywidgets \
         scipy==1.4.1 matplotlib==3.1.3 pandas==1.0.4 seaborn==0.10.1 \
         pytorch-lightning==0.7.6 scikit-learn==0.23.1 scikit-image==0.17.2 && \
     conda install -c pytorch -c gpytorch \
