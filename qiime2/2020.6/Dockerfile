@@ -16,4 +16,8 @@ RUN wget https://data.qiime2.org/distro/core/$YML && \
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
+LABEL homepage=https://qiime2.org/
+LABEL description="QIIME 2 is a next-generation microbiome bioinformatics platform that is extensible, free, open source, and community developed."
+LABEL moduleclass=bio
+
 ENTRYPOINT ["qiime"]
