@@ -1,8 +1,8 @@
-QIIME 2020.6
+QIIME 2 2020.6
 
 https://qiime2.org
 
-This container includes the following Python 3.7.6 packages:
+This container includes the following Python 3.7.6 packages:  
 https://data.qiime2.org/distro/core/qiime2-2020.6-py36-linux-conda.yml
 
 Usage on Rivanna:
