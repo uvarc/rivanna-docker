@@ -72,8 +72,8 @@ for i in *;  do
             if [ -e $j/Dockerfile ]; then
                 get_image_info $i $j
 
-                # base image
-                base=$(awk '{if($1 ~ "^FROM") print $2}' $j/Dockerfile)
+                # base image (production for multi-stage)
+                base=$(awk '{if($1 ~ "^FROM") print $2}' $j/Dockerfile | tail -1)
 
                 # size in MB
                 size=$(awk -F':' '/full_size/ {
