@@ -1,8 +1,6 @@
 FROM node:14.3.0-slim
 LABEL maintainer=rs7wz@virginia.edu
 
-ARG VERSION=0.0.10
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates wget \
         libasound2 \
@@ -17,8 +15,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libsecret-1-0 && \
     rm -rf /var/lib/apt/lists/*
 
-RUN cd /opt && \
-    wget https://github.com/DocNow/hydrator/releases/download/v${VERSION}/hydrator_${VERSION}_amd64.deb && \
+ARG VERSION=0.0.10
+
+WORKDIR /opt
+RUN wget https://github.com/DocNow/hydrator/releases/download/v${VERSION}/hydrator_${VERSION}_amd64.deb && \
     dpkg -i *.deb && \
     rm *.deb
 
