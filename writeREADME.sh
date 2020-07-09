@@ -68,6 +68,7 @@ EOF
 for i in *;  do
     if [ -d $i ]; then
         cd $i
+        count=1
         for j in *; do
             if [ -e $j/Dockerfile ]; then
                 get_image_info $i $j
@@ -87,7 +88,12 @@ for i in *;  do
                 # last updated by
                 lastby=$(sed -n 's/"last_updater_username":"\(.*\)"$/\1/p' $TMP)
 
-                echo "| [$i](https://hub.docker.com/r/uvarc/$i) | $j | \`$base\` | $size | $lastup | \`$lastby\` |"
+                if [ $count -eq 1 ]; then
+                    echo "| [$i](https://hub.docker.com/r/uvarc/$i) | $j | \`$base\` | $size | $lastup | \`$lastby\` |"
+                else
+                    echo "| | $j | \`$base\` | $size | $lastup | \`$lastby\` |"
+                fi
+                count=$((count+1))
             fi
         done
         cd ..
