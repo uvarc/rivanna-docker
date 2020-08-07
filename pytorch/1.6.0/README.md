@@ -11,6 +11,7 @@ This container includes the following Python 3.7.7 packages:
     - Ignite 0.4.1
     - PyTorch Lightning 0.8.5
 - Other packages:
+    - LightGBM 2.3.1
     - NumPy 1.18.5
     - SciPy 1.5.2
     - Matplotlib 3.3.0
@@ -24,6 +25,6 @@ This container includes the following Python 3.7.7 packages:
 Usage on Rivanna:
 ```
 module load singularity
-singularity pull docker://uvarc/pytorch:1.5.1
-singularity run --nv pytorch_1.5.1.sif your_script.py
+singularity pull docker://uvarc/pytorch:1.6.0
+singularity run --nv pytorch_1.6.0.sif your_script.py
 ```
