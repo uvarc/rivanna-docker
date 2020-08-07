@@ -40,13 +40,19 @@ RUN wget -q https://github.com/microsoft/LightGBM/archive/v${VERSION}.tar.gz && 
     cmake -DUSE_GPU=1 -DOpenCL_LIBRARY=/usr/local/cuda/lib64/libOpenCL.so -DOpenCL_INCLUDE_DIR=/usr/local/cuda/include/ .. && \
     make OPENCL_HEADERS=/usr/local/cuda-10.2/targets/x86_64-linux/include LIBOPENCL=/usr/local/cuda-10.2/targets/x86_64-linux/lib
 
+# Use runtime
 FROM nvidia/cuda:10.2-cudnn8-runtime
 ARG VERSION=2.3.1
+COPY --from=build /etc/OpenCL/vendors/nvidia.icd /etc/OpenCL/vendors/nvidia.icd
+COPY --from=build /usr/local/cuda/targets/x86_64-linux/include/CL /usr/local/cuda/targets/x86_64-linux/include/CL
 COPY --from=build /usr/local/cuda/lib64/libOpenCL.so /usr/local/cuda/lib64/libOpenCL.so
 COPY --from=build /usr/local/cuda/lib64/libOpenCL.so.1 /usr/local/cuda/lib64/libOpenCL.so.1
 COPY --from=build /opt/LightGBM-${VERSION}/lightgbm /opt/LightGBM-${VERSION}/lightgbm
 COPY --from=build /opt/LightGBM-${VERSION}/lib_lightgbm.so /opt/LightGBM-${VERSION}/lib_lightgbm.so
 COPY --from=build /opt/LightGBM-${VERSION}/python-package /opt/LightGBM-${VERSION}/python-package
+
+WORKDIR /usr/local/cuda
+RUN ln -s targets/x86_64-linux/include/CL include
 
 # Global Path Setting
 ENV CUDA_HOME /usr/local/cuda
