@@ -12,7 +12,7 @@ This container includes the following Python 3.7.7 packages:
     - PyTorch Lightning 0.8.5
 - Other packages:
     - LightGBM 2.3.1
-    - NumPy 1.18.5
+    - NumPy 1.19.1
     - SciPy 1.5.2
     - Matplotlib 3.3.0
     - Seaborn 0.10.1
