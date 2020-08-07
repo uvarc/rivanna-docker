@@ -1,14 +1,50 @@
+FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-devel AS build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        gcc g++ cmake \
+        libglib2.0-0 \
+        libxext6 \
+        libsm6 \
+        libxrender1 \
+        libboost-dev \
+        libboost-system-dev \
+        libboost-filesystem-dev
+
+RUN conda install -c conda-forge -c anaconda \
+        mkl=2020.2 \
+        numpy=1.19.1 \
+        scipy=1.5.2 \
+        scikit-learn=0.23.2
+
+RUN pip install --no-cache-dir \
+        lightgbm==2.3.1 --install-option=--gpu \
+                        --install-option="--opencl-include-dir=/usr/local/cuda/include/" \
+                        --install-option="--opencl-library=/usr/local/cuda/lib64/libOpenCL.so"
+
 FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
+WORKDIR /usr/local/cuda
+COPY --from=build /usr/local/cuda/targets/x86_64-linux/include/CL /usr/local/cuda/targets/x86_64-linux/include/CL
+COPY --from=build /usr/local/cuda/lib64/libOpenCL.so /usr/local/cuda/lib64/libOpenCL.so
+COPY --from=build /usr/local/cuda/lib64/libOpenCL.so.1 /usr/local/cuda/lib64/libOpenCL.so.1
+COPY --from=build /opt/conda/lib/python3.7/site-packages/lightgbm /opt/conda/lib/python3.7/site-packages/lightgbm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         gcc g++ openslide-tools \
+        libglib2.0-0 \
+        libboost-dev \
+        libboost-system-dev \
+        libboost-filesystem-dev \
         libsm6 libxext6 libxrender-dev && \
     rm -rf /var/lib/apt/lists/*
 
-RUN conda install -c conda-forge \
-        sox jupyter ipykernel ipywidgets \
-        scipy==1.5.2 matplotlib==3.3.0 pandas==1.1.0 seaborn==0.10.1 \
-        pytorch-lightning==0.8.5 scikit-learn==0.23.1 scikit-image==0.17.2 && \
+RUN conda install -c conda-forge -c anaconda \
+        mkl=2020.2 \
+        numpy=1.19.1 \
+        scipy=1.5.2 \
+        scikit-learn=0.23.2 \
+        matplotlib==3.3.0 pandas==1.1.0 seaborn==0.10.1 \
+        pytorch-lightning==0.8.5 scikit-image==0.17.2 \
+        sox jupyter ipykernel ipywidgets && \
     conda install -c pytorch -c gpytorch \
         torchaudio==0.6.0 torchtext==0.7.0 botorch==0.3.0 ignite==0.4.1 && \
     conda clean --all
