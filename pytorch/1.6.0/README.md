@@ -17,7 +17,7 @@ This container includes the following Python 3.7.7 packages:
     - Matplotlib 3.3.0
     - Seaborn 0.10.1
     - Pandas 1.1.0
-    - Scikit-learn 0.23.1
+    - Scikit-learn 0.23.2
     - Scikit-image 0.17.2
     - OpenSlide-Python 1.1.1
     - OpenCV 4.3.0.36
