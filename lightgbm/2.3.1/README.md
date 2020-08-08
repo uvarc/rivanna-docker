@@ -2,8 +2,8 @@ LightGBM 2.3.1 CLI
 
 https://github.com/microsoft/LightGBM
 
-Please refer to the tutorial:
-https://lightgbm.readthedocs.io/en/latest/GPU-Tutorial.html
+Compiled with CUDA 10.2. Please refer to the tutorial:
+https://lightgbm.readthedocs.io/en/latest/GPU-Tutorial.html#dataset-preparation
 
 Usage on Rivanna:
 ```
