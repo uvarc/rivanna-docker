@@ -51,7 +51,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | 3.1.9 | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
 | [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.938 MB | 2020-07-08 13:35:17.546402 | `rsdmse` |
 | [inkscape](https://hub.docker.com/r/uvarc/inkscape) | 0.92.4 | `alpine:3.11.6` | 35.476 MB | 2020-05-28 11:40:21.37022 | `rsdmse` |
-| [lightgbm](https://hub.docker.com/r/uvarc/lightgbm) | 2.3.1 | `nvidia/cuda:10.2-cudnn8-runtime` | 1.930 GB | 2020-08-07 17:36:58.653185 | `rsdmse` |
+| [lightgbm](https://hub.docker.com/r/uvarc/lightgbm) | 2.3.1 | `nvidia/cuda:10.2-base` | 111.314 MB | 2020-08-08 15:32:16.637214 | `rsdmse` |
 | [omero-client](https://hub.docker.com/r/uvarc/omero-client) | 5.6.1 | `continuumio/miniconda3:4.8.2` | 1.375 GB | 2020-07-09 13:35:20.84667 | `rsdmse` |
 | [patric](https://hub.docker.com/r/uvarc/patric) | 1.027 | `centos:8.1.1911` | 115.069 MB | 2020-06-02 10:53:43.716121 | `rsdmse` |
 | [pytorch](https://hub.docker.com/r/uvarc/pytorch) | 1.5.0 | `pytorch/pytorch:1.5-cuda10.1-cudnn7-runtime` | 1.849 GB | 2020-06-09 01:13:13.500138 | `rsdmse` |
