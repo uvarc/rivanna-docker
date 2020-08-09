@@ -8,7 +8,7 @@ This container provides the following applications:
     - rpy2 3.3.3
     - argparse 1.1
     - Pysam 0.16.0.1
-- R 4.0.1
+- R 4.0.2
 - Samtools 1.7
 
 Usage on Rivanna:

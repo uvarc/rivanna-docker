@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:4.8.2 AS build
+FROM python:3.7.6-slim-buster AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         wget ca-certificates git build-essential \
@@ -14,26 +14,25 @@ RUN wget -q https://github.com/samtools/samtools/releases/download/${SAMTOOLS_VE
     cd samtools-${SAMTOOLS_VERSION} && \
     ./configure --prefix=/opt/samtools && make && make install
 
-FROM continuumio/miniconda3:4.8.2
+FROM python:3.7.6-slim-buster
 COPY --from=build /opt/samtools/bin /opt/samtools
 WORKDIR /opt
 
+# R 4.0
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        git \
+        git gnupg \
         libbz2-dev libcurl4-openssl-dev libreadline-dev liblzma-dev \
         libncurses5-dev libncursesw5-dev zlib1g-dev && \
+    echo "deb http://cloud.r-project.org/bin/linux/debian buster-cran40/" >> /etc/apt/sources.list && \
+    apt-key adv --keyserver keys.gnupg.net --recv-key FCAE2A0E115C3D8A && \
+    apt-get update && apt-get install -y --no-install-recommends -t buster-cran40 r-base && \
     rm -rf /var/lib/apt/lists/*
 
-RUN conda install -c conda-forge -c bioconda \
-        python=3.7.6 \
-        r-base=4.0.1 \
-        numpy=1.18.5 \
-        pysam=0.16.0.1 && \
-    conda clean -a
-
 RUN pip install --no-cache-dir \
+        rpy2==3.3.3 \
         argparse==1.1 \
-        rpy2==3.3.3
+        numpy==1.18.5 \
+        pysam==0.16.0.1
 
 # Danpos
 ARG DANPOS_VERSION=3.1.1
