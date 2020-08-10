@@ -52,6 +52,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [danpos](https://hub.docker.com/r/uvarc/danpos) | 3.1.1 | `python:3.7.6-slim-buster` | 208.754 MB | 2020-08-09 19:50:06.950131 | `rsdmse` |
 | [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.938 MB | 2020-07-08 13:35:17.546402 | `rsdmse` |
 | [inkscape](https://hub.docker.com/r/uvarc/inkscape) | 0.92.4 | `alpine:3.11.6` | 35.476 MB | 2020-05-28 11:40:21.37022 | `rsdmse` |
+| | 1.0 | `alpine:3.12.0` | 77.034 MB | 2020-08-10 00:59:26.5463 | `rsdmse` |
 | [lightgbm](https://hub.docker.com/r/uvarc/lightgbm) | 2.3.1 | `nvidia/opencl:runtime` | 104.777 MB | 2020-08-09 11:13:10.858526 | `rsdmse` |
 | [omero-client](https://hub.docker.com/r/uvarc/omero-client) | 5.6.1 | `continuumio/miniconda3:4.8.2` | 1.375 GB | 2020-07-09 13:35:20.84667 | `rsdmse` |
 | [patric](https://hub.docker.com/r/uvarc/patric) | 1.027 | `centos:8.1.1911` | 115.069 MB | 2020-06-02 10:53:43.716121 | `rsdmse` |
