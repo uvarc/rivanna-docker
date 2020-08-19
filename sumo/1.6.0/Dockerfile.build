@@ -1,0 +1,14 @@
+ARG VERSION=1.6.0
+
+FROM python:3.7.9-slim-buster AS build
+ARG VERSION
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        wget ca-certificates \
+        cmake g++ libxerces-c-dev libfox-1.6-dev libgdal-dev libproj-dev libgl2ps-dev swig && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt
+RUN wget https://sumo.dlr.de/releases/$VERSION/sumo-src-${VERSION}.tar.gz && \
+    tar xf sumo-src-${VERSION}.tar.gz && \
+    cd sumo-$VERSION/build && mkdir cmake-build && cd cmake-build && \
+    cmake ../.. && make
