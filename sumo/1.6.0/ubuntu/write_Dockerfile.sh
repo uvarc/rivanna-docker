@@ -7,8 +7,8 @@ cp Dockerfile.build $OUT
 cat >>$OUT <<EOF
 
 FROM gcr.io/distroless/cc-debian10
-COPY --from=build /opt/sumo-1.6.0/bin /opt/sumo-1.6.0/bin
 EOF
+
 
 echo "COPY --from=build \\" >>$OUT
 DIR_PREV=$(dirname `head -1 $IN`)
@@ -24,14 +24,12 @@ while read -r line; do
 
     DIR_PREV=$DIR
 done <$IN >>$OUT
+
 echo "        $DIR_PREV/" >>$OUT
 
 cat >>$OUT <<EOF
 
-COPY --from=build /etc/fonts/fonts.conf /etc/fonts/
-ENV FONTCONFIG_PATH=/etc/fonts
-ENV PATH=/opt/sumo-1.6.0/bin:\$PATH
-
+ENV PATH=/usr/bin
 LABEL maintainer=rs7wz@virginia.edu
 
 ENTRYPOINT ["sumo"]
