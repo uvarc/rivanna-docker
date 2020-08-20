@@ -1,0 +1,5 @@
+FROM ubuntu:18.04 AS build
+RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common && \
+    add-apt-repository ppa:sumo/stable && \
+    apt-get update && apt-get install -y --no-install-recommends sumo && \
+    rm -rf /var/lib/apt/lists/*
