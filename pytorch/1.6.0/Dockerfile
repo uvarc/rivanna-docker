@@ -28,13 +28,17 @@ COPY --from=build /usr/local/cuda/lib64/libOpenCL.so /usr/local/cuda/lib64/libOp
 COPY --from=build /usr/local/cuda/lib64/libOpenCL.so.1 /usr/local/cuda/lib64/libOpenCL.so.1
 COPY --from=build /opt/conda/lib/python3.7/site-packages/lightgbm /opt/conda/lib/python3.7/site-packages/lightgbm
 
+RUN mkdir -p /etc/OpenCL/vendors && \
+    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
         gcc g++ openslide-tools \
         libglib2.0-0 \
         libboost-dev \
         libboost-system-dev \
         libboost-filesystem-dev \
-        libsm6 libxext6 libxrender-dev && \
+        libsm6 libxext6 libxrender-dev \
+        libsndfile1 && \
     rm -rf /var/lib/apt/lists/*
 
 RUN conda install -c conda-forge -c anaconda \
