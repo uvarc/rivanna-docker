@@ -59,13 +59,14 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 1.031 | `debian:buster-slim` | 65.926 MB | 2020-08-10 00:49:27.812868 | `rsdmse` |
 | [pytorch](https://hub.docker.com/r/uvarc/pytorch) | 1.5.0 | `pytorch/pytorch:1.5-cuda10.1-cudnn7-runtime` | 1.849 GB | 2020-06-09 01:13:13.500138 | `rsdmse` |
 | | 1.5.1 | `pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime` | 2.263 GB | 2020-07-09 10:50:23.537395 | `rsdmse` |
-| | 1.6.0 | `pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime` | 2.267 GB | 2020-08-07 20:12:35.558461 | `rsdmse` |
+| | 1.6.0 | `pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime` | 2.270 GB | 2020-08-25 21:33:21.645904 | `rsdmse` |
 | [qiime2](https://hub.docker.com/r/uvarc/qiime2) | 2020.6 | `continuumio/miniconda3:4.8.2` | 1.325 GB | 2020-07-04 16:53:29.891717 | `rsdmse` |
 | [skopeo](https://hub.docker.com/r/uvarc/skopeo) | 1.1.0 | `frolvlad/alpine-glibc` | 21.101 MB | 2020-07-04 14:50:16.656518 | `rsdmse` |
 | | 1.1.1 | `gcr.io/distroless/static-debian10` | 13.384 MB | 2020-08-21 14:27:12.698304 | `rsdmse` |
 | [sumo](https://hub.docker.com/r/uvarc/sumo) | 1.4.0 | `debian:bullseye-slim` | 176.588 MB | 2020-05-29 17:49:29.088243 | `rsdmse` |
 | | 1.6.0 | `gcr.io/distroless/cc-debian10` | 85.778 MB | 2020-08-20 19:26:13.520411 | `rsdmse` |
 | [tensorflow](https://hub.docker.com/r/uvarc/tensorflow) | 2.2.0 | `nvidia/cuda:10.1-base-ubuntu18.04` | 1.749 GB | 2020-06-11 11:42:02.752208 | `rsdmse` |
+| | 2.3.0 | `gcr.io/distroless/python3-debian10` |  |  | `` |
 
 Note:
 - App link redirects to Docker Hub repository.
