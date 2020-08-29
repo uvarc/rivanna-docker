@@ -1,22 +1,8 @@
 FROM python:3.7.4-slim-buster AS py
 ARG VERSION=2.3.0
-
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir \
-        tensorflow==$VERSION \
-        ipykernel==5.3.4 \
-        jupyter==1.0.0 \
-        keras==2.4.3 \
-        keras-vis==0.4.1 \
-        matplotlib==3.3.1 \
-        nbformat==5.0.7 \
-        opencv-python==4.4.0.42 \
-        pandas==1.1.1 \
-        pydot==1.4.1 \
-        scikit-image==0.17.2 \
-        scikit-learn==0.23.2 \
-        seaborn==0.10.1 \
-        tflearn==0.3.2
+        tensorflow==$VERSION
 
 FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04 AS lib
 ARG LIBNVINFER=6.0.1-1
@@ -25,8 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda10.1 \
         libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda10.1 \
         libhdf5-serial-dev \
-        libzmq3-dev \
-        libsm6 libxext6 libxrender1 && \
+        libzmq3-dev && \
     rm -rf /var/lib/apt/lists/*
 
 # Python version 3.7.3
@@ -37,10 +22,27 @@ COPY --from=py /usr/local/lib/python3.7/site-packages /site-packages
 
 # CUDA libraries
 COPY --from=lib /usr/local/cuda/compat /usr/local/cuda/compat
+COPY --from=lib /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 COPY --from=lib \
+    /usr/local/cuda/lib64/libcudart.so.10.1 \
+    /usr/local/cuda/lib64/libcufft.so.10 \
+    /usr/local/cuda/lib64/libcufftw.so.10 \
+    /usr/local/cuda/lib64/libcuinj64.so.10.1 \
+    /usr/local/cuda/lib64/libcurand.so.10 \
+    /usr/local/cuda/lib64/libcusolver.so.10 \
+    /usr/local/cuda/lib64/libcusolverMg.so.10 \
+    /usr/local/cuda/lib64/libcusparse.so.10 \
+    /usr/local/cuda/lib64/libnvrtc.so.10.1 \
+    /usr/local/cuda/lib64/libnvrtc-builtins.so.10.1 \
+    /usr/local/cuda/lib64/
+COPY --from=lib \
+    /usr/lib/x86_64-linux-gnu/libcublas.so.10 \
+    /usr/lib/x86_64-linux-gnu/libcublasLt.so.10 \
+    /usr/lib/x86_64-linux-gnu/libcudnn.so.7 \
     /usr/lib/x86_64-linux-gnu/libnvinfer.so.6 \
     /usr/lib/x86_64-linux-gnu/libnvinfer_plugin.so.6 \
     /usr/lib/x86_64-linux-gnu/
+COPY --from=lib /usr/local/cuda/extras/CUPTI/lib64 /usr/local/cuda/extras/CUPTI/lib64
 
 # system libraries
 COPY --from=lib \
@@ -56,19 +58,11 @@ COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/libzmq.a \
     /usr/lib/x86_64-linux-gnu/libzmq.so \
     /usr/lib/x86_64-linux-gnu/pkgconfig/libzmq.pc \
-    /usr/lib/x86_64-linux-gnu/libSM.so.6 \
-    /usr/lib/x86_64-linux-gnu/libXext.so.6 \
-    /usr/lib/x86_64-linux-gnu/libXrender.so.1 \
     /usr/lib/x86_64-linux-gnu/
 
 ENV PYTHONPATH=/site-packages
-ENV LD_LIBRARY_PATH=/apps/software/standard/core/cudnn/7.6.5.32/lib64:/apps/software/standard/core/cuda/10.1.168/nvvm/lib64:/apps/software/standard/core/cuda/10.1.168/extras/CUPTI/lib64:/apps/software/standard/core/cuda/10.1.168/lib64:/usr/lib/x86_64-linux-gnu
+ENV LD_LIBRARY_PATH=/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64
 ENV LANG C.UTF-8
-
-LABEL homepage=https://www.tensorflow.org
-LABEL description="TensorFlow is an open-source software library for Machine Intelligence."
-LABEL gpu=true
-LABEL moduleclass=data
 
 LABEL maintainer=rs7wz@virginia.edu
 

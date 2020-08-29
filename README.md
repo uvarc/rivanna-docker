@@ -66,7 +66,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [sumo](https://hub.docker.com/r/uvarc/sumo) | 1.4.0 | `debian:bullseye-slim` | 176.588 MB | 2020-05-29 17:49:29.088243 | `rsdmse` |
 | | 1.6.0 | `gcr.io/distroless/cc-debian10` | 85.778 MB | 2020-08-20 19:26:13.520411 | `rsdmse` |
 | [tensorflow](https://hub.docker.com/r/uvarc/tensorflow) | 2.2.0 | `nvidia/cuda:10.1-base-ubuntu18.04` | 1.749 GB | 2020-06-11 11:42:02.752208 | `rsdmse` |
-| | 2.3.0 | `gcr.io/distroless/python3-debian10` | 1.185 GB | 2020-08-28 13:00:11.732376 | `rsdmse` |
+| | 2.3.0 | `gcr.io/distroless/python3-debian10` | 666.381 MB | 2020-08-29 16:51:55.820883 | `rsdmse` |
 
 Note:
 - App link redirects to Docker Hub repository.
