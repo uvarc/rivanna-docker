@@ -75,6 +75,7 @@ COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/libzmq.a \
     /usr/lib/x86_64-linux-gnu/libzmq.so \
     /usr/lib/x86_64-linux-gnu/pkgconfig/libzmq.pc \
+    /usr/lib/x86_64-linux-gnu/libSM.so.6 \
     /usr/lib/x86_64-linux-gnu/libGL.so.1 \
     /usr/lib/x86_64-linux-gnu/libGLdispatch.so.0 \
     /usr/lib/x86_64-linux-gnu/libGLX_mesa.so.0 \
@@ -86,9 +87,6 @@ COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/libEGL.so.1 \
     /usr/lib/x86_64-linux-gnu/libgthread-2.0.so.0 \
     /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0 \
-    /usr/lib/x86_64-linux-gnu/libSM.so.6 \
-    /usr/lib/x86_64-linux-gnu/libXext.so.6 \
-    /usr/lib/x86_64-linux-gnu/libXrender.so.1 \
     /usr/lib/x86_64-linux-gnu/libgdk-3.so \
     /usr/lib/x86_64-linux-gnu/libgtk-3.so \
     /usr/lib/x86_64-linux-gnu/pkgconfig/gdk-3.0.pc \
