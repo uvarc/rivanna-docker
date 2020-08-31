@@ -3,9 +3,23 @@
 
 FROM python:3.7.4-slim-buster AS py
 ARG VERSION=2.3.0
+
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir \
-        tensorflow==$VERSION
+        tensorflow==$VERSION \
+        ipykernel==5.3.4 \
+        jupyter==1.0.0 \
+        keras==2.4.3 \
+        keras-vis==0.4.1 \
+        matplotlib==3.3.1 \
+        nbformat==5.0.7 \
+        opencv-python==4.4.0.42 \
+        pandas==1.1.1 \
+        pydot==1.4.1 \
+        scikit-image==0.17.2 \
+        scikit-learn==0.23.2 \
+        seaborn==0.10.1 \
+        tflearn==0.3.2
 
 FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04 AS lib
 ARG LIBNVINFER=6.0.1-1
@@ -14,7 +28,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda10.1 \
         libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda10.1 \
         libhdf5-serial-dev \
-        libzmq3-dev && \
+        libzmq3-dev \
+        libsm6 libxext6 libxrender1 && \
     rm -rf /var/lib/apt/lists/*
 
 # Python version 3.7.3
@@ -44,11 +59,19 @@ COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/libzmq.a \
     /usr/lib/x86_64-linux-gnu/libzmq.so \
     /usr/lib/x86_64-linux-gnu/pkgconfig/libzmq.pc \
+    /usr/lib/x86_64-linux-gnu/libSM.so.6 \
+    /usr/lib/x86_64-linux-gnu/libXext.so.6 \
+    /usr/lib/x86_64-linux-gnu/libXrender.so.1 \
     /usr/lib/x86_64-linux-gnu/
 
 ENV PYTHONPATH=/site-packages
 ENV LD_LIBRARY_PATH=/apps/software/standard/core/cudnn/7.6.5.32/lib64:/apps/software/standard/core/cuda/10.1.168/nvvm/lib64:/apps/software/standard/core/cuda/10.1.168/extras/CUPTI/lib64:/apps/software/standard/core/cuda/10.1.168/lib64:/usr/lib/x86_64-linux-gnu
 ENV LANG C.UTF-8
+
+LABEL homepage=https://www.tensorflow.org
+LABEL description="TensorFlow is an open-source software library for Machine Intelligence."
+LABEL gpu=true
+LABEL moduleclass=data
 
 LABEL maintainer=rs7wz@virginia.edu
 
