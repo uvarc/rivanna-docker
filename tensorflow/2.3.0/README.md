@@ -3,31 +3,30 @@ TensorFlow
 https://tensorflow.org/
 
 ## Tags
-We are experimenting with the distroless base image starting from version 2.3.0, which requires singularity 3.6+. This applies to all tags (`cpu`, `distroless`, `slim`, `base`). Go through the next section to decide which tag to use.
+We are experimenting with the distroless base image starting from version 2.3.0, which requires singularity 3.6+. This applies to all tags (`x.y.z`, `x.y.z-cpu`, `x.y.z-distroless`). Go through the next section to decide which to pull.
 
-We recommend `base` for use on Rivanna.
+We recommend `x.y.z` for use on Rivanna.
 
 ### Which tag should I use?
 
 Move right if "no"; down if "yes"
 
-- Do you intend to use this on a GPU? -- no --> `cpu`
-- Does your computer/platform have CUDA and cuDNN? -- no --> `distroless`
-- Do you need preinstalled Python packages? -- no --> `slim`
-- `base`
+- Do you intend to use this on a GPU? --(no)--> `x.y.z-cpu`
+- Do you need preinstalled Python packages? --(no)--> `x.y.z-distroless`
+- `x.y.z`
 
 ### Details
 
-- `cpu`
+- `x.y.z-cpu`
     - can only run on CPU
     - all tags without `cpu` can run on GPU
     - usage on Rivanna:
         ```
         module load singularity/3.6.1
         singularity pull docker://uvarc/tensorflow:x.y.z-cpu
-        singularity run tensorflow_x.y.z-cpu.sif your_script.py
+        ./tensorflow_x.y.z-cpu.sif your_script.py
         ```
-- `distroless`
+- `x.y.z-distroless`
     - contains necessary CUDA libraries
     - usage on Rivanna:
         ```
@@ -35,18 +34,14 @@ Move right if "no"; down if "yes"
         singularity pull docker://uvarc/tensorflow:x.y.z-distroless
         singularity run --nv tensorflow_x.y.z-distroless.sif your_script.py
         ```
-- `slim`
-    - does not contain CUDA libraries that are present in Rivanna's `cuda` and `cudnn` modules
-    - need to bind mount `/apps` at runtime on Rivanna
+- `x.y.z`
+    - extends `x.y.z-distroless` with preinstalled Python packages (see below)
     - usage on Rivanna:
         ```
         module load singularity/3.6.1
-        singularity pull docker://uvarc/tensorflow:x.y.z-slim
-        singularity run --nv -B /apps tensorflow_x.y.z-slim.sif your_script.py
+        singularity pull docker://uvarc/tensorflow:x.y.z
+        singularity run --nv tensorflow_x.y.z.sif your_script.py
         ```
-- `base`
-    - extends `slim` with preinstalled Python packages (see below)
-    - usage on Rivanna: same as `slim`
 
 ## Preinstalled Python Packages
 **Bold: contained in all tags**
@@ -67,5 +62,5 @@ Move right if "no"; down if "yes"
 
 To install more packages:
 ```
-singularity exec <sif> python -m pip install --user <package>
+./<sif> -m pip install --user <package>
 ```
