@@ -77,13 +77,13 @@ COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/pkgconfig/libzmq.pc \
     /usr/lib/x86_64-linux-gnu/libGL.so.1 \
     /usr/lib/x86_64-linux-gnu/libGLdispatch.so.0 \
-	/usr/lib/x86_64-linux-gnu/libGLX_mesa.so.0 \
-	/usr/lib/x86_64-linux-gnu/libGLX.so.0 \
-	/usr/lib/x86_64-linux-gnu/libGLESv2.so.2 \
-	/usr/lib/x86_64-linux-gnu/libGLESv1_CM.so.1 \
-	/usr/lib/x86_64-linux-gnu/libGL.so.1 \
-	/usr/lib/x86_64-linux-gnu/libEGL_mesa.so.0 \
-	/usr/lib/x86_64-linux-gnu/libEGL.so.1 \
+    /usr/lib/x86_64-linux-gnu/libGLX_mesa.so.0 \
+    /usr/lib/x86_64-linux-gnu/libGLX.so.0 \
+    /usr/lib/x86_64-linux-gnu/libGLESv2.so.2 \
+    /usr/lib/x86_64-linux-gnu/libGLESv1_CM.so.1 \
+    /usr/lib/x86_64-linux-gnu/libGL.so.1 \
+    /usr/lib/x86_64-linux-gnu/libEGL_mesa.so.0 \
+    /usr/lib/x86_64-linux-gnu/libEGL.so.1 \
     /usr/lib/x86_64-linux-gnu/libgthread-2.0.so.0 \
     /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0 \
     /usr/lib/x86_64-linux-gnu/libSM.so.6 \
@@ -110,27 +110,27 @@ COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/libswscale.so \
     /usr/lib/x86_64-linux-gnu/pkgconfig/libswscale.pc \
     /usr/lib/x86_64-linux-gnu/libpcre32.so.3 \
-	/usr/lib/x86_64-linux-gnu/libpcre16.so.3 \
-	/usr/lib/x86_64-linux-gnu/libpcreposix.so.3 \
-	/usr/lib/x86_64-linux-gnu/libpcrecpp.so.0 \
-	/lib/x86_64-linux-gnu/libpcre.so.3 \
+    /usr/lib/x86_64-linux-gnu/libpcre16.so.3 \
+    /usr/lib/x86_64-linux-gnu/libpcreposix.so.3 \
+    /usr/lib/x86_64-linux-gnu/libpcrecpp.so.0 \
+    /lib/x86_64-linux-gnu/libpcre.so.3 \
     /usr/lib/x86_64-linux-gnu/libX11.so.6 \
     /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1 \
     /usr/lib/x86_64-linux-gnu/libxcb.so.1 \
     /usr/lib/x86_64-linux-gnu/libXxf86vm.so.1 \
-	/usr/lib/x86_64-linux-gnu/libXtst.so.6 \
-	/usr/lib/x86_64-linux-gnu/libXrender.so.1 \
-	/usr/lib/x86_64-linux-gnu/libXrandr.so.2 \
-	/usr/lib/x86_64-linux-gnu/libXinerama.so.1 \
-	/usr/lib/x86_64-linux-gnu/libXi.so.6 \
-	/usr/lib/x86_64-linux-gnu/libXft.so.2 \
-	/usr/lib/x86_64-linux-gnu/libXfixes.so.3 \
-	/usr/lib/x86_64-linux-gnu/libXext.so.6 \
-	/usr/lib/x86_64-linux-gnu/libXdmcp.so.6 \
-	/usr/lib/x86_64-linux-gnu/libXdamage.so.1 \
-	/usr/lib/x86_64-linux-gnu/libXcursor.so.1 \
-	/usr/lib/x86_64-linux-gnu/libXcomposite.so.1 \
-	/usr/lib/x86_64-linux-gnu/libXau.so.6 \
+    /usr/lib/x86_64-linux-gnu/libXtst.so.6 \
+    /usr/lib/x86_64-linux-gnu/libXrender.so.1 \
+    /usr/lib/x86_64-linux-gnu/libXrandr.so.2 \
+    /usr/lib/x86_64-linux-gnu/libXinerama.so.1 \
+    /usr/lib/x86_64-linux-gnu/libXi.so.6 \
+    /usr/lib/x86_64-linux-gnu/libXft.so.2 \
+    /usr/lib/x86_64-linux-gnu/libXfixes.so.3 \
+    /usr/lib/x86_64-linux-gnu/libXext.so.6 \
+    /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 \
+    /usr/lib/x86_64-linux-gnu/libXdamage.so.1 \
+    /usr/lib/x86_64-linux-gnu/libXcursor.so.1 \
+    /usr/lib/x86_64-linux-gnu/libXcomposite.so.1 \
+    /usr/lib/x86_64-linux-gnu/libXau.so.6 \
     /lib/x86_64-linux-gnu/libbsd.so.0 \
     /usr/lib/x86_64-linux-gnu/
 
