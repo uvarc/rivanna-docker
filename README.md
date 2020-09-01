@@ -24,7 +24,7 @@ This repository contains Dockerfiles for Rivanna.
 └── writeREADME.sh
 </pre>
 
-Each Dockerfile should reside in its own directory with a `README.md` with this template:
+Each version should reside in its own directory with a `README.md`. Here is a suggested template:
 ````
 <name of main app> <version> <any other important info>
 
@@ -40,7 +40,7 @@ singularity pull docker://uvarc/<app>:<tag>
 ```
 ````
 
-Individual `README.md` files are used as the Docker Hub repository description.
+Individual `README.md` files are used as the Docker Hub repository overview.
 
 To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/wiki) for instructions and tips.
 
