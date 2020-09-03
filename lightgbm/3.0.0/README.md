@@ -2,7 +2,7 @@ LightGBM CLI
 
 https://github.com/microsoft/LightGBM
 
-Compiled with OpenCL. Versions 3+ are distroless and require singularity/3.6.1.
+Compiled with OpenCL. Versions 3+ are distroless and require singularity 3.6+.
 
 [Tutorial](https://lightgbm.readthedocs.io/en/latest/GPU-Tutorial.html#dataset-preparation)
 
