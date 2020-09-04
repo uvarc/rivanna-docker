@@ -106,6 +106,8 @@ Note:
 - App link redirects to Docker Hub repository.
 - The \`*.sif\` Singularity image size (created after \`singularity pull\`) is about the same as the compressed size.
 
+## License
+[MIT license](LICENSE)
 EOF
 
 rm $TMP
