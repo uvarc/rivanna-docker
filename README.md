@@ -50,7 +50,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 |---|---|----|---:|---|---|
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | 3.1.9 | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
 | [danpos](https://hub.docker.com/r/uvarc/danpos) | 3.1.1 | `python:3.7.6-slim-buster` | 208.754 MB | 2020-08-09 19:50:06.950131 | `rsdmse` |
-| [dvipng](https://hub.docker.com/r/uvarc/dvipng) | 1.17 | `debian:buster-slim` | 30.501 MB | 2020-09-04 12:37:28.833044 | `rsdmse` |
+| [dvipng](https://hub.docker.com/r/uvarc/dvipng) | 1.17 | `gcr.io/distroless/cc-debian10` | 13.623 MB | 2020-09-06 12:18:13.402213 | `rsdmse` |
 | [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.938 MB | 2020-07-08 13:35:17.546402 | `rsdmse` |
 | [inkscape](https://hub.docker.com/r/uvarc/inkscape) | 0.92.4 | `alpine:3.11.6` | 35.476 MB | 2020-05-28 11:40:21.37022 | `rsdmse` |
 | | 1.0 | `alpine:3.12.0` | 77.034 MB | 2020-08-10 00:59:26.5463 | `rsdmse` |

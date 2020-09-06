@@ -2,9 +2,11 @@ dvipng 1.17
 
 https://ctan.org/pkg/dvipng
 
+This is a distroless container which requires singularity 3.6+.
+
 Usage on Rivanna:
 ```
-module load singularity
+module load singularity/3.6.1
 singularity pull docker://uvarc/dvipng:1.17
 ./dvipng_1.17.sif
 ```
