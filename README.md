@@ -49,6 +49,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 |App|Version|Base Image|Compressed Size|Last Updated (UTC)|By|
 |---|---|----|---:|---|---|
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | 3.1.9 | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
+| | 4.0.1 | `ubuntu:20.04` | 712.173 MB | 2020-09-09 11:29:11.872026 | `rsdmse` |
 | [danpos](https://hub.docker.com/r/uvarc/danpos) | 3.1.1 | `python:3.7.6-slim-buster` | 208.754 MB | 2020-08-09 19:50:06.950131 | `rsdmse` |
 | [dvipng](https://hub.docker.com/r/uvarc/dvipng) | 1.17 | `gcr.io/distroless/cc-debian10` | 13.623 MB | 2020-09-06 12:18:13.402213 | `rsdmse` |
 | [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.938 MB | 2020-07-08 13:35:17.546402 | `rsdmse` |
@@ -67,7 +68,8 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 1.1.1 | `gcr.io/distroless/static-debian10` | 13.384 MB | 2020-08-21 14:27:12.698304 | `rsdmse` |
 | [sumo](https://hub.docker.com/r/uvarc/sumo) | 1.4.0 | `debian:bullseye-slim` | 176.588 MB | 2020-05-29 17:49:29.088243 | `rsdmse` |
 | | 1.6.0 | `gcr.io/distroless/cc-debian10` | 85.778 MB | 2020-08-20 19:26:13.520411 | `rsdmse` |
-| [tensorflow](https://hub.docker.com/r/uvarc/tensorflow) | 2.2.0 | `nvidia/cuda:10.1-base-ubuntu18.04` | 1.749 GB | 2020-06-11 11:42:02.752208 | `rsdmse` |
+| [tensorflow](https://hub.docker.com/r/uvarc/tensorflow) | 1.5.1 | `gcr.io/distroless/python2.7-debian10` | 896.176 MB | 2020-09-08 10:52:58.908871 | `rsdmse` |
+| | 2.2.0 | `nvidia/cuda:10.1-base-ubuntu18.04` | 1.749 GB | 2020-06-11 11:42:02.752208 | `rsdmse` |
 | | 2.3.0 | `gcr.io/distroless/python3-debian10` | 1.334 GB | 2020-08-31 18:54:16.712148 | `rsdmse` |
 
 Note:

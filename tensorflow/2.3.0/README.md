@@ -46,19 +46,19 @@ Move right if "no"; down if "yes"
 ## Preinstalled Python Packages
 **Bold: contained in all tags**
 
-| Package\Tensorflow| 2.3.0 | 2.2.0 |
-|---|---|---| 
-|**Python**   | 3.7.3   | 3.7.7   |
-|**NumPy**    | 1.18.5  | 1.18.4  |
-|**SciPy**    | 1.4.1   | 1.4.1   |
-|Keras        | 2.4.3   | 2.3.1   |
-|Keras-vis    | 0.4.1   | 0.4.1   |
-|Matplotlib   | 3.3.1   | 3.2.1   |
-|Seaborn      | 0.10.1  | 0.10.1  |
-|Pandas       | 1.1.1   | 1.0.4   |
-|Scikit-learn | 0.23.2  | 0.23.1  |
-|Scikit-image | 0.17.2  | 0.17.2  |
-|OpenCV       | 4.4.0.42| 4.2.0.32|
+| Package\Tensorflow| 2.3.0 | 2.2.0 | 1.5.1 |
+|---|---|---|---| 
+|**Python**   | 3.7.3   | 3.7.7   | 2.7.16 |
+|**NumPy**    | 1.18.5  | 1.18.4  | 1.16.6 |
+|**SciPy**    | 1.4.1   | 1.4.1   | 1.2.3 |
+|Keras        | 2.4.3   | 2.3.1   | 2.2.5 |
+|Keras-vis    | 0.4.1   | 0.4.1   | |
+|Matplotlib   | 3.3.1   | 3.2.1   | |
+|Seaborn      | 0.10.1  | 0.10.1  | |
+|Pandas       | 1.1.1   | 1.0.4   | |
+|Scikit-learn | 0.23.2  | 0.23.1  | 0.20.4 |
+|Scikit-image | 0.17.2  | 0.17.2  | |
+|OpenCV       | 4.4.0.42| 4.2.0.32| 4.2.0.32 |
 
 To install more packages:
 ```
