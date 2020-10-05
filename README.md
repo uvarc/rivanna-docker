@@ -51,6 +51,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | 3.1.9 | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
 | | 4.0.1 | `ubuntu:20.04` | 712.173 MB | 2020-09-09 11:29:11.872026 | `rsdmse` |
 | [danpos](https://hub.docker.com/r/uvarc/danpos) | 3.1.1 | `python:3.7.6-slim-buster` | 208.754 MB | 2020-08-09 19:50:06.950131 | `rsdmse` |
+| [ds5559](https://hub.docker.com/r/uvarc/ds5559) | spark3 | `jupyter/pyspark-notebook:4a112c0f11eb` | 1.363 GB | 2020-10-05 18:13:26.962941 | `rsdmse` |
 | [dvipng](https://hub.docker.com/r/uvarc/dvipng) | 1.17 | `gcr.io/distroless/cc-debian10` | 13.623 MB | 2020-09-06 12:18:13.402213 | `rsdmse` |
 | [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.938 MB | 2020-07-08 13:35:17.546402 | `rsdmse` |
 | [inkscape](https://hub.docker.com/r/uvarc/inkscape) | 0.92.4 | `alpine:3.11.6` | 35.476 MB | 2020-05-28 11:40:21.37022 | `rsdmse` |
@@ -60,6 +61,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [omero-client](https://hub.docker.com/r/uvarc/omero-client) | 5.6.1 | `continuumio/miniconda3:4.8.2` | 1.375 GB | 2020-07-09 13:35:20.84667 | `rsdmse` |
 | [patric](https://hub.docker.com/r/uvarc/patric) | 1.027 | `centos:8.1.1911` | 115.069 MB | 2020-06-02 10:53:43.716121 | `rsdmse` |
 | | 1.031 | `debian:buster-slim` | 65.926 MB | 2020-08-10 00:49:27.812868 | `rsdmse` |
+| [ps2eps](https://hub.docker.com/r/uvarc/ps2eps) | 1.68 | `scratch` | 12.972 MB | 2020-10-05 20:59:02.39083 | `rsdmse` |
 | [pytorch](https://hub.docker.com/r/uvarc/pytorch) | 1.5.0 | `pytorch/pytorch:1.5-cuda10.1-cudnn7-runtime` | 1.849 GB | 2020-06-09 01:13:13.500138 | `rsdmse` |
 | | 1.5.1 | `pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime` | 2.263 GB | 2020-07-09 10:50:23.537395 | `rsdmse` |
 | | 1.6.0 | `pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime` | 2.270 GB | 2020-08-25 21:33:21.645904 | `rsdmse` |
