@@ -58,7 +58,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 1.0 | `alpine:3.12.0` | 77.034 MB | 2020-08-10 00:59:26.5463 | `rsdmse` |
 | [lightgbm](https://hub.docker.com/r/uvarc/lightgbm) | 2.3.1 | `nvidia/opencl:runtime` | 104.777 MB | 2020-08-09 11:13:10.858526 | `rsdmse` |
 | | 3.0.0 | `gcr.io/distroless/cc-debian10` | 14.916 MB | 2020-09-02 12:04:59.336756 | `rsdmse` |
-| [nanopolish](https://hub.docker.com/r/uvarc/nanopolish) | 0.13.2 | `debian:buster-slim` | 43.951 MB | 2020-10-06 20:06:28.481094 | `rsdmse` |
+| [nanopolish](https://hub.docker.com/r/uvarc/nanopolish) | 0.13.2 | `python:slim-buster` | 161.935 MB | 2020-10-06 20:35:41.638563 | `rsdmse` |
 | [omero-client](https://hub.docker.com/r/uvarc/omero-client) | 5.6.1 | `continuumio/miniconda3:4.8.2` | 1.375 GB | 2020-07-09 13:35:20.84667 | `rsdmse` |
 | [patric](https://hub.docker.com/r/uvarc/patric) | 1.027 | `centos:8.1.1911` | 115.069 MB | 2020-06-02 10:53:43.716121 | `rsdmse` |
 | | 1.031 | `debian:buster-slim` | 65.926 MB | 2020-08-10 00:49:27.812868 | `rsdmse` |
