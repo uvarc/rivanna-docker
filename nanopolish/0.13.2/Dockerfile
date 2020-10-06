@@ -12,8 +12,9 @@ RUN git clone --recursive https://github.com/jts/nanopolish.git && \
     cd nanopolish && \
     make
 
-FROM debian:buster-slim
-COPY --from=build /opt/nanopolish/nanopolish /nanopolish
+FROM python:slim-buster
+COPY --from=build /opt/nanopolish/nanopolish /opt/nanopolish/nanopolish
+COPY --from=build /opt/nanopolish/scripts /opt/nanopolish/scripts
 
 COPY --from=build \
     /usr/lib/x86_64-linux-gnu/libstdc++.so.6 \
@@ -29,6 +30,10 @@ COPY --from=build \
     /lib/x86_64-linux-gnu/libc.so.6 \
     /lib/x86_64-linux-gnu/
 
+RUN pip install --no-cache-dir -r /opt/nanopolish/scripts/requirements.txt
+
+COPY --from=build /opt/nanopolish/LICENSE /opt/nanopolish/LICENSE
+
 LABEL maintainer=rs7wz@virginia.edu
 
-ENTRYPOINT ["/nanopolish"]
+ENTRYPOINT ["/opt/nanopolish/nanopolish"]
