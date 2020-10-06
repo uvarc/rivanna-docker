@@ -9,4 +9,7 @@ singularity pull docker://uvarc/nanopolish:0.13.2
 ./nanopolish_0.13.2.sif
 ```
 
-The Python scripts are located in `/opt/nanopolish/scripts`.
+The Python scripts are located in `/opt/nanopolish/scripts`. Example:
+```
+singularity exec nanopolish_0.13.2.sif python /opt/nanopolish/script/nanopolish_merge.py
+```
