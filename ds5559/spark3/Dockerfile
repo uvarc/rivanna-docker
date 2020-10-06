@@ -11,14 +11,6 @@ ENV PATH /opt/conda/bin:$PATH
 ENV LC_ALL C
 ENV NUMBA_CACHE_DIR /tmp
 
-# graphframes patch
-WORKDIR /opt
-RUN git clone https://github.com/rsdmse/graphframes-jars.git && \
-    cd /usr/local/spark/jars && \
-    mv /opt/graphframes-jars/*.jar . && \
-    wget http://dl.bintray.com/spark-packages/maven/graphframes/graphframes/0.8.1-spark3.0-s_2.12/graphframes-0.8.1-spark3.0-s_2.12.jar && \
-    rm -rf /opt/graphframes-jars
-
 RUN pip install --no-cache-dir \
         ipykernel \
         nltk \
@@ -39,5 +31,8 @@ RUN pip install --no-cache-dir \
         shap \
         wfdb==3.0.1 \
         biosppy==0.6.1
+
+RUN cd /usr/local/spark/jars && \
+    wget http://dl.bintray.com/spark-packages/maven/graphframes/graphframes/0.8.1-spark3.0-s_2.12/graphframes-0.8.1-spark3.0-s_2.12.jar 
 
 LABEL maintainer=rs7wz@virginia.edu
