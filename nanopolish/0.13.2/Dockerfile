@@ -12,7 +12,7 @@ RUN git clone --recursive https://github.com/jts/nanopolish.git && \
     cd nanopolish && \
     make
 
-FROM scratch
+FROM debian:buster-slim
 COPY --from=build /opt/nanopolish/nanopolish /nanopolish
 
 COPY --from=build \
@@ -28,8 +28,6 @@ COPY --from=build \
     /lib/x86_64-linux-gnu/libpthread.so.0 \
     /lib/x86_64-linux-gnu/libc.so.6 \
     /lib/x86_64-linux-gnu/
-COPY --from=build \
-    /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
 
 LABEL maintainer=rs7wz@virginia.edu
 
