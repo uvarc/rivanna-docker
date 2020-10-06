@@ -1,0 +1,51 @@
+# Custom PyTorch container for Eli Drazen
+FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04 AS build
+RUN rm /etc/apt/sources.list.d/nvidia-ml.list && apt-get clean
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update && apt-get install -y --no-install-recommends \
+        git gcc g++ python3.7-dev python3-pip && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN python3.7 -m pip install --no-cache-dir -U pip
+RUN python3.7 -m pip install --no-cache-dir setuptools
+RUN python3.7 -m pip install --no-cache-dir torch==1.6.0
+RUN python3.7 -m pip install --no-cache-dir mkl mkl-include
+
+RUN ln -s /usr/bin/python3.7 /usr/bin/python
+RUN ln -s /usr/local/lib/libmkl_rt.so /usr/local/lib/libmkl.so
+RUN CXXFLAGS="-L/usr/local/lib" python -m pip install --no-cache-dir git+https://github.com/edraizen/MinkowskiEngine \
+        --install-option="--force_cuda" \
+        --install-option="--cuda_home=/usr/local/cuda" \
+        --install-option="--blas=mkl"
+
+FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime AS prod
+RUN ln -s /opt/conda/lib/libmkl_rt.so /opt/conda/lib/libmkl.so
+COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngine /opt/conda/lib/python3.7/site-packages/MinkowskiEngine
+COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngine-0.4.3-py3.7.egg-info /opt/conda/lib/python3.7/site-packages/MinkowskiEngine-0.4.3-py3.7.egg-info
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        gcc \
+        libglib2.0-0 \
+        libsm6 libxext6 libxrender-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir \
+        dask[dataframe] \
+        scikit-learn Biopython seaborn tqdm dask joblib torchnet tables pyarrow \
+        boto3 botocore awscli toil \
+        fastparquet freesasa==2.0.3.post7 \
+        tensorboardX wandb \
+        opencv-python \
+        ipykernel
+
+COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngineBackend.cpython-37m-x86_64-linux-gnu.so /opt/conda/lib/python3.7/site-packages/MinkowskiEngineBackend.cpython-37m-x86_64-linux-gnu.so
+
+ENV LC_ALL C
+ENV LD_LIBRARY_PATH /opt/local/lib:/opt/local/lib/python3.7/site-packages/torch/lib:$LD_LIBRARY_PATH
+
+LABEL maintainer=rs7wz@virginia.edu
+
+ENTRYPOINT ["python"]
