@@ -12,7 +12,11 @@ RUN git clone --recursive https://github.com/jts/nanopolish.git && \
     cd nanopolish && \
     make
 
-FROM python:slim-buster
+FROM python:3.7.4-slim-buster AS py
+COPY --from=build /opt/nanopolish/scripts/requirements.txt /opt/nanopolish/scripts/requirements.txt
+RUN pip install --no-cache-dir -r /opt/nanopolish/scripts/requirements.txt
+
+FROM gcr.io/distroless/python3-debian10
 COPY --from=build /opt/nanopolish/nanopolish /opt/nanopolish/nanopolish
 COPY --from=build /opt/nanopolish/scripts /opt/nanopolish/scripts
 
@@ -30,10 +34,13 @@ COPY --from=build \
     /lib/x86_64-linux-gnu/libc.so.6 \
     /lib/x86_64-linux-gnu/
 
-RUN pip install --no-cache-dir -r /opt/nanopolish/scripts/requirements.txt
-
 COPY --from=build /opt/nanopolish/LICENSE /opt/nanopolish/LICENSE
+
+COPY --from=py /usr/local/lib/python3.7/site-packages /site-packages
+
+ENV PYTHONPATH=/site-packages
+ENV PATH=/opt/nanopolish:/opt/nanopolish/scripts:$PATH
 
 LABEL maintainer=rs7wz@virginia.edu
 
-ENTRYPOINT ["/opt/nanopolish/nanopolish"]
+ENTRYPOINT ["nanopolish"]
