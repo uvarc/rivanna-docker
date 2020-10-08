@@ -11,12 +11,13 @@ RUN wget https://data.qiime2.org/distro/core/$YML && \
 RUN apt-get update && apt-get install -y --no-install-recommends lsof && \
     rm -rf /var/lib/apt/lists/*
 
-FROM gcr.io/distroless/python3-debian10
+# cannot use distroless due to "#!/usr/bin/env Rscript"
+FROM debian:buster-slim
 COPY --from=build /opt/qiime2 /opt/qiime2
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
-ENV PATH /opt/qiime2/bin
+ENV PATH /opt/qiime2/bin:$PATH
 ENV PYTHONPATH /opt/qiime2/lib/python3.6/site-packages
 
 LABEL maintainer=rs7wz@virginia.edu
