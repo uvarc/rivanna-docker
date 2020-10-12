@@ -70,7 +70,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 2020.8 | `debian:buster-slim` | 933.327 MB | 2020-10-08 14:50:35.394611 | `rsdmse` |
 | [skopeo](https://hub.docker.com/r/uvarc/skopeo) | 1.1.0 | `frolvlad/alpine-glibc` | 21.101 MB | 2020-07-04 14:50:16.656518 | `rsdmse` |
 | | 1.1.1 | `gcr.io/distroless/static-debian10` | 13.384 MB | 2020-08-21 14:27:12.698304 | `rsdmse` |
-| [subversion](https://hub.docker.com/r/uvarc/subversion) | 1.14.0 | `scratch` | 8.105 MB | 2020-10-12 18:03:22.472699 | `rsdmse` |
+| [subversion](https://hub.docker.com/r/uvarc/subversion) | 1.14.0 | `ubuntu:20.10` | 33.317 MB | 2020-10-12 20:37:47.833993 | `rsdmse` |
 | [sumo](https://hub.docker.com/r/uvarc/sumo) | 1.4.0 | `debian:bullseye-slim` | 176.588 MB | 2020-05-29 17:49:29.088243 | `rsdmse` |
 | | 1.6.0 | `gcr.io/distroless/cc-debian10` | 85.778 MB | 2020-08-20 19:26:13.520411 | `rsdmse` |
 | [tensorflow](https://hub.docker.com/r/uvarc/tensorflow) | 1.5.1 | `gcr.io/distroless/python2.7-debian10` | 896.176 MB | 2020-09-08 10:52:58.908871 | `rsdmse` |
