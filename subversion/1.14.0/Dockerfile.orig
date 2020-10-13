@@ -1,0 +1,13 @@
+FROM ubuntu:20.10
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        subversion vim && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LANG en_US.UTF-8
+
+LABEL maintainer=rs7wz@virginia.edu
+LABEL homepage=http://subversion.apache.org/
+LABEL description="Subversion is an open source version control system."
+LABEL moduleclass=tools
+
+ENTRYPOINT ["svn"]
