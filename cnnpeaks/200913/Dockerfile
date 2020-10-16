@@ -56,7 +56,7 @@ ARG LIBNVINFER_VERSION
 # python packages
 RUN pip install --no-cache-dir \
         tensorflow==1.15 tensorflow-gpu==1.15 \
-        numpy scipy sklearn pandas progressbar2 pysam cython
+        numpy scipy matplotlib sklearn pandas progressbar2 pysam cython
 
 # copy HTSlib, samtools, and dependencies
 COPY --from=build /opt/htslib/bin /usr/include/bin
@@ -148,4 +148,4 @@ LABEL moduleclass=bio
 
 ENV PATH /opt/CNNPeaks:/opt/CNNPeaks/scripts:$PATH
 
-ENTRYPOINT ["python", "CNNpeaks"]
+ENTRYPOINT ["python", "/opt/CNNPeaks/CNNpeaks"]

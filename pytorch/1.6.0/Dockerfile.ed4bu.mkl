@@ -11,22 +11,28 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN ln -s /usr/bin/python3.7 /usr/bin/python
 
-RUN python -m pip install --no-cache-dir -U pip setuptools wheel
+RUN python -m pip install --no-cache-dir -U pip setuptools
 RUN python -m pip install --no-cache-dir torch==1.6.0 #mkl mkl-include
 
-RUN apt-get update && apt-get install -y --no-install-recommends libopenblas-dev && \
+RUN ln -s /usr/local/lib/libmkl_rt.so /usr/local/lib/libmkl.so
+
+RUN python -m pip install --no-cache-dir wheel
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libopenblas-dev
     rm -rf /var/lib/apt/lists/*
 
-RUN python -m pip install --no-cache-dir git+https://github.com/NVIDIA/MinkowskiEngine.git@v0.5
+RUN CXXFLAGS="-L/usr/local/lib" python -m pip install --no-cache-dir git+https://github.com/NVIDIA/MinkowskiEngine.git@v0.5
         #--install-option="--force_cuda" \
         #--install-option="--cuda_home=/usr/local/cuda" \
-        #--install-option="--blas=openblas"
+        #--install-option="--blas=mkl"
 
-FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
+FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime AS prod
+RUN ln -s /opt/conda/lib/libmkl_rt.so /opt/conda/lib/libmkl.so
 
 COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngine /opt/conda/lib/python3.7/site-packages/MinkowskiEngine
-COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngineBackend /opt/conda/lib/python3.7/site-packages/MinkowskiEngineBackend
-COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngine-0.5.0b0.dist-info /opt/conda/lib/python3.7/site-packages/MinkowskiEngine-0.5.0b0.dist-info
+COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngine-0.4.3-py3.7.egg-info /opt/conda/lib/python3.7/site-packages/MinkowskiEngine-0.4.3-py3.7.egg-info
+COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngineBackend.cpython-37m-x86_64-linux-gnu.so /opt/conda/lib/python3.7/site-packages/MinkowskiEngineBackend.cpython-37m-x86_64-linux-gnu.so
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         gcc \
@@ -42,8 +48,6 @@ RUN pip install --no-cache-dir \
         tensorboardX wandb \
         opencv-python \
         ipykernel
-
-COPY --from=build /usr/lib/x86_64-linux-gnu/libopenblas.so.0 /usr/lib/x86_64-linux-gnu/libopenblas.so.0
 
 ENV LC_ALL C
 ENV LD_LIBRARY_PATH /opt/local/lib:/opt/local/lib/python3.7/site-packages/torch/lib:$LD_LIBRARY_PATH
