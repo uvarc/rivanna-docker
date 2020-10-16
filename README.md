@@ -50,6 +50,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 |---|---|----|---:|---|---|
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | 3.1.9 | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
 | | 4.0.1 | `ubuntu:20.04` | 712.173 MB | 2020-09-09 11:29:11.872026 | `rsdmse` |
+| [cnnpeaks](https://hub.docker.com/r/uvarc/cnnpeaks) | 200913 | `python:3.7.9-slim-buster` | 1.375 GB | 2020-10-15 14:47:28.535632 | `rsdmse` |
 | [danpos](https://hub.docker.com/r/uvarc/danpos) | 3.1.1 | `python:3.7.6-slim-buster` | 208.754 MB | 2020-08-09 19:50:06.950131 | `rsdmse` |
 | [ds5559](https://hub.docker.com/r/uvarc/ds5559) | spark3 | `jupyter/pyspark-notebook:4a112c0f11eb` | 1.358 GB | 2020-10-06 22:10:32.189093 | `rsdmse` |
 | [dvipng](https://hub.docker.com/r/uvarc/dvipng) | 1.17 | `gcr.io/distroless/cc-debian10` | 13.623 MB | 2020-09-06 12:18:13.402213 | `rsdmse` |
