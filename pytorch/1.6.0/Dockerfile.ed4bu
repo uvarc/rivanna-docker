@@ -17,16 +17,17 @@ RUN python -m pip install --no-cache-dir torch==1.6.0 #mkl mkl-include
 RUN apt-get update && apt-get install -y --no-install-recommends libopenblas-dev && \
     rm -rf /var/lib/apt/lists/*
 
-RUN python -m pip install --no-cache-dir git+https://github.com/NVIDIA/MinkowskiEngine.git@v0.5
-        #--install-option="--force_cuda" \
-        #--install-option="--cuda_home=/usr/local/cuda" \
-        #--install-option="--blas=openblas"
+ENV TORCH_CUDA_ARCH_LIST="3.5 5.2 6.0 6.1 7.0+PTX"
+RUN python -m pip install --no-cache-dir git+https://github.com/NVIDIA/MinkowskiEngine.git@v0.5 \
+        --install-option="--force_cuda" \
+        --install-option="--cuda_home=/usr/local/cuda" \
+        --install-option="--blas=openblas"
 
 FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
 COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngine /opt/conda/lib/python3.7/site-packages/MinkowskiEngine
 COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngineBackend /opt/conda/lib/python3.7/site-packages/MinkowskiEngineBackend
-COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngine-0.5.0b0.dist-info /opt/conda/lib/python3.7/site-packages/MinkowskiEngine-0.5.0b0.dist-info
+COPY --from=build /usr/local/lib/python3.7/dist-packages/MinkowskiEngine-0.5.0b0-py3.7.egg-info /opt/conda/lib/python3.7/site-packages/MinkowskiEngine-0.5.0b0-py3.7.egg-info
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         gcc \
