@@ -1,13 +1,12 @@
 FROM python:3.7.4-slim-buster AS py
-ARG VERSION=1.6.0
+ARG VERSION=1.7.0
 
-RUN pip install --no-cache-dir --upgrade pip && \
+RUN pip install --no-cache-dir -U pip && \
     pip install --no-cache-dir \
-        torch==$VERSION torchvision==0.7.0
-
-RUN pip install --no-cache-dir \
-        torchaudio===0.6.0 pytorch-lightning==0.8.5 \
-        numpy==1.19.1 scipy==1.5.2 
+        torch==${VERSION}+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 numpy==1.19.2 \
+        -f https://download.pytorch.org/whl/torch_stable.html && \
+    pip install --no-cache-dir \
+        scipy==1.5.3 pytorch-lightning==1.0.3
 
 # Python 3.7.3
 FROM gcr.io/distroless/python3-debian10
