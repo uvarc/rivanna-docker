@@ -8,8 +8,15 @@ RUN wget https://data.qiime2.org/distro/core/$YML && \
     conda clean -a && \
     rm $YML
 
-RUN apt-get update && apt-get install -y --no-install-recommends lsof && \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential gcc lsof git && \
     rm -rf /var/lib/apt/lists/*
+
+ENV PATH /opt/qiime2/bin:$PATH
+
+RUN pip install --no-cache-dir numpy cython && \
+    pip install --no-cache-dir git+https://github.com/biocore/empress.git && \
+    qiime dev refresh-cache
 
 # cannot use distroless due to "#!/usr/bin/env Rscript"
 FROM debian:buster-slim
