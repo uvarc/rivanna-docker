@@ -1,6 +1,4 @@
-ARG PYTHON_VERSION=3.7.9
-
-FROM python:${PYTHON_VERSION}-slim-buster AS build
+FROM python:3.7.9-slim-buster AS build
 
 RUN apt update && apt install -y --no-install-recommends \
         g++ git \
@@ -18,7 +16,7 @@ RUN git clone https://github.com/popgenmethods/smcpp.git && \
     cd smcpp && \
     python setup.py install
 
-FROM python:${PYTHON_VERSION}-slim-buster
+FROM python:3.7.9-slim-buster
 
 RUN apt update && apt install -y --no-install-recommends \
         gnuplot-nox && \
