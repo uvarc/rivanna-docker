@@ -2,8 +2,9 @@ QIIME 2
 
 https://qiime2.org
 
-This container includes [Empress](https://github.com/biocore/empress) and the following Python 3.6 packages:  
-https://data.qiime2.org/distro/core/qiime2-2020.8-py36-linux-conda.yml
+This container includes these [Python 3.6 packages](https://data.qiime2.org/distro/core/qiime2-2020.8-py36-linux-conda.yml) and plugins:
+- [Empress](https://github.com/biocore/empress) 
+- [PICRUSt2](https://github.com/gavinmdouglas/q2-picrust2)
 
 ## Usage on Rivanna
 Pick the most convenient option for your workflow.

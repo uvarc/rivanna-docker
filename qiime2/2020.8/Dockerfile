@@ -14,8 +14,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ENV PATH /opt/qiime2/bin:$PATH
 
+# plugin: empress
 RUN pip install --no-cache-dir numpy cython && \
     pip install --no-cache-dir git+https://github.com/biocore/empress.git && \
+    qiime dev refresh-cache
+
+# plugin: picrust2
+RUN pip install --no-cache-dir git+https://github.com/picrust/picrust2.git && \
+    pip install --no-cache-dir git+https://github.com/gavinmdouglas/q2-picrust2.git && \
     qiime dev refresh-cache
 
 # cannot use distroless due to "#!/usr/bin/env Rscript"
