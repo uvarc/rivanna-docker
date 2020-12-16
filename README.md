@@ -71,7 +71,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 1.6.0 | `pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime` | 2.270 GB | 2020-08-25 21:33:21.645904 | `rsdmse` |
 | | 1.7.0 | `gcr.io/distroless/python3-debian10` | 1.337 GB | 2020-10-29 19:25:19.370825 | `rsdmse` |
 | [qiime2](https://hub.docker.com/r/uvarc/qiime2) | 2020.6 | `continuumio/miniconda3:4.8.2` | 1.325 GB | 2020-07-04 16:53:29.891717 | `rsdmse` |
-| | 2020.8 | `debian:buster-slim` | 935.700 MB | 2020-11-03 16:20:53.705721 | `rsdmse` |
+| | 2020.8 | `debian:buster-slim` | 935.868 MB | 2020-11-11 14:54:02.517266 | `rsdmse` |
 | [skopeo](https://hub.docker.com/r/uvarc/skopeo) | 1.1.0 | `frolvlad/alpine-glibc` | 21.101 MB | 2020-07-04 14:50:16.656518 | `rsdmse` |
 | | 1.1.1 | `gcr.io/distroless/static-debian10` | 13.384 MB | 2020-08-21 14:27:12.698304 | `rsdmse` |
 | [smcpp](https://hub.docker.com/r/uvarc/smcpp) | 1.15.4 | `python:3.7.9-slim-buster` | 158.007 MB | 2020-11-05 21:26:25.727266 | `rsdmse` |
@@ -81,6 +81,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [tensorflow](https://hub.docker.com/r/uvarc/tensorflow) | 1.5.1 | `gcr.io/distroless/python2.7-debian10` | 896.176 MB | 2020-09-08 10:52:58.908871 | `rsdmse` |
 | | 2.2.0 | `nvidia/cuda:10.1-base-ubuntu18.04` | 1.749 GB | 2020-06-11 11:42:02.752208 | `rsdmse` |
 | | 2.3.0 | `gcr.io/distroless/python3-debian10` | 1.334 GB | 2020-08-31 18:54:16.712148 | `rsdmse` |
+| | 2.4.0 | `gcr.io/distroless/python3-debian10` | 1.685 GB | 2020-12-14 22:02:07.989203 | `rsdmse` |
 
 Note:
 - App link redirects to Docker Hub repository.
