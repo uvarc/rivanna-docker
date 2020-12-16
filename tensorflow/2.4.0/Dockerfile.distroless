@@ -1,4 +1,4 @@
-ARG VERSION=2.4.0.dev20200902
+ARG VERSION=2.4.0
 ARG CUDA_MAJOR_VERSION=11
 ARG CUDA_VERSION=${CUDA_MAJOR_VERSION}.0
 ARG CUDNN_MAJOR_VERSION=8
@@ -10,7 +10,7 @@ FROM python:3.7.4-slim-buster AS py
 ARG VERSION
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir \
-        tf-nightly==$VERSION
+        tensorflow==$VERSION
 
 FROM nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN_MAJOR_VERSION}-devel-ubuntu18.04 AS lib
 ARG CUDA_MAJOR_VERSION
