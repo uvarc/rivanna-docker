@@ -35,13 +35,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda$CUDA && \
     rm -rf /var/lib/apt/lists/*
 
-FROM gcr.io/distroless/python3-debian10
+FROM python:3.7.9-slim-buster
 ARG CUDA
 ARG CUDNN_MAJOR_VERSION
 ARG LIBNVINFER_MAJOR_VERSION
 
+COPY --from=py /usr/local/bin /usr/local/bin
 COPY --from=py /usr/local/lib/python3.7/site-packages /site-packages
+
 COPY --from=py \
+	/lib/x86_64-linux-gnu/libcrypt.so.1 \
+	/lib/x86_64-linux-gnu/libpthread.so.0 \
+	/lib/x86_64-linux-gnu/libdl.so.2 \
+	/lib/x86_64-linux-gnu/libutil.so.1 \
+	/lib/x86_64-linux-gnu/libm.so.6 \
+	/lib/x86_64-linux-gnu/libc.so.6 \
     /lib/x86_64-linux-gnu/libbz2.so.1 \
     /lib/x86_64-linux-gnu/libexpat.so.1 \
     /lib/x86_64-linux-gnu/libgcc_s.so.1 \
@@ -57,6 +65,9 @@ COPY --from=py \
     /usr/lib/x86_64-linux-gnu/libssl.so.1.1 \
     /usr/lib/x86_64-linux-gnu/libstdc++.so.6 \
     /usr/lib/x86_64-linux-gnu/
+
+COPY --from=py /usr/local/lib/libpython3.7m.so.1.0 /usr/local/lib/libpython3.7m.so.1.0
+COPY --from=py /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
 
 COPY --from=lib /usr/local/cuda/compat/libcuda.so.1 /usr/local/cuda/compat/libcuda.so.1
 COPY --from=lib \
@@ -76,6 +87,8 @@ COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/libnvinfer_plugin.so.$LIBNVINFER_MAJOR_VERSION \
     /usr/lib/x86_64-linux-gnu/
 
+ENV PATH /usr/local/bin:$PATH
+ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 ENV PYTHONPATH /site-packages
 
 LABEL maintainer=rs7wz@virginia.edu
@@ -84,4 +97,4 @@ LABEL description="The dragonn package implements Deep RegulAtory GenOmic Neural
 LABEL gpu=true
 LABEL moduleclass=data
 
-ENTRYPOINT ["python"]
+ENTRYPOINT ["dragonn"]
