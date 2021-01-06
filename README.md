@@ -52,6 +52,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 4.0.1 | `ubuntu:20.04` | 712.173 MB | 2020-09-09 11:29:11.872026 | `rsdmse` |
 | [cnnpeaks](https://hub.docker.com/r/uvarc/cnnpeaks) | 200913 | `python:3.7.9-slim-buster` | 1.390 GB | 2020-10-15 18:10:46.459076 | `rsdmse` |
 | [danpos](https://hub.docker.com/r/uvarc/danpos) | 3.1.1 | `python:3.7.6-slim-buster` | 208.754 MB | 2020-08-09 19:50:06.950131 | `rsdmse` |
+| [dragonn](https://hub.docker.com/r/uvarc/dragonn) | 0.4.1 | `python:3.7.9-slim-buster` | 1.244 GB | 2020-12-21 18:26:49.371628 | `rsdmse` |
 | [ds5559](https://hub.docker.com/r/uvarc/ds5559) | spark2 | `jupyter/pyspark-notebook:dc9744740e12` | 1.991 GB | 2020-10-21 14:24:18.743139 | `rsdmse` |
 | | spark3 | `jupyter/pyspark-notebook:4a112c0f11eb` | 1.358 GB | 2020-10-06 22:10:32.189093 | `rsdmse` |
 | [dvipng](https://hub.docker.com/r/uvarc/dvipng) | 1.17 | `gcr.io/distroless/cc-debian10` | 13.623 MB | 2020-09-06 12:18:13.402213 | `rsdmse` |
@@ -60,6 +61,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 1.0 | `alpine:3.12.0` | 77.034 MB | 2020-08-10 00:59:26.5463 | `rsdmse` |
 | [lightgbm](https://hub.docker.com/r/uvarc/lightgbm) | 2.3.1 | `nvidia/opencl:runtime` | 104.777 MB | 2020-08-09 11:13:10.858526 | `rsdmse` |
 | | 3.0.0 | `gcr.io/distroless/cc-debian10` | 14.916 MB | 2020-09-02 12:04:59.336756 | `rsdmse` |
+| [maestro](https://hub.docker.com/r/uvarc/maestro) | 1.3.0 | `continuumio/miniconda3:4.9.2` | 1.799 GB | 2021-01-06 15:21:04.241953 | `rsdmse` |
 | [muview2](https://hub.docker.com/r/uvarc/muview2) | 2.2a2 | `ubuntu:18.04` | 114.333 MB | 2020-10-28 13:28:46.721377 | `rsdmse` |
 | [nanopolish](https://hub.docker.com/r/uvarc/nanopolish) | 0.13.2 | `gcr.io/distroless/python3-debian10` | 142.970 MB | 2020-10-07 19:21:34.741678 | `rsdmse` |
 | [omero-client](https://hub.docker.com/r/uvarc/omero-client) | 5.6.1 | `continuumio/miniconda3:4.8.2` | 1.375 GB | 2020-07-09 13:35:20.84667 | `rsdmse` |
