@@ -24,7 +24,6 @@ RUN pip install --no-cache-dir git+https://github.com/picrust/picrust2.git && \
     pip install --no-cache-dir git+https://github.com/gavinmdouglas/q2-picrust2.git && \
     qiime dev refresh-cache
 
-# cannot use distroless due to "#!/usr/bin/env Rscript"
 FROM debian:buster-slim
 COPY --from=build /opt/qiime2 /opt/qiime2
 
