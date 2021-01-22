@@ -63,6 +63,8 @@ COPY --from=build /usr/local/cuda/targets/x86_64-linux/lib/libcudart.so.10.2 /us
 
 COPY --from=build /usr/local/openmm /usr/local/openmm
 
+COPY --from=build /opt/tinker/params /opt/tinker/params
+
 ENV OPENMM_PLUGIN_DIR /usr/local/openmm/lib/plugins
 ENV LD_LIBRARY_PATH /usr/local/openmm/lib:/usr/local/openmm/lib/plugins:/usr/local/cuda/targets/x86_64-linux/lib:/usr/local/cuda/targets/x86_64-linux/lib/stubs:$LD_LIBRARY_PATH
 
