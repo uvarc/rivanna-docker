@@ -65,6 +65,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [muview2](https://hub.docker.com/r/uvarc/muview2) | 2.2a2 | `ubuntu:18.04` | 114.333 MB | 2020-10-28 13:28:46.721377 | `rsdmse` |
 | [nanopolish](https://hub.docker.com/r/uvarc/nanopolish) | 0.13.2 | `gcr.io/distroless/python3-debian10` | 142.970 MB | 2020-10-07 19:21:34.741678 | `rsdmse` |
 | [omero-client](https://hub.docker.com/r/uvarc/omero-client) | 5.6.1 | `continuumio/miniconda3:4.8.2` | 1.375 GB | 2020-07-09 13:35:20.84667 | `rsdmse` |
+| [openmm](https://hub.docker.com/r/uvarc/openmm) | 7.5.0 | `scratch` | 11.836 MB | 2021-01-22 12:33:34.729733 | `rsdmse` |
 | [patric](https://hub.docker.com/r/uvarc/patric) | 1.027 | `centos:8.1.1911` | 115.069 MB | 2020-06-02 10:53:43.716121 | `rsdmse` |
 | | 1.031 | `debian:buster-slim` | 65.926 MB | 2020-08-10 00:49:27.812868 | `rsdmse` |
 | [ps2eps](https://hub.docker.com/r/uvarc/ps2eps) | 1.68 | `debian:buster-slim` | 54.597 MB | 2020-10-05 21:20:09.556291 | `rsdmse` |
