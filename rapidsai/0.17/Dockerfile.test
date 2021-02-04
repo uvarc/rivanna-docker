@@ -1,0 +1,74 @@
+ARG VERSION=0.17
+ARG CUDA_VERSION=11.0
+ARG PYTHON_VERSION=3.7
+
+FROM continuumio/miniconda3:4.9.2 AS py
+ARG VERSION
+ARG CUDA_VERSION
+ARG PYTHON_VERSION
+
+RUN conda install -c rapidsai -c nvidia -c conda-forge -c defaults \
+        cudf=${VERSION} cudatoolkit=${CUDA_VERSION} python=${PYTHON_VERSION} && \
+    conda clean -ya
+
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-devel-ubuntu18.04 AS lib
+
+FROM gcr.io/distroless/python3-debian10
+
+ARG CUDA_VERSION
+ARG CUDA_MAJOR_VERSION=11
+COPY --from=lib /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+COPY --from=lib \
+    /usr/local/cuda/lib64/libcublas.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libcublasLt.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libcudart.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcufft.so.10 \
+    /usr/local/cuda/lib64/libcufftw.so.10 \
+    /usr/local/cuda/lib64/libcuinj64.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcupti.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcurand.so.10 \
+    /usr/local/cuda/lib64/libcusolver.so.10 \
+    /usr/local/cuda/lib64/libcusolverMg.so.10 \
+    /usr/local/cuda/lib64/libcusparse.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libnvrtc.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libnvrtc-builtins.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/
+COPY --from=lib /usr/local/cuda/compat /usr/local/cuda/compat
+
+COPY --from=py /opt/conda/lib/python3.7/site-packages /opt/conda/lib/python3.7/site-packages
+COPY --from=py /opt/conda/lib/python3.7/lib-dynload /opt/conda/lib/python3.7/lib-dynload
+
+COPY --from=py \
+    /opt/conda/lib/libblas.so.3 \
+    /opt/conda/lib/libcblas.so.3 \
+    /opt/conda/lib/libcrypto.so.1.1 \
+    /opt/conda/lib/libffi.so.7.1.0 \
+    /opt/conda/lib/libgcc_s.so.1 \
+    /opt/conda/lib/libgfortran.so.5 \
+    /opt/conda/lib/liblapack.so.3 \
+    /opt/conda/lib/liblzma.so.5.2.5 \
+    /opt/conda/lib/libopenblasp-r0.3.12.so \
+    /opt/conda/lib/libquadmath.so.0 \
+    /opt/conda/lib/libLLVM-10.so \
+    /opt/conda/lib/libssl.so.1.1 \
+    /opt/conda/lib/libstdc++.so.6 \
+    /opt/conda/lib/libyaml-0.so.2.0.9 \
+    /opt/conda/lib/libz.so.1 \
+# ipykernel
+    /opt/conda/lib/libzmq.so.5 \
+    /opt/conda/lib/libsodium.so.23 \
+    /opt/conda/lib/
+
+COPY --from=py \
+    /lib/x86_64-linux-gnu/libc.so.6 \
+	/lib/x86_64-linux-gnu/libdl.so.2 \
+	/lib/x86_64-linux-gnu/libpthread.so.0 \
+	/lib/x86_64-linux-gnu/libm.so.6 \
+	/lib/x86_64-linux-gnu/
+
+COPY --from=py /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
+
+ENV PYTHONPATH /opt/conda/lib/python3.7/site-packages
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/opt/conda/lib:/usr/local/cuda/lib64/stubs:/usr/local/cuda/compat:/opt/conda/lib/python3.7/lib-dynload:/opt/conda/lib/python3.7/site-packages/llvmlite/binding
+
+ENTRYPOINT ["python"]
