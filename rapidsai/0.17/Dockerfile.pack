@@ -1,0 +1,80 @@
+ARG VERSION=0.17
+ARG CUDA_VERSION=11.0
+ARG PYTHON_VERSION=3.7
+
+FROM continuumio/miniconda3:4.9.2 AS py
+ARG VERSION
+ARG CUDA_VERSION
+ARG PYTHON_VERSION
+
+RUN conda create -n rapids -c rapidsai -c nvidia -c conda-forge -c defaults \
+        rapids-blazing=${VERSION} cudatoolkit=${CUDA_VERSION} python=${PYTHON_VERSION} \
+        ipykernel && \
+    conda clean -ya
+
+RUN conda install -c conda-forge conda-pack && \
+    conda clean -ya
+
+WORKDIR /rapids
+RUN conda-pack -n rapids -o /tmp/rapids.tar && \
+    tar xf /tmp/rapids.tar && rm /tmp/rapids.tar
+
+RUN /rapids/bin/conda-unpack
+
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-devel-ubuntu18.04 AS lib
+
+FROM debian:buster-slim
+ARG CUDA_VERSION
+ARG CUDA_MAJOR_VERSION=11
+
+COPY --from=lib /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+COPY --from=lib \
+    /usr/local/cuda/lib64/libcublas.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libcublasLt.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libcudart.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcufft.so.10 \
+    /usr/local/cuda/lib64/libcufftw.so.10 \
+    /usr/local/cuda/lib64/libcuinj64.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcupti.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcurand.so.10 \
+    /usr/local/cuda/lib64/libcusolver.so.10 \
+    /usr/local/cuda/lib64/libcusolverMg.so.10 \
+    /usr/local/cuda/lib64/libcusparse.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libnvrtc.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libnvrtc-builtins.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/
+COPY --from=lib /usr/local/cuda/compat /usr/local/cuda/compat
+
+COPY --from=py /rapids /rapids
+
+COPY --from=py \
+    /lib/x86_64-linux-gnu/libc.so.6 \
+    /lib/x86_64-linux-gnu/libdl.so.2 \
+    /lib/x86_64-linux-gnu/libpthread.so.0 \
+    /lib/x86_64-linux-gnu/libm.so.6 \
+    /lib/x86_64-linux-gnu/librt.so.1 \
+    /lib/x86_64-linux-gnu/
+
+COPY --from=py /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
+
+SHELL ["/bin/bash", "-c"]
+RUN source /rapids/bin/activate
+
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES "compute,utility"
+ENV NVIDIA_REQUIRE_CUDA "cuda>=11.0 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441 brand=tesla,driver>=450,driver<451"
+ENV CUDA_VERSION 11.0.3
+ENV CUDNN_VERSION 8.0.4.30
+ENV NCCL_VERSION 2.7.8
+
+ENV PATH /rapids/bin:$PATH
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:/usr/local/cuda/compat:$LD_LIBRARY_PATH
+ENV LC_ALL C
+
+LABEL maintainer=rs7wz@virginia.edu
+LABEL homepage=https://rapids.ai/
+LABEL description="The RAPIDS suite of open source software libraries and APIs gives you the ability to execute end-to-end data science and analytics pipelines entirely on GPUs. Licensed under Apache 2.0, RAPIDS is incubated by NVIDIA based on extensive hardware and data science science experience. RAPIDS utilizes NVIDIA CUDA primitives for low-level compute optimization, and exposes GPU parallelism and high-bandwidth memory speed through user-friendly Python interfaces."
+LABEL gpu=true
+LABEL moduleclass="data"
+
+ENTRYPOINT ["python"]
