@@ -75,6 +75,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 1.7.0 | `gcr.io/distroless/python3-debian10` | 1.337 GB | 2020-10-29 19:25:19.370825 | `rsdmse` |
 | [qiime2](https://hub.docker.com/r/uvarc/qiime2) | 2020.6 | `continuumio/miniconda3:4.8.2` | 1.325 GB | 2020-07-04 16:53:29.891717 | `rsdmse` |
 | | 2020.8 | `debian:buster-slim` | 935.868 MB | 2020-11-11 14:54:02.517266 | `rsdmse` |
+| [rapidsai](https://hub.docker.com/r/uvarc/rapidsai) | 0.17 | `debian:buster-slim` | 3.509 GB | 2021-02-05 13:10:11.392025 | `rsdmse` |
 | [skopeo](https://hub.docker.com/r/uvarc/skopeo) | 1.1.0 | `frolvlad/alpine-glibc` | 21.101 MB | 2020-07-04 14:50:16.656518 | `rsdmse` |
 | | 1.1.1 | `gcr.io/distroless/static-debian10` | 13.384 MB | 2020-08-21 14:27:12.698304 | `rsdmse` |
 | [smcpp](https://hub.docker.com/r/uvarc/smcpp) | 1.15.4 | `python:3.7.9-slim-buster` | 158.007 MB | 2020-11-05 21:26:25.727266 | `rsdmse` |
