@@ -2,13 +2,22 @@ echolocatoR
 
 https://github.com/RajLabMSSM/echolocatoR
 
-This container also includes samtools 1.11, htslib 1.11, and TensorFlow 1.15 with Python 3.7.9.
+## Usage on Rivanna
 
-Usage on Rivanna:
+### Command line
+
 ```
 module load singularity
-singularity pull docker://uvarc/cnnpeaks:200913
-singularity run --nv cnnpeaks_200913.sif [arugments]
+singularity pull docker://uvarc/echolocator:20210120
+singularity exec echolocator_20210120.sif Rscript my_script.R
 ```
 
-The default command is `python CNNpeaks`. It is installed under `/opt/CNNPeaks`.
+### RStudio
+- Start a FastX Web or Desktop session.
+- In a terminal, run:
+
+```
+module load singularity
+singularity pull docker://uvarc/echolocator:20210120
+./echolocator_20210120.sif
+```
