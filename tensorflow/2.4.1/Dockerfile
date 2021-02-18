@@ -4,7 +4,7 @@ ARG CUDA_VERSION=${CUDA_MAJOR_VERSION}.0
 ARG CUDNN_MAJOR_VERSION=8
 ARG CUDNN_VERSION=${CUDNN_MAJOR_VERSION}.0.2.39-1
 ARG LIBNVINFER_MAJOR_VERSION=7
-ARG LIBNVINFER_VERSION=${LIBNVINFER_MAJOR_VERSION}.1.3-1
+ARG LIBNVINFER_VERSION=${LIBNVINFER_MAJOR_VERSION}.2.2-1
 
 FROM python:3.7.4-slim-buster AS py
 ARG VERSION
@@ -32,12 +32,11 @@ RUN pip install --no-cache-dir \
 
 FROM nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN_MAJOR_VERSION}-devel-ubuntu18.04 AS lib
 ARG CUDA_MAJOR_VERSION
-ARG CUDA_VERSION
 ARG LIBNVINFER_MAJOR_VERSION
 ARG LIBNVINFER_VERSION
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_VERSION} \
-        libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_VERSION} \
+        libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
+        libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
         libhdf5-serial-dev \
         libzmq3-dev && \
     rm -rf /var/lib/apt/lists/*
@@ -78,6 +77,12 @@ COPY --from=lib \
     /usr/local/cuda/lib64/
 COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/libcudnn.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_ops_train.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_ops_infer.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_cnn_train.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_cnn_infer.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_adv_train.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_adv_infer.so.$CUDNN_MAJOR_VERSION \
     /usr/lib/x86_64-linux-gnu/libnvinfer.so.$LIBNVINFER_MAJOR_VERSION \
     /usr/lib/x86_64-linux-gnu/libnvinfer_plugin.so.$LIBNVINFER_MAJOR_VERSION \
     /usr/lib/x86_64-linux-gnu/
