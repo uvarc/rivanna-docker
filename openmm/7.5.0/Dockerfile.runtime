@@ -34,47 +34,17 @@ WORKDIR /opt/tinker/source
 RUN cp ../openmm/* . && \
     make dynamic_omm.x TINKERDIR=/opt/tinker
 
-FROM scratch
+FROM nvidia/cuda:10.2-runtime-ubuntu18.04
 COPY --from=build /opt/tinker/source/dynamic_omm.x /dynamic_omm.x
 COPY --from=build /opt/tinker/params /opt/tinker/params
 COPY --from=build /usr/local/openmm /usr/local/openmm
 
-COPY --from=build \
-    /usr/local/cuda/lib64/libcudart.so.10.2 \
-    /usr/local/cuda/lib64/libcufft.so.10 \
-    /usr/local/cuda/lib64/libcufftw.so.10 \
-    /usr/local/cuda/lib64/libcuinj64.so.10.2 \
-    /usr/local/cuda/lib64/libcurand.so.10 \
-    /usr/local/cuda/lib64/libcusolver.so.10 \
-    /usr/local/cuda/lib64/libcusolverMg.so.10 \
-    /usr/local/cuda/lib64/libcusparse.so.10 \
-    /usr/local/cuda/lib64/libnvrtc.so.10.2 \
-    /usr/local/cuda/lib64/libnvrtc-builtins.so.10.2 \
-    /usr/local/cuda/lib64/
-COPY --from=build \
-    /usr/lib/x86_64-linux-gnu/libcublas.so.10 \
-    /usr/lib/x86_64-linux-gnu/libcublasLt.so.10 \
-    /usr/lib/x86_64-linux-gnu/
+COPY --from=build /usr/local/cuda/lib64/stubs /usr/local/cuda/lib64/stubs
 
-COPY --from=build /usr/local/cuda/compat /usr/local/cuda/compat 
-
-COPY --from=build \
-    /lib/x86_64-linux-gnu/libc.so.6 \
-    /lib/x86_64-linux-gnu/libdl.so.2 \
-    /lib/x86_64-linux-gnu/libgcc_s.so.1 \
-    /lib/x86_64-linux-gnu/libm.so.6 \
-    /lib/x86_64-linux-gnu/libmvec.so.1 \
-    /lib/x86_64-linux-gnu/libpthread.so.0 \
-    /lib/x86_64-linux-gnu/librt.so.1 \
-    /lib/x86_64-linux-gnu/
-
-COPY --from=build /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
-COPY --from=build /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
+COPY --from=build /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib/x86_64-linux-gnu/libgcc_s.so.1
 
 ENV OPENMM_PLUGIN_DIR=/usr/local/openmm/lib/plugins \
-    LD_LIBRARY_PATH=/usr/local/openmm/lib:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu \
-    NVIDIA_DRIVER_CAPABILITIES=compute,utility \
-    NVIDIA_VISIBLE_DEVICES=all
+    LD_LIBRARY_PATH=/usr/local/openmm/lib:/usr/local/openmm/lib/plugins:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu:/usr/local/cuda/compat:/usr/local/cuda/stubs:/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
 LABEL homepage=https://github.com/openmm/openmm \
       description="OpenMM is a toolkit for molecular simulation using high performance GPU code." \
