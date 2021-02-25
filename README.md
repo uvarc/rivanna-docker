@@ -56,6 +56,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [ds5559](https://hub.docker.com/r/uvarc/ds5559) | spark2 | `jupyter/pyspark-notebook:dc9744740e12` | 1.991 GB | 2020-10-21 14:24:18.743139 | `rsdmse` |
 | | spark3 | `jupyter/pyspark-notebook:4a112c0f11eb` | 1.358 GB | 2020-10-06 22:10:32.189093 | `rsdmse` |
 | [dvipng](https://hub.docker.com/r/uvarc/dvipng) | 1.17 | `gcr.io/distroless/cc-debian10` | 13.623 MB | 2020-09-06 12:18:13.402213 | `rsdmse` |
+| [funannotate](https://hub.docker.com/r/uvarc/funannotate) | 1.8.3 | `debian:buster-slim` | 1.189 GB | 2021-02-24 15:48:50.829226 | `rsdmse` |
 | [hydrator](https://hub.docker.com/r/uvarc/hydrator) | 0.0.10 | `node:14.3.0-slim` | 178.938 MB | 2020-07-08 13:35:17.546402 | `rsdmse` |
 | [inkscape](https://hub.docker.com/r/uvarc/inkscape) | 0.92.4 | `alpine:3.11.6` | 35.476 MB | 2020-05-28 11:40:21.37022 | `rsdmse` |
 | | 1.0 | `alpine:3.12.0` | 77.034 MB | 2020-08-10 00:59:26.5463 | `rsdmse` |
@@ -65,7 +66,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [muview2](https://hub.docker.com/r/uvarc/muview2) | 2.2a2 | `ubuntu:18.04` | 114.333 MB | 2020-10-28 13:28:46.721377 | `rsdmse` |
 | [nanopolish](https://hub.docker.com/r/uvarc/nanopolish) | 0.13.2 | `gcr.io/distroless/python3-debian10` | 142.970 MB | 2020-10-07 19:21:34.741678 | `rsdmse` |
 | [omero-client](https://hub.docker.com/r/uvarc/omero-client) | 5.6.1 | `continuumio/miniconda3:4.8.2` | 1.375 GB | 2020-07-09 13:35:20.84667 | `rsdmse` |
-| [openmm](https://hub.docker.com/r/uvarc/openmm) | 7.5.0 | `scratch` | 11.836 MB | 2021-01-22 12:33:34.729733 | `rsdmse` |
+| [openmm](https://hub.docker.com/r/uvarc/openmm) | 7.5.0 | `scratch` | 451.169 MB | 2021-02-24 23:33:29.288453 | `rsdmse` |
 | [patric](https://hub.docker.com/r/uvarc/patric) | 1.027 | `centos:8.1.1911` | 115.069 MB | 2020-06-02 10:53:43.716121 | `rsdmse` |
 | | 1.031 | `debian:buster-slim` | 65.926 MB | 2020-08-10 00:49:27.812868 | `rsdmse` |
 | [ps2eps](https://hub.docker.com/r/uvarc/ps2eps) | 1.68 | `debian:buster-slim` | 54.597 MB | 2020-10-05 21:20:09.556291 | `rsdmse` |
@@ -86,6 +87,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 2.2.0 | `nvidia/cuda:10.1-base-ubuntu18.04` | 1.749 GB | 2020-06-11 11:42:02.752208 | `rsdmse` |
 | | 2.3.0 | `gcr.io/distroless/python3-debian10` | 1.334 GB | 2020-08-31 18:54:16.712148 | `rsdmse` |
 | | 2.4.0 | `gcr.io/distroless/python3-debian10` | 1.685 GB | 2020-12-14 22:02:07.989203 | `rsdmse` |
+| | 2.4.1 | `gcr.io/distroless/python3-debian10` | 2.259 GB | 2021-02-18 12:13:04.438719 | `rsdmse` |
 
 Note:
 - App link redirects to Docker Hub repository.
