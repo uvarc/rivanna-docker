@@ -1,0 +1,112 @@
+ARG VERSION=2.4.1 \
+    CUDA_MAJOR_VERSION=11 \
+    CUDA_VERSION=${CUDA_MAJOR_VERSION}.0 \
+    CUDNN_MAJOR_VERSION=8 \
+    CUDNN_VERSION=${CUDNN_MAJOR_VERSION}.0.2.39-1 \
+    LIBNVINFER_MAJOR_VERSION=7 \
+    LIBNVINFER_VERSION=${LIBNVINFER_MAJOR_VERSION}.2.2-1
+
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN_MAJOR_VERSION}-devel-ubuntu18.04 AS build
+ARG CUDA_MAJOR_VERSION
+ARG LIBNVINFER_MAJOR_VERSION
+ARG LIBNVINFER_VERSION
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        python3-dev python3-pip \
+        git wget ca-certificates \
+        libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
+        libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
+        libhdf5-serial-dev \
+        libzmq3-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget -q https://github.com/bazelbuild/bazelisk/releases/download/v1.7.5/bazelisk-linux-amd64 \
+         -O /usr/local/bin/bazel && \
+    chmod +x /usr/local/bin/bazel
+
+WORKDIR /opt
+RUN git clone https://github.com/tensorflow/tensorflow.git && cd tensorflow && \
+    git checkout r2.4
+
+WORKDIR /usr/local/cuda/include
+RUN for i in \
+        NvCaffeParser.h \
+        NvInfer.h \
+        NvInferPlugin.h \
+        NvInferPluginUtils.h \
+        NvInferRuntime.h \
+        NvInferRuntimeCommon.h \
+        NvInferVersion.h \
+        NvOnnxConfig.h \
+        NvOnnxParser.h \
+        NvUffParser.h \
+        NvUtils.h; \
+    do wget -q https://raw.githubusercontent.com/NVIDIA/TensorRT/release/7.2/include/$i; done
+
+WORKDIR /opt/tensorflow
+# run configure manually to generate .bazelrc
+
+RUN pip3 install -U --no-cache-dir pip numpy wheel && \
+    pip3 install -U --no-cache-dir keras_preprocessing --no-deps
+
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+RUN bazel build --config=noaws --config=nogcp --config=cuda --config=mkl \
+        --copt=-march=sandybridge --copt=-O3 \
+    //tensorflow/tools/pip_package:build_pip_package
+
+RUN pip3 install --no-cache-dir setuptools
+RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package /mnt
+
+ARG VERSION
+RUN pip3 install --no-cache-dir /mnt/tensorflow-${VERSION}-cp36-cp36m-linux_x86_64.whl
+
+FROM python:3.6.13-slim-buster
+ARG CUDA_MAJOR_VERSION \
+    CUDA_VERSION \
+    CUDNN_MAJOR_VERSION \
+    LIBNVINFER_MAJOR_VERSION
+
+COPY --from=build /usr/local/lib/python3.6/dist-packages /usr/local/lib/python3.6/site-packages
+
+COPY --from=build \
+    /usr/local/cuda/lib64/libcublas.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libcublasLt.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libcudart.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcufft.so.10 \
+    /usr/local/cuda/lib64/libcufftw.so.10 \
+    /usr/local/cuda/lib64/libcuinj64.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcupti.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcurand.so.10 \
+    /usr/local/cuda/lib64/libcusolver.so.10 \
+    /usr/local/cuda/lib64/libcusolverMg.so.10 \
+    /usr/local/cuda/lib64/libcusparse.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libnvperf_* \
+    /usr/local/cuda/lib64/libnvrtc.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libnvrtc-builtins.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/
+COPY --from=build \
+    /usr/lib/x86_64-linux-gnu/libcudnn.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_ops_train.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_ops_infer.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_cnn_train.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_cnn_infer.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_adv_train.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_adv_infer.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libnvinfer.so.$LIBNVINFER_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libnvinfer_plugin.so.$LIBNVINFER_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/
+
+COPY --from=build \
+    /usr/lib/x86_64-linux-gnu/hdf5 \
+    /usr/lib/x86_64-linux-gnu/libhdf5* \
+    /usr/lib/x86_64-linux-gnu/libzmq.a \
+    /usr/lib/x86_64-linux-gnu/libzmq.so \
+    /usr/lib/x86_64-linux-gnu/
+
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64 \
+    LANG=C.UTF-8
+
+LABEL maintainer=rs7wz@virginia.edu
+
+ENTRYPOINT ["python"]
