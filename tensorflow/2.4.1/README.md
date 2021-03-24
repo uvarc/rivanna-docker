@@ -22,7 +22,7 @@ Move right if "no"; down if "yes"
     - all tags without `cpu` can run on GPU
     - usage on Rivanna:
         ```
-        module load singularity/3.6.1
+        module load singularity
         singularity pull docker://uvarc/tensorflow:x.y.z-cpu
         ./tensorflow_x.y.z-cpu.sif your_script.py
         ```
@@ -30,7 +30,7 @@ Move right if "no"; down if "yes"
     - contains necessary CUDA libraries
     - usage on Rivanna:
         ```
-        module load singularity/3.6.1
+        module load singularity
         singularity pull docker://uvarc/tensorflow:x.y.z-distroless
         singularity run --nv tensorflow_x.y.z-distroless.sif your_script.py
         ```
@@ -38,7 +38,7 @@ Move right if "no"; down if "yes"
     - extends `x.y.z-distroless` with preinstalled Python packages (see below)
     - usage on Rivanna:
         ```
-        module load singularity/3.6.1
+        module load singularity
         singularity pull docker://uvarc/tensorflow:x.y.z
         singularity run --nv tensorflow_x.y.z.sif your_script.py
         ```

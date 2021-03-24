@@ -101,10 +101,8 @@ COPY --from=lib /usr/include/x86_64-linux-gnu/libswscale /usr/include/x86_64-lin
 COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/hdf5 \
     /usr/lib/x86_64-linux-gnu/libhdf5* \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/hdf5-serial.pc \
     /usr/lib/x86_64-linux-gnu/libzmq.a \
     /usr/lib/x86_64-linux-gnu/libzmq.so \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/libzmq.pc \
     /usr/lib/x86_64-linux-gnu/libSM.so.6 \
     /usr/lib/x86_64-linux-gnu/libGL.so.1 \
     /usr/lib/x86_64-linux-gnu/libGLdispatch.so.0 \
@@ -119,24 +117,12 @@ COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/libglib-2.0.so.0 \
     /usr/lib/x86_64-linux-gnu/libgdk-3.so \
     /usr/lib/x86_64-linux-gnu/libgtk-3.so \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/gdk-3.0.pc \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/gdk-broadway-3.0.pc \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/gdk-wayland-3.0.pc \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/gdk-x11-3.0.pc \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/gtk+-3.0.pc \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/gtk+-broadway-3.0.pc \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/gtk+-unix-print-3.0.pc \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/gtk+-wayland-3.0.pc \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/gtk+-x11-3.0.pc \
     /usr/lib/x86_64-linux-gnu/libavcodec.a \
     /usr/lib/x86_64-linux-gnu/libavcodec.so \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/libavcodec.pc \
     /usr/lib/x86_64-linux-gnu/libavformat.a \
     /usr/lib/x86_64-linux-gnu/libavformat.so \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/libavformat.pc \
     /usr/lib/x86_64-linux-gnu/libswscale.a \
     /usr/lib/x86_64-linux-gnu/libswscale.so \
-    /usr/lib/x86_64-linux-gnu/pkgconfig/libswscale.pc \
     /usr/lib/x86_64-linux-gnu/libpcre32.so.3 \
     /usr/lib/x86_64-linux-gnu/libpcre16.so.3 \
     /usr/lib/x86_64-linux-gnu/libpcreposix.so.3 \
@@ -162,8 +148,8 @@ COPY --from=lib \
     /lib/x86_64-linux-gnu/libbsd.so.0 \
     /usr/lib/x86_64-linux-gnu/
 
-ENV PYTHONPATH=/site-packages \
-    LD_LIBRARY_PATH=/usr/local/cuda/lib64 \
+ENV PYTHONPATH=/site-packages:$PYTHONPATH \
+    LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH \
     LANG=C.UTF-8
 
 LABEL maintainer=rs7wz@virginia.edu \
