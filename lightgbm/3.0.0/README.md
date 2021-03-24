@@ -8,7 +8,7 @@ Compiled with OpenCL. Versions 3+ are distroless and require singularity 3.6+.
 
 Usage on Rivanna:
 ```
-module load singularity/3.6.1
+module load singularity
 singularity pull docker://uvarc/lightgbm:x.y.z
 singularity run --nv lightgbm_x.y.z.sif <parameters>
 ```

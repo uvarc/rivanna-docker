@@ -6,7 +6,7 @@ Compiled with TINKER 8.8.3 and GPU support. This is based on `scratch` so Singul
 
 Usage on Rivanna:
 ```
-module load singularity/3.6.1
+module load singularity
 singularity pull docker://uvarc/openmm:7.5.0
 ```
 

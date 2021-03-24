@@ -13,7 +13,7 @@ All are GPU-compatible.
 
 ## Usage on Rivanna
 ```
-module load singularity/3.6.1
+module load singularity
 singularity pull docker://uvarc/pytorch:x.y.z
 singularity run --nv pytorch_x.y.z.sif your_script.py
 ```

@@ -10,7 +10,7 @@ This container includes the following Python 3.7.3 packages:
 
 Usage on Rivanna:
 ```
-module load singularity/3.6.1
+module load singularity
 singularity pull docker://uvarc/dragonn:0.4.1
 singularity run --nv dragonn_0.4.1.sif -h
 ```
