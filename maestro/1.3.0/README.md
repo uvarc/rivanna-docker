@@ -11,5 +11,5 @@ singularity pull MAESTRO docker://uvarc/maestro:1.3.0
 
 To install additional Python packages:
 ```
-singularity exec MAESTRO pip install <package>
+singularity exec MAESTRO pip install --user <package>
 ```
