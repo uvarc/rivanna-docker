@@ -1,0 +1,80 @@
+FROM jupyter/scipy-notebook:4a112c0f11eb
+
+# Fix DL4006
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+USER root
+
+# Spark dependencies
+# Default values can be overridden at build time
+# (ARGS are in lower case to distinguish them from ENV)
+ARG spark_version="3.0.1" \
+    hadoop_version="3.2" \
+    openjdk_version="8"
+
+ENV APACHE_SPARK_VERSION="${spark_version}" \
+    HADOOP_VERSION="${hadoop_version}"
+
+RUN apt-get update && apt-get install --no-install-recommends -y \
+        "openjdk-${openjdk_version}-jre-headless" ca-certificates-java \
+        texlive-xetex texlive-fonts-recommended && \
+    rm -rf /var/lib/apt/lists/*
+
+# Spark installation
+WORKDIR /tmp
+# Using the preferred mirror to download Spark
+# hadolint ignore=SC2046
+ARG TGZ=spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
+RUN wget https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/$TGZ && \
+    tar xf $TGZ -C /usr/local --owner root --group root --no-same-owner && \
+    rm $TGZ
+
+WORKDIR /usr/local
+
+# Configure Spark
+ENV SPARK_HOME=/usr/local/spark \
+    SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
+    PATH=$PATH:$SPARK_HOME/bin \
+    LC_ALL=C \
+    NUMBA_CACHE_DIR=/tmp
+
+RUN ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" spark && \
+    # Add a link in the before_notebook hook in order to source automatically PYTHONPATH
+    mkdir -p /usr/local/bin/before-notebook.d && \
+    ln -s "${SPARK_HOME}/sbin/spark-config.sh" /usr/local/bin/before-notebook.d/spark-config.sh
+
+# Fix Spark installation for Java 11 and Apache Arrow library
+# see: https://github.com/apache/spark/pull/27356, https://spark.apache.org/docs/latest/#downloading
+RUN cp -p "$SPARK_HOME/conf/spark-defaults.conf.template" "$SPARK_HOME/conf/spark-defaults.conf" && \
+    echo 'spark.driver.extraJavaOptions -Dio.netty.tryReflectionSetAccessible=true' >> $SPARK_HOME/conf/spark-defaults.conf && \
+    echo 'spark.executor.extraJavaOptions -Dio.netty.tryReflectionSetAccessible=true' >> $SPARK_HOME/conf/spark-defaults.conf
+
+# ds5559
+RUN pip install --no-cache-dir \
+        tensorflow-cpu==2.3.0 \
+        tensorboard==2.3.0 \
+        tensorframes \
+        tensorflowonspark \
+        jieba \
+        sparkdl \
+        keras \
+        graphframes \
+        requests_oauthlib \
+        folium \
+        shap \
+        wfdb==3.0.1 \
+        biosppy==0.6.1
+RUN pip install --no-cache-dir -f https://download.pytorch.org/whl/torch_stable.html \
+        torch==1.8.1+cpu torchvision==0.9.1+cpu torchaudio==0.8.1 \
+        spark-nlp==3.0.1 sentence-transformers==1.0.4
+
+RUN cd /usr/local/spark/jars && \
+    wget -q http://dl.bintray.com/spark-packages/maven/graphframes/graphframes/0.8.1-spark3.0-s_2.12/graphframes-0.8.1-spark3.0-s_2.12.jar && \
+    wget -q https://repo1.maven.org/maven2/com/johnsnowlabs/nlp/spark-nlp_2.12/3.0.1/spark-nlp_2.12-3.0.1.jar
+
+WORKDIR $HOME
+USER $NB_UID
+
+ENV PYTHONPATH=${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.10.9-src.zip
+
+LABEL maintainer=rs7wz@virginia.edu
