@@ -7,16 +7,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         texlive-xetex texlive-fonts-recommended && \
     rm -rf /var/lib/apt/lists/*
 
-ENV PATH /opt/conda/bin:$PATH
-ENV LC_ALL C
-ENV NUMBA_CACHE_DIR /tmp
+ENV LC_ALL=C \
+    NUMBA_CACHE_DIR=/tmp
 
+ARG TF_VERSION=1.15.5
 RUN pip install --no-cache-dir \
         ipykernel \
         nltk \
         pyarrow \
-        tensorflow-cpu==2.3.0 \
-        tensorboard==2.3.0 \
+        tensorflow==$TF_VERSION \
+        tensorboard==$TF_VERSION \
         tensorframes \
         tensorflowonspark \
         jieba \
