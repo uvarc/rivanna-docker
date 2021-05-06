@@ -10,11 +10,11 @@ RUN git clone https://github.com/ulissigroup/amptorch.git && \
     cd amptorch && \
     conda install -c conda-forge conda-pack && \
     conda env create -f env_gpu.yml && \
+    conda install -n amptorch -c conda-forge ipykernel ipywidgets && \
     conda clean -ya
 
 WORKDIR /opt/amptorch
-RUN conda install -n amptorch -c conda-forge ipykernel ipywidgets && \
-    /opt/conda/envs/amptorch/bin/pip install . && \
+RUN /opt/conda/envs/amptorch/bin/pip install . && \
     /opt/conda/envs/amptorch/bin/pre-commit install
 
 WORKDIR /amptorch
