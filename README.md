@@ -48,6 +48,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 
 |App|Version|Base Image|Compressed Size|Last Updated (UTC)|By|
 |---|---|----|---:|---|---|
+| [amptorch](https://hub.docker.com/r/uvarc/amptorch) | 20210308 | `debian:buster-slim` | 1.822 GB | 2021-05-05 18:58:58.006662 | `rsdmse` |
 | [bart-mri](https://hub.docker.com/r/uvarc/bart-mri) | 0.7.00 | `scratch` | 18.544 MB | 2021-03-05 20:10:32.291212 | `rsdmse` |
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | 3.1.9 | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
 | | 4.0.1 | `ubuntu:20.04` | 712.173 MB | 2020-09-09 11:29:11.872026 | `rsdmse` |
@@ -71,14 +72,17 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [patric](https://hub.docker.com/r/uvarc/patric) | 1.027 | `centos:8.1.1911` | 115.069 MB | 2020-06-02 10:53:43.716121 | `rsdmse` |
 | | 1.031 | `debian:buster-slim` | 65.926 MB | 2020-08-10 00:49:27.812868 | `rsdmse` |
 | [ps2eps](https://hub.docker.com/r/uvarc/ps2eps) | 1.68 | `debian:buster-slim` | 54.597 MB | 2020-10-05 21:20:09.556291 | `rsdmse` |
-| [pytorch](https://hub.docker.com/r/uvarc/pytorch) | 1.5.0 | `pytorch/pytorch:1.5-cuda10.1-cudnn7-runtime` | 1.849 GB | 2020-06-09 01:13:13.500138 | `rsdmse` |
-| | 1.5.1 | `pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime` | 2.263 GB | 2020-07-09 10:50:23.537395 | `rsdmse` |
+| [pytorch](https://hub.docker.com/r/uvarc/pytorch) | 1.4.0-py37 | `python:3.7.4-slim-buster` | 1.007 GB | 2021-04-19 13:41:46.716233 | `rsdmse` |
+| | 1.5.0 | `pytorch/pytorch:1.5-cuda10.1-cudnn7-runtime` | 1.849 GB | 2020-06-09 01:13:13.500138 | `rsdmse` |
+| | 1.5.1 | `pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime` | 2.057 GB | 2021-04-19 17:55:40.205335 | `rsdmse` |
 | | 1.6.0 | `pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime` | 2.270 GB | 2020-08-25 21:33:21.645904 | `rsdmse` |
 | | 1.7.0 | `gcr.io/distroless/python3-debian10` | 1.337 GB | 2020-10-29 19:25:19.370825 | `rsdmse` |
 | | 1.8.0 | `gcr.io/distroless/python3-debian10` | 1.150 GB | 2021-03-04 22:40:55.054253 | `rsdmse` |
+| | 1.8.1 | `python:3.8.8-slim-buster` | 1.234 GB | 2021-04-30 19:23:12.527219 | `rsdmse` |
 | [qiime2](https://hub.docker.com/r/uvarc/qiime2) | 2020.6 | `continuumio/miniconda3:4.8.2` | 1.325 GB | 2020-07-04 16:53:29.891717 | `rsdmse` |
 | | 2020.8 | `debian:buster-slim` | 935.868 MB | 2020-11-11 14:54:02.517266 | `rsdmse` |
 | [rapidsai](https://hub.docker.com/r/uvarc/rapidsai) | 0.17 | `debian:buster-slim` | 3.509 GB | 2021-02-05 13:10:11.392025 | `rsdmse` |
+| | 0.19 | `debian:buster-slim` | 3.802 GB | 2021-04-29 01:27:24.709666 | `rsdmse` |
 | [skopeo](https://hub.docker.com/r/uvarc/skopeo) | 1.1.0 | `frolvlad/alpine-glibc` | 21.101 MB | 2020-07-04 14:50:16.656518 | `rsdmse` |
 | | 1.1.1 | `gcr.io/distroless/static-debian10` | 13.384 MB | 2020-08-21 14:27:12.698304 | `rsdmse` |
 | [smcpp](https://hub.docker.com/r/uvarc/smcpp) | 1.15.4 | `python:3.7.9-slim-buster` | 158.007 MB | 2020-11-05 21:26:25.727266 | `rsdmse` |
@@ -89,7 +93,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 2.2.0 | `nvidia/cuda:10.1-base-ubuntu18.04` | 1.749 GB | 2020-06-11 11:42:02.752208 | `rsdmse` |
 | | 2.3.0 | `gcr.io/distroless/python3-debian10` | 1.334 GB | 2020-08-31 18:54:16.712148 | `rsdmse` |
 | | 2.4.0 | `gcr.io/distroless/python3-debian10` | 1.685 GB | 2020-12-14 22:02:07.989203 | `rsdmse` |
-| | 2.4.1 | `gcr.io/distroless/python3-debian10` | 2.259 GB | 2021-02-18 12:13:04.438719 | `rsdmse` |
+| | 2.4.1 | `gcr.io/distroless/python3-debian10` | 2.269 GB | 2021-03-08 15:07:29.35334 | `rsdmse` |
 
 Note:
 - App link redirects to Docker Hub repository.
