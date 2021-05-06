@@ -1,6 +1,7 @@
 FROM continuumio/miniconda3:4.9.2 AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        gcc g++ \
         git ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
@@ -11,19 +12,16 @@ RUN git clone https://github.com/ulissigroup/amptorch.git && \
     conda env create -f env_gpu.yml && \
     conda clean -ya
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        gcc g++ \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /opt/amptorch
-RUN /opt/conda/envs/amptorch/bin/pip install . && \
+RUN conda install -n amptorch -c conda-forge ipykernel ipywidgets && \
+    /opt/conda/envs/amptorch/bin/pip install . && \
     /opt/conda/envs/amptorch/bin/pre-commit install
 
 WORKDIR /amptorch
 RUN conda-pack -n amptorch -o /tmp/amptorch.tar && \
     tar xf /tmp/amptorch.tar && rm /tmp/amptorch.tar
     
-FROM python:3.6.13-slim-buster
+FROM debian:buster-slim
 COPY --from=build /amptorch /amptorch
 
 ENV PATH=/amptorch/bin:$PATH \
