@@ -122,8 +122,16 @@ RUN cd /usr/local/spark/jars && \
 # link no longer works
     #wget -q http://dl.bintray.com/spark-packages/maven/graphframes/graphframes/0.8.0-spark3.0-s_2.12/graphframes-0.8.0-spark3.0-s_2.12.jar
 
+WORKDIR /opt
+
+# RIV-6264
+RUN wget -q https://mirror.nodesdirect.com/apache/kafka/2.8.0/kafka_2.13-2.8.0.tgz && \
+    tar xf kafka_2.13-2.8.0.tgz && \
+    rm kafka_2.13-2.8.0.tgz
+
 WORKDIR $HOME
 
-ENV PYTHONPATH=${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.10.9-src.zip
+ENV PATH=/opt/kafka_2.13-2.8.0/bin:$PATH \
+    PYTHONPATH=${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.10.9-src.zip
 
 LABEL maintainer=rs7wz@virginia.edu
