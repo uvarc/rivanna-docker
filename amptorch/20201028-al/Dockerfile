@@ -6,31 +6,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
-RUN git clone https://github.com/ulissigroup/amptorch.git && \
-    cd amptorch && \
-    conda install -c conda-forge conda-pack && \
-    conda env create -f env_gpu.yml && \
-    conda install -n amptorch -c conda-forge ipykernel ipywidgets && \
+RUN conda install -c conda-forge conda-pack && \
+    conda create -n amptorch -c conda-forge -c pytorch \
+        python=3.6 \
+        cudatoolkit=10.2 \
+        pytorch=1.6.0 \
+        ase=3.21 \
+        numpy=1.18.5 \
+        matplotlib=2.2.5 \
+        tqdm=4.45 \
+        h5py=2.10.0 \
+        ipykernel ipywidgets && \
     conda clean -ya
 
-WORKDIR /opt/amptorch
-RUN /opt/conda/envs/amptorch/bin/pip install . && \
-    /opt/conda/envs/amptorch/bin/pre-commit install
+RUN /opt/conda/envs/amptorch/bin/pip install --no-cache-dir \
+        git+https://github.com/ulissigroup/amptorch.git@active_learning \
+        amp-atomistics && \
+    /opt/conda/envs/amptorch/bin/pip install --no-cache-dir \
+        -f https://pytorch-geometric.com/whl/torch-1.6.0+cu102.html \
+        torch-scatter \
+        torch-sparse
 
-RUN /opt/conda/envs/amptorch/bin/pip install --no-cache-dir git+https://bitbucket.org/andrewpeterson/amp
+RUN /opt/conda/envs/amptorch/bin/pip install --no-cache-dir \
+        tensorflow==1.15.5 \
+        git+https://github.com/mshuaibii/SIMPLE-NN.git
 
 WORKDIR /amptorch
 RUN conda-pack -n amptorch -o /tmp/amptorch.tar && \
     tar xf /tmp/amptorch.tar && rm /tmp/amptorch.tar
     
 FROM debian:buster-slim
-
 COPY --from=build /amptorch /amptorch
-COPY --from=build /usr/lib/x86_64-linux-gnu/libgfortran.so.5 /usr/lib/x86_64-linux-gnu/libgfortran.so.5
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        openssh-server \
-    && rm -rf /var/lib/apt/lists/*
 
 ENV PATH=/amptorch/bin:$PATH \
     CONDA_PREFIX=/amptorch \
