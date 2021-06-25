@@ -48,13 +48,15 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 
 |App|Version|Base Image|Compressed Size|Last Updated (UTC)|By|
 |---|---|----|---:|---|---|
-| [amptorch](https://hub.docker.com/r/uvarc/amptorch) | 20210308 | `debian:buster-slim` | 1.822 GB | 2021-05-05 18:58:58.006662 | `rsdmse` |
+| [amptorch](https://hub.docker.com/r/uvarc/amptorch) | 20201028-al | `debian:buster-slim` | 1.322 GB | 2021-06-17 16:24:35.300944 | `rsdmse` |
+| | 20210308 | `debian:buster-slim` | 1.795 GB | 2021-06-22 13:57:33.307414 | `rsdmse` |
 | [bart-mri](https://hub.docker.com/r/uvarc/bart-mri) | 0.7.00 | `scratch` | 18.544 MB | 2021-03-05 20:10:32.291212 | `rsdmse` |
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | 3.1.9 | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
 | | 4.0.1 | `ubuntu:20.04` | 712.173 MB | 2020-09-09 11:29:11.872026 | `rsdmse` |
 | [cnnpeaks](https://hub.docker.com/r/uvarc/cnnpeaks) | 200913 | `python:3.7.9-slim-buster` | 1.390 GB | 2020-10-15 18:10:46.459076 | `rsdmse` |
 | [danpos](https://hub.docker.com/r/uvarc/danpos) | 3.1.1 | `python:3.7.6-slim-buster` | 208.754 MB | 2020-08-09 19:50:06.950131 | `rsdmse` |
 | [dragonn](https://hub.docker.com/r/uvarc/dragonn) | 0.4.1 | `python:3.7.9-slim-buster` | 1.244 GB | 2020-12-21 18:26:49.371628 | `rsdmse` |
+| [ds5110](https://hub.docker.com/r/uvarc/ds5110) | spark3 | `continuumio/miniconda3:4.9.2` | 1.737 GB | 2021-05-13 17:02:45.165157 | `rsdmse` |
 | [ds5559](https://hub.docker.com/r/uvarc/ds5559) | spark2 | `jupyter/pyspark-notebook:dc9744740e12` | 1.991 GB | 2020-10-21 14:24:18.743139 | `rsdmse` |
 | | spark3 | `jupyter/pyspark-notebook:4a112c0f11eb` | 1.358 GB | 2020-10-06 22:10:32.189093 | `rsdmse` |
 | [dvipng](https://hub.docker.com/r/uvarc/dvipng) | 1.17 | `gcr.io/distroless/cc-debian10` | 13.623 MB | 2020-09-06 12:18:13.402213 | `rsdmse` |
@@ -65,6 +67,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | [lightgbm](https://hub.docker.com/r/uvarc/lightgbm) | 2.3.1 | `nvidia/opencl:runtime` | 104.777 MB | 2020-08-09 11:13:10.858526 | `rsdmse` |
 | | 3.0.0 | `gcr.io/distroless/cc-debian10` | 14.916 MB | 2020-09-02 12:04:59.336756 | `rsdmse` |
 | [maestro](https://hub.docker.com/r/uvarc/maestro) | 1.3.0 | `continuumio/miniconda3:4.9.2` | 1.799 GB | 2021-01-06 15:21:04.241953 | `rsdmse` |
+| [minkowskiengine](https://hub.docker.com/r/uvarc/minkowskiengine) | 0.5.4 | `debian:buster-slim` | 1.690 GB | 2021-06-16 19:14:41.116219 | `rsdmse` |
 | [muview2](https://hub.docker.com/r/uvarc/muview2) | 2.2a2 | `ubuntu:18.04` | 114.333 MB | 2020-10-28 13:28:46.721377 | `rsdmse` |
 | [nanopolish](https://hub.docker.com/r/uvarc/nanopolish) | 0.13.2 | `gcr.io/distroless/python3-debian10` | 142.970 MB | 2020-10-07 19:21:34.741678 | `rsdmse` |
 | [omero-client](https://hub.docker.com/r/uvarc/omero-client) | 5.6.1 | `continuumio/miniconda3:4.8.2` | 1.375 GB | 2020-07-09 13:35:20.84667 | `rsdmse` |
