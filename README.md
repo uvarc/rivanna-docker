@@ -48,7 +48,8 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 
 |App|Version|Base Image|Compressed Size|Last Updated (UTC)|By|
 |---|---|----|---:|---|---|
-| [amptorch](https://hub.docker.com/r/uvarc/amptorch) | 20201028-al | `debian:buster-slim` | 1.322 GB | 2021-06-17 16:24:35.300944 | `rsdmse` |
+| [alphafold](https://hub.docker.com/r/uvarc/alphafold) | 20210715 | `nvidia/cuda:${CUDA}-base` | 2.002 GB | 2021-07-16 11:58:14.107834 | `rsdmse` |
+| [amptorch](https://hub.docker.com/r/uvarc/amptorch) | 20201028-al | `debian:buster-slim` | 1.323 GB | 2021-07-07 13:16:21.282742 | `rsdmse` |
 | | 20210308 | `debian:buster-slim` | 1.795 GB | 2021-06-22 13:57:33.307414 | `rsdmse` |
 | [bart-mri](https://hub.docker.com/r/uvarc/bart-mri) | 0.7.00 | `scratch` | 18.544 MB | 2021-03-05 20:10:32.291212 | `rsdmse` |
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | 3.1.9 | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |

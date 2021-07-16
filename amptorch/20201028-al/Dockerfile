@@ -36,10 +36,18 @@ RUN conda-pack -n amptorch -o /tmp/amptorch.tar && \
     tar xf /tmp/amptorch.tar && rm /tmp/amptorch.tar
     
 FROM debian:buster-slim
+
+# SUP-1626: import _tkinter
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libx11-6 \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /amptorch /amptorch
 
-ENV PATH=/amptorch/bin:$PATH \
-    CONDA_PREFIX=/amptorch \
+ENV CONDA_PREFIX=/amptorch
+ENV PATH=$CONDA_PREFIX/bin:$PATH \
+    FONTCONFIG_PATH=$CONDA_PREFIX/etc/fonts \
+    FONTCONFIG_FILE=$CONDA_PREFIX/etc/fonts/fonts.conf \
     LC_ALL=C.UTF-8
 
 LABEL maintainer=rs7wz@virginia.edu \
