@@ -2,8 +2,6 @@
 
 https://github.com/deepmind/alphafold
 
-The commit date is used as the tag, since there is no version.
-
 ## Notes on Dockerfile
 Modified from official Dockerfile:
 - `conda clean` -> saves ~1 GB
@@ -14,5 +12,5 @@ Overall the image size is ~2 GB smaller than that built from the official Docker
 ## Usage on Rivanna
 ```
 module load singularity
-singularity pull docker://uvarc/alphafold:20210715
+singularity pull docker://uvarc/alphafold:2.0.0
 ```
