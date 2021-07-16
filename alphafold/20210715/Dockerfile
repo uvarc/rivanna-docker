@@ -85,6 +85,9 @@ COPY --from=build /app /app
 COPY --from=build /opt/alphafoldenv /opt/alphafoldenv
 COPY --from=build /opt/hhsuite /opt/hhsuite
 
+# hhsuite executable path hardcoded as /usr/bin in run_alphafold.py
+RUN ln -s /opt/hhsuite/bin/* /usr/bin
+
 # We need to run `ldconfig` first to ensure GPUs are visible, due to some quirk
 # with Debian. See https://github.com/NVIDIA/nvidia-docker/issues/1399 for
 # details.
@@ -97,7 +100,7 @@ ldconfig\n\
 python /app/alphafold/run_alphafold.py "$@"' > /app/run_alphafold.sh \
   && chmod +x /app/run_alphafold.sh
 
-ENV PATH=/opt/alphafoldenv/bin:/opt/hhsuite/bin:$PATH \
+ENV PATH=/opt/alphafoldenv/bin:$PATH \
     PYTHONPATH=/opt/alphafoldnev/lib/python3.9/site-packages \
     LC_ALL=C.UTF-8
 
