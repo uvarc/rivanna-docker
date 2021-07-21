@@ -49,6 +49,7 @@ RUN wget -q -P /tmp https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-
 # Install conda packages.
 ENV PATH="/opt/conda/bin:$PATH"
 RUN /opt/conda/bin/conda create -y -p /opt/alphafoldenv -c conda-forge \
+      python=3.8 \
       openmm=7.5.1 \
       cudatoolkit==${CUDA}.3 \
       pdbfixer \
@@ -61,13 +62,15 @@ RUN wget -q -P /app/alphafold/alphafold/common/ \
   https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt
 
 # Install pip packages.
+# downgrade TF to 2.4.1 https://github.com/deepmind/alphafold/pull/28
 RUN /opt/alphafoldenv/bin/pip install --upgrade --no-cache-dir pip \
+    && sed -i 's/^tensorflow.*$/tensorflow==2.4.1/' /app/alphafold/requirements.txt \
     && /opt/alphafoldenv/bin/pip install --no-cache-dir -r /app/alphafold/requirements.txt \
     && /opt/alphafoldenv/bin/pip install --upgrade --no-cache-dir jax jaxlib==0.1.69+cuda${CUDA/./} -f \
        https://storage.googleapis.com/jax-releases/jax_releases.html
 
 # Apply OpenMM patch.
-WORKDIR /opt/alphafoldenv/lib/python3.9/site-packages
+WORKDIR /opt/alphafoldenv/lib/python3.8/site-packages
 RUN patch -p0 < /app/alphafold/docker/openmm.patch
 
 FROM nvidia/cuda:${CUDA}-base
@@ -75,7 +78,9 @@ ARG CUDA
 
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+# add cudnn and cusolver
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      libcudnn8 libcusolver-11-0 \
       cuda-command-line-tools-${CUDA/./-} \
       hmmer \
       kalign \
@@ -101,7 +106,7 @@ python /app/alphafold/run_alphafold.py "$@"' > /app/run_alphafold.sh \
   && chmod +x /app/run_alphafold.sh
 
 ENV PATH=/opt/alphafoldenv/bin:$PATH \
-    PYTHONPATH=/opt/alphafoldnev/lib/python3.9/site-packages \
+    PYTHONPATH=/opt/alphafoldnev/lib/python3.8/site-packages \
     LC_ALL=C.UTF-8
 
 LABEL maintainer=rs7wz@virginia.edu \
