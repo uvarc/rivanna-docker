@@ -1,0 +1,62 @@
+# include cupy and cudf (incompatible cuda version with pytorch)
+# update lightgbm to 3.2.1 for arl4zk
+
+FROM pytorch/pytorch:1.9.0-cuda11.1-cudnn8-devel AS build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        gcc g++ cmake \
+        libglib2.0-0 \
+        libxext6 \
+        libsm6 \
+        libxrender1 \
+        libboost-dev \
+        libboost-system-dev \
+        libboost-filesystem-dev
+
+RUN conda install -c conda-forge -c anaconda \
+        mkl=2021.3.0 \
+        numpy=1.21.1 \
+        scipy=1.7.0 \
+        scikit-learn=0.24.2
+
+RUN pip install --no-cache-dir \
+        lightgbm==3.2.1 --install-option=--gpu \
+                        --install-option="--opencl-include-dir=/usr/local/cuda/include/" \
+                        --install-option="--opencl-library=/usr/local/cuda/lib64/libOpenCL.so"
+
+FROM mambaorg/micromamba:0.15.2 AS py
+RUN micromamba install -n base -y -c conda-forge -c pytorch -c gpytorch -c rapidsai -c nvidia \
+        python=3.8.10 \
+        pytorch=1.9.0 \
+        numpy==1.19.2 \
+        scipy=1.7.0 \
+        cupy cudf=21.06 dask cudatoolkit=11.0 \
+        scikit-learn=0.24.2 \
+        matplotlib pandas && \
+    micromamba clean -ya
+
+FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu18.04 AS lib
+
+FROM debian:buster-slim
+COPY --from=build /usr/local/cuda/targets/x86_64-linux/include/CL /usr/local/cuda/targets/x86_64-linux/include/CL
+COPY --from=build /usr/local/cuda/lib64/libOpenCL.so /usr/local/cuda/lib64/libOpenCL.so
+COPY --from=build /usr/local/cuda/lib64/libOpenCL.so.1 /usr/local/cuda/lib64/libOpenCL.so.1
+COPY --from=py /opt/conda /opt/conda
+COPY --from=build /opt/conda/lib/python3.7/site-packages/lightgbm /opt/conda/lib/python3.8/site-packages/lightgbm
+COPY --from=lib /usr/local/cuda/compat /usr/local/cuda/compat
+COPY --from=build \
+	/usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 \
+	/usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 \
+	/usr/lib/x86_64-linux-gnu/libgomp.so.1 \
+	/usr/lib/x86_64-linux-gnu/libstdc++.so.6 \
+    /usr/lib/x86_64-linux-gnu/
+
+RUN mkdir -p /etc/OpenCL/vendors && \
+    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
+
+ENV PATH=/opt/conda/bin:$PATH \
+    PYTHONPATH=/opt/conda/lib/python3.8/site-packages \
+    LD_LIBRARY_PATH=/usr/local/cuda/compat:$LD_LIBRARY_PATH \
+    LC_ALL=C
+
+ENTRYPOINT ["python"]
