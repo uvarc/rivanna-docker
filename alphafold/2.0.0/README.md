@@ -16,14 +16,11 @@ Our solution:
 - Added `libcudnn8` and `libcusolver-11-0` in production stage
 
 ### Image size reduction
-Overall the image size is ~2 GB smaller than that built from the official Dockerfile. (Not taking into account of the additional libraries in the previous section.)
+Overall the image size is ~2 GB smaller than that built from the official Dockerfile.
 
 - `conda clean` -> saves ~1 GB
 - Added a second production stage without buildtime dependencies -> saves 0.45 GB
 
-## Usage on Rivanna
+## Usage on HPC via Singularity
 
-```
-module load singularity
-singularity pull docker://uvarc/alphafold:2.0.0
-```
+Please visit https://www.rc.virginia.edu/userinfo/rivanna/software/alphafold/
