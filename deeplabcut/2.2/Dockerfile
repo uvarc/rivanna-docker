@@ -23,8 +23,10 @@ RUN micromamba install -n base -c conda-forge \
 RUN pip install --no-cache-dir deeplabcut[gui]==2.2 tensorflow==2.4.1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        lsof && \
+        lsof wget && \
     rm -rf /var/lib/apt/lists/*
+
+RUN wget https://downloads.sourceforge.net/project/virtualgl/2.6.5/virtualgl_2.6.5_amd64.deb
 
 FROM debian:buster-slim
 COPY --from=py /opt/conda /opt/conda
@@ -56,6 +58,23 @@ RUN sed -i 's/WxAgg/Agg/' /opt/conda/lib/python3.8/site-packages/deeplabcut/__in
 # https://github.com/DeepLabCut/DeepLabCut/issues/1190
 ADD download_pretrain.py .
 RUN python download_pretrain.py
+RUN chmod -R go+rx /opt/conda/lib/python3.8/site-packages/deeplabcut/pose_estimation_tensorflow/models/pretrained
+
+# VirtualGL
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libxtst6 \
+        libxv1 \
+        libglu1-mesa && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=py /tmp/virtualgl_2.6.5_amd64.deb /tmp/virtualgl_2.6.5_amd64.deb
+RUN dpkg -r VirtualGL && \
+    dpkg -i /tmp/virtualgl*.deb
+
+# font
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        fonts-noto && \
+    rm -rf /var/lib/apt/lists/*
 
 LABEL maintainer=rs7wz@virginia.edu \
       homepage=https://github.com/DeepLabCut/DeepLabCut \
