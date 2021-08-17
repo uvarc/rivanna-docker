@@ -1,4 +1,5 @@
-FROM continuumio/miniconda3:4.9.2 AS build
+FROM mambaorg/micromamba:0.15.2 AS build
+USER root
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         gcc g++ gfortran \
@@ -6,8 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
-RUN conda install -c conda-forge conda-pack && \
-    conda create -n amptorch -c conda-forge -c pytorch \
+RUN micromamba create -p /amptorch -c conda-forge -c pytorch \
         python=3.6 \
         cudatoolkit=10.2 \
         pytorch=1.6.0 \
@@ -17,26 +17,27 @@ RUN conda install -c conda-forge conda-pack && \
         tqdm=4.45 \
         h5py=2.10.0 \
         ipykernel ipywidgets && \
-    conda clean -ya
+    micromamba clean -ya
 
-RUN /opt/conda/envs/amptorch/bin/pip install --no-cache-dir \
+RUN /amptorch/bin/pip install --no-cache-dir \
         git+https://github.com/ulissigroup/amptorch.git@active_learning \
         amp-atomistics && \
-    /opt/conda/envs/amptorch/bin/pip install --no-cache-dir \
+    /amptorch/bin/pip install --no-cache-dir \
         -f https://pytorch-geometric.com/whl/torch-1.6.0+cu102.html \
-        torch-scatter \
-        torch-sparse
-
-RUN /opt/conda/envs/amptorch/bin/pip install --no-cache-dir \
+        torch-scatter==2.0.7 \
+        torch-sparse==0.6.10
+RUN /amptorch/bin/pip install --no-cache-dir \
         tensorflow==1.15.5 \
         git+https://github.com/mshuaibii/SIMPLE-NN.git
-
-WORKDIR /amptorch
-RUN conda-pack -n amptorch -o /tmp/amptorch.tar && \
-    tar xf /tmp/amptorch.tar && rm /tmp/amptorch.tar
+RUN /amptorch/bin/pip install --no-cache-dir \
+        git+https://github.com/kirstenwinther/Protosearch.git@swarm_opt
     
-FROM debian:buster-slim
+RUN git clone https://github.com/kirstenwinther/Protosearch.git && \
+    cd Protosearch && \
+    git checkout swarm_opt && \
+    /amptorch/bin/pip install --no-cache-dir -r requirements.txt
 
+FROM debian:buster-slim
 # SUP-1626: import _tkinter
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libx11-6 \
@@ -44,8 +45,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY --from=build /amptorch /amptorch
 
+ARG SRC=/opt/Protosearch/protosearch \
+    DEST=/amptorch/lib/python3.6/site-packages/protosearch
+COPY --from=build $SRC/active_learning $DEST/active_learning
+COPY --from=build $SRC/build_bulk $DEST/build_bulk
+COPY --from=build $SRC/calculate $DEST/calculate
+COPY --from=build $SRC/enumeration $DEST/enumeration
+COPY --from=build $SRC/examples $DEST/examples
+COPY --from=build $SRC/ml_modelling $DEST/ml_modelling
+COPY --from=build $SRC/oqmd $DEST/oqmd
+
+RUN sed -i '306s/\* n_parameters//' /amptorch/lib/python3.6/site-packages/protosearch/build_bulk/cell_parameters.py
+
 ENV CONDA_PREFIX=/amptorch
 ENV PATH=$CONDA_PREFIX/bin:$PATH \
+    PYTHONPATH=/amptorch/lib/python3.6/site-packages \
     FONTCONFIG_PATH=$CONDA_PREFIX/etc/fonts \
     FONTCONFIG_FILE=$CONDA_PREFIX/etc/fonts/fonts.conf \
     LC_ALL=C.UTF-8
