@@ -9,4 +9,4 @@ module load singularity cc3d
 run [compucell3d.sh|paramScan.sh|runScript.sh|twedit++.sh]
 ```
 
-The default command is `compucell3d.sh`.
+The default command is `python`.
