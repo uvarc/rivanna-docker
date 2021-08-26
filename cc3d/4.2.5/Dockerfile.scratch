@@ -1,0 +1,16 @@
+FROM ubuntu:20.04 AS build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        wget ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt
+RUN wget -O CC3D_4.2.5_ubuntu_20.04_64bit.tar.gz https://sourceforge.net/projects/cc3d/files/4.2.5/linux/CC3D_4.2.5_ubuntu_20.04_64bit.tar.gz/download && \
+    tar xf CC3D_4.2.5_ubuntu_20.04_64bit.tar.gz && \
+    rm CC3D_4.2.5_ubuntu_20.04_64bit.tar.gz
+
+FROM scratch
+COPY --from=build /opt/CC3D_4.2.5_ubuntu_20.04_64bit /cc3d
+
+ENV PATH=/cc3d:$PATH
+
+ENTRYPOINT ["compucell3d.sh"]
