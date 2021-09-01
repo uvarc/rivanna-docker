@@ -23,8 +23,8 @@ RUN ln -s $PREFIX_CC3D/Python37/lib/libncurses.so $PREFIX_CC3D/Python37/lib/libn
 ENV PATH=$PREFIX_CC3D:$PREFIX_CC3D/Python37/bin:$PATH \
     PYTHONPATH=$PREFIX_CC3D/lib/site-packages:$PREFIX_CC3D/Python37/lib/python3.7/site-packages \
     COMPUCELL3D_PLUGIN_PATH=${PREFIX_CC3D}/lib/site-packages/cc3d/cpp/CompuCell3DPlugins \
-    COMPUCELL3D_STEPPABLE_PATH=${PREFIX_CC3D}/lib/site-packages/cc3d/cpp/CompuCell3DSteppables \
-    LD_LIBRARY_PATH=${PREFIX_CC3D}/lib/site-packages/cc3d/cpp/lib:${COMPUCELL3D_PLUGIN_PATH}:${COMPUCELL3D_STEPPABLE_PATH}:$LD_LIBRARY_PATH \
+    COMPUCELL3D_STEPPABLE_PATH=${PREFIX_CC3D}/lib/site-packages/cc3d/cpp/CompuCell3DSteppables
+ENV LD_LIBRARY_PATH=${PREFIX_CC3D}/lib/site-packages/cc3d/cpp/lib:${COMPUCELL3D_PLUGIN_PATH}:${COMPUCELL3D_STEPPABLE_PATH}:$LD_LIBRARY_PATH \
     COMPUCELL3D_MAJOR_VERSION=4 \
     COMPUCELL3D_MINOR_VERSION=2 \
     COMPUCELL3D_BUILD_VERSION=5
