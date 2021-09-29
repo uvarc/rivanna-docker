@@ -1,0 +1,103 @@
+ARG VERSION=2.4.1
+ARG CUDA_MAJOR_VERSION=11
+ARG CUDA_VERSION=${CUDA_MAJOR_VERSION}.0
+ARG CUDNN_MAJOR_VERSION=8
+ARG CUDNN_VERSION=${CUDNN_MAJOR_VERSION}.0.2.39-1
+ARG LIBNVINFER_MAJOR_VERSION=7
+ARG LIBNVINFER_VERSION=${LIBNVINFER_MAJOR_VERSION}.2.2-1
+
+FROM python:3.7.4-slim-buster AS py
+ARG VERSION
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir \
+        tensorflow==$VERSION
+RUN pip install --no-cache-dir \
+        numpy==1.19.4 \
+        scipy==1.5.4 \
+        keras==2.4.3 \
+        keras-vis==0.4.1 \
+        matplotlib \
+        seaborn \
+        pandas \
+        scikit-learn==0.24.1 \
+        stanza==1.2.1 \
+        transformers==4.8.0
+
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN_MAJOR_VERSION}-devel-ubuntu18.04 AS lib
+ARG CUDA_MAJOR_VERSION
+ARG LIBNVINFER_MAJOR_VERSION
+ARG LIBNVINFER_VERSION
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
+        libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
+        libhdf5-serial-dev \
+        libzmq3-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# Python version 3.7.3
+FROM gcr.io/distroless/python3-debian10
+ARG CUDA_MAJOR_VERSION
+ARG CUDA_VERSION
+ARG CUDNN_MAJOR_VERSION
+ARG LIBNVINFER_MAJOR_VERSION
+ARG LIBNVINFER_VERSION
+
+# Python packages
+COPY --from=py /usr/local/lib/python3.7/site-packages /site-packages
+
+# CUDA libraries
+COPY --from=lib /usr/local/cuda/compat /usr/local/cuda/compat
+COPY --from=lib /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+COPY --from=lib \
+    /usr/local/cuda/lib64/libcublas.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libcublasLt.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libcudart.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcufft.so.10 \
+    /usr/local/cuda/lib64/libcufftw.so.10 \
+    /usr/local/cuda/lib64/libcuinj64.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcupti.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libcurand.so.10 \
+    /usr/local/cuda/lib64/libcusolver.so.10 \
+    /usr/local/cuda/lib64/libcusolverMg.so.10 \
+    /usr/local/cuda/lib64/libcusparse.so.$CUDA_MAJOR_VERSION \
+    /usr/local/cuda/lib64/libnvperf_* \
+    /usr/local/cuda/lib64/libnvrtc.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/libnvrtc-builtins.so.$CUDA_VERSION \
+    /usr/local/cuda/lib64/
+COPY --from=lib \
+    /usr/lib/x86_64-linux-gnu/libcudnn.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_ops_train.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_ops_infer.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_cnn_train.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_cnn_infer.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_adv_train.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libcudnn_adv_infer.so.$CUDNN_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libnvinfer.so.$LIBNVINFER_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/libnvinfer_plugin.so.$LIBNVINFER_MAJOR_VERSION \
+    /usr/lib/x86_64-linux-gnu/
+
+# system libraries
+COPY --from=lib \
+    /usr/include/hdf5 \
+    /usr/include/zmq.h \
+    /usr/include/zmq.hpp \
+    /usr/include/zmq_utils.h \
+    /usr/include/
+COPY --from=lib \
+    /usr/lib/x86_64-linux-gnu/hdf5 \
+    /usr/lib/x86_64-linux-gnu/libhdf5* \
+    /usr/lib/x86_64-linux-gnu/libzmq.a \
+    /usr/lib/x86_64-linux-gnu/libzmq.so \
+    /usr/lib/x86_64-linux-gnu/
+
+ENV PYTHONPATH=/site-packages:$PYTHONPATH \
+    LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH \
+    LANG=C.UTF-8
+
+LABEL maintainer=rs7wz@virginia.edu \
+      homepage=https://www.tensorflow.org \
+      description="TensorFlow is an open-source software library for Machine Intelligence." \
+      gpu=true \
+      moduleclass=data
+
+ENTRYPOINT ["/usr/bin/python"]
