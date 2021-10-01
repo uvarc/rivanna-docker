@@ -48,16 +48,21 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 
 |App|Version|Base Image|Compressed Size|Last Updated (UTC)|By|
 |---|---|----|---:|---|---|
-| [alphafold](https://hub.docker.com/r/uvarc/alphafold) | 20210715 | `nvidia/cuda:${CUDA}-base` | 2.002 GB | 2021-07-16 11:58:14.107834 | `rsdmse` |
-| [amptorch](https://hub.docker.com/r/uvarc/amptorch) | 20201028-al | `debian:buster-slim` | 1.323 GB | 2021-07-07 13:16:21.282742 | `rsdmse` |
+| [alphafold](https://hub.docker.com/r/uvarc/alphafold) | 2.0.0 | `nvidia/cuda:${CUDA}-base` | 3.149 GB | 2021-07-21 20:14:32.479255 | `rsdmse` |
+| | 2.0.1 | `nvidia/cuda:${CUDA}-base` | 2.929 GB | 2021-09-30 11:44:11.233821 | `rsdmse` |
+| [amptorch](https://hub.docker.com/r/uvarc/amptorch) | 0.1 | `debian:buster-slim` | 2.330 GB | 2021-09-20 15:37:47.255919 | `rsdmse` |
+| | 20201028-al | `debian:buster-slim` | 1.391 GB | 2021-08-17 14:58:59.231892 | `rsdmse` |
 | | 20210308 | `debian:buster-slim` | 1.795 GB | 2021-06-22 13:57:33.307414 | `rsdmse` |
 | [bart-mri](https://hub.docker.com/r/uvarc/bart-mri) | 0.7.00 | `scratch` | 18.544 MB | 2021-03-05 20:10:32.291212 | `rsdmse` |
+| [cc3d](https://hub.docker.com/r/uvarc/cc3d) | 4.2.5 | `ubuntu:20.04` | 638.032 MB | 2021-09-01 12:46:06.083639 | `rsdmse` |
 | [cellprofiler](https://hub.docker.com/r/uvarc/cellprofiler) | 3.1.9 | `openjdk:8-jdk-slim` | 584.534 MB | 2020-05-29 14:39:25.659657 | `rsdmse` |
 | | 4.0.1 | `ubuntu:20.04` | 712.173 MB | 2020-09-09 11:29:11.872026 | `rsdmse` |
 | [cnnpeaks](https://hub.docker.com/r/uvarc/cnnpeaks) | 200913 | `python:3.7.9-slim-buster` | 1.390 GB | 2020-10-15 18:10:46.459076 | `rsdmse` |
 | [danpos](https://hub.docker.com/r/uvarc/danpos) | 3.1.1 | `python:3.7.6-slim-buster` | 208.754 MB | 2020-08-09 19:50:06.950131 | `rsdmse` |
+| [deeplabcut](https://hub.docker.com/r/uvarc/deeplabcut) | 2.2 | `debian:buster-slim` | 4.963 GB | 2021-08-11 13:14:43.974651 | `rsdmse` |
 | [dragonn](https://hub.docker.com/r/uvarc/dragonn) | 0.4.1 | `python:3.7.9-slim-buster` | 1.244 GB | 2020-12-21 18:26:49.371628 | `rsdmse` |
-| [ds5110](https://hub.docker.com/r/uvarc/ds5110) | spark3 | `continuumio/miniconda3:4.9.2` | 1.737 GB | 2021-05-13 17:02:45.165157 | `rsdmse` |
+| [ds5110](https://hub.docker.com/r/uvarc/ds5110) | spark3.0 | `continuumio/miniconda3:4.9.2` |  |  | `` |
+| | spark3.1 | `continuumio/miniconda3:4.9.2` | 1.736 GB | 2021-08-12 11:37:53.212935 | `rsdmse` |
 | [ds5559](https://hub.docker.com/r/uvarc/ds5559) | spark2 | `jupyter/pyspark-notebook:dc9744740e12` | 1.991 GB | 2020-10-21 14:24:18.743139 | `rsdmse` |
 | | spark3 | `jupyter/pyspark-notebook:4a112c0f11eb` | 1.358 GB | 2020-10-06 22:10:32.189093 | `rsdmse` |
 | [dvipng](https://hub.docker.com/r/uvarc/dvipng) | 1.17 | `gcr.io/distroless/cc-debian10` | 13.623 MB | 2020-09-06 12:18:13.402213 | `rsdmse` |
@@ -87,6 +92,9 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 2020.8 | `debian:buster-slim` | 935.868 MB | 2020-11-11 14:54:02.517266 | `rsdmse` |
 | [rapidsai](https://hub.docker.com/r/uvarc/rapidsai) | 0.17 | `debian:buster-slim` | 3.509 GB | 2021-02-05 13:10:11.392025 | `rsdmse` |
 | | 0.19 | `debian:buster-slim` | 3.802 GB | 2021-04-29 01:27:24.709666 | `rsdmse` |
+| | 21.10 | `debian:buster-slim` | 2.859 GB | 2021-09-13 16:44:43.154485 | `rsdmse` |
+| [rmats-turbo](https://hub.docker.com/r/uvarc/rmats-turbo) | 4.1.1 | `debian:bullseye-slim` | 364.886 MB | 2021-09-28 22:24:38.185023 | `rsdmse` |
+| [sgp](https://hub.docker.com/r/uvarc/sgp) | pytorch-1.0 | `python:3.6.14-slim-buster` | 644.856 MB | 2021-08-04 17:59:04.286627 | `rsdmse` |
 | [skopeo](https://hub.docker.com/r/uvarc/skopeo) | 1.1.0 | `frolvlad/alpine-glibc` | 21.101 MB | 2020-07-04 14:50:16.656518 | `rsdmse` |
 | | 1.1.1 | `gcr.io/distroless/static-debian10` | 13.384 MB | 2020-08-21 14:27:12.698304 | `rsdmse` |
 | [smcpp](https://hub.docker.com/r/uvarc/smcpp) | 1.15.4 | `python:3.7.9-slim-buster` | 158.007 MB | 2020-11-05 21:26:25.727266 | `rsdmse` |
@@ -98,6 +106,7 @@ To contribute, please visit the [wiki](https://github.com/uvarc/rivanna-docker/w
 | | 2.3.0 | `gcr.io/distroless/python3-debian10` | 1.334 GB | 2020-08-31 18:54:16.712148 | `rsdmse` |
 | | 2.4.0 | `gcr.io/distroless/python3-debian10` | 1.685 GB | 2020-12-14 22:02:07.989203 | `rsdmse` |
 | | 2.4.1 | `gcr.io/distroless/python3-debian10` | 2.269 GB | 2021-03-08 15:07:29.35334 | `rsdmse` |
+| [wget2](https://hub.docker.com/r/uvarc/wget2) | 2.0.0 | `debian:bullseye-slim` | 50.827 MB | 2021-09-28 13:46:41.713289 | `rsdmse` |
 
 Note:
 - App link redirects to Docker Hub repository.
