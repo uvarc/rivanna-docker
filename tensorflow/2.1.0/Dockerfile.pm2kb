@@ -1,0 +1,33 @@
+FROM tensorflow/tensorflow:2.1.0-gpu-py3-jupyter
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        gcc libc6-dev openslide-tools \
+        libfreetype6-dev \
+        libhdf5-serial-dev \
+        libffi-dev libssl-dev \
+        libzmq3-dev \
+        libsm6 libxext6 libxrender1 && \
+    rm -rf /var/lib/apt/lists/*
+
+ARG TF_VERSION=2.1.0
+RUN pip install --no-cache-dir --upgrade \
+        pip setuptools && \
+    pip install --no-cache-dir \
+        matplotlib numpy scipy==1.4.1 \
+        tensorflow-estimator==$TF_VERSION tensorboard==$TF_VERSION \
+        tensorflow-federated==0.13.0 \
+        gast==0.2.2 protobuf \
+        ipykernel ipywidgets \
+        pydot \
+        keras-vis==0.4 \
+        tflearn==0.3.2 \
+        pandas==1.0.0 \
+        scikit-learn==0.22.1 \
+        openslide-python==1.1.2 \
+        opencv-python==4.2.0.32
+
+ENV LANG=C.UTF-8 \
+    LC_ALL=C
+
+LABEL maintainer=rs7wz@virginia.edu
+ENTRYPOINT ["python"]

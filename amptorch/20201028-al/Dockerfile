@@ -37,6 +37,10 @@ RUN git clone https://github.com/kirstenwinther/Protosearch.git && \
     git checkout swarm_opt && \
     /amptorch/bin/pip install --no-cache-dir -r requirements.txt
 
+# SUP-1847
+RUN /amptorch/bin/pip install --no-cache-dir \
+        pyswarms catkit
+
 FROM debian:buster-slim
 # SUP-1626: import _tkinter
 RUN apt-get update && apt-get install -y --no-install-recommends \
