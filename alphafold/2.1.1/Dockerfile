@@ -38,7 +38,7 @@
 #   [Official] -> [Current]
 #   - Two sets of CUDA libraries in system and conda env -> Only use conda env
 #   - Cuda base image with miniconda installation -> Micromamba base image during build stage
-#   - Single stage -> Two stages
+#   - Single stage -> Three stages
 # The resulting image is about 3 GB smaller.
 
 ARG VERSION=2.1.1
@@ -99,6 +99,8 @@ RUN $CONDADIR/bin/pip install --upgrade --no-cache-dir jax jaxlib==0.1.69+cuda${
 WORKDIR $CONDADIR/lib/python3.8/site-packages
 RUN patch -p0 < /app/alphafold/docker/openmm.patch
 
+FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu18.04 AS lib
+
 FROM debian:bullseye-slim
 ARG CONDADIR
 SHELL ["/bin/bash", "-c"]
@@ -111,6 +113,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=build /app /app
 COPY --from=build $CONDADIR $CONDADIR
 COPY --from=build /opt/hhsuite /opt/hhsuite
+
+# needed by jax
+COPY --from=lib /usr/local/cuda/bin/ptxas /usr/bin/ptxas
 
 # hhsuite executable path hardcoded as /usr/bin in run_alphafold.py
 RUN ln -s /opt/hhsuite/bin/* /usr/bin
