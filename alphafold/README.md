@@ -3,11 +3,12 @@
 https://github.com/deepmind/alphafold
 
 ## Notes on Dockerfile
-Overall the image size is ~3 GB smaller than that built from the official Dockerfile.
+On disk the image size is 5.4 GB, 47% smaller than that built from the official Dockerfile (10.1 GB).
 
-- `conda clean` -> saves ~1 GB
-- Production stage without buildtime dependencies -> saves ~0.5 GB
-- No need to have system CUDA libraries (all in conda env) -> saves ~1 GB
+Major differences:
+- No need to have system CUDA libraries (all in conda env)
+- Use micromamba as base image for build stage
+- Three-stage build process to eliminate buildtime dependencies
 
 ## Versions
 
