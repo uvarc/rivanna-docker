@@ -1,9 +1,9 @@
-FROM python:3.8.8-slim-buster AS py
-ARG VERSION=1.8.1
+FROM python:3.8-slim-buster AS py
+ARG VERSION=1.10.0
 
 RUN pip install --no-cache-dir -U pip numpy==1.20.1 scipy==1.6.1 && \
     pip install --no-cache-dir \
-        torch==${VERSION}+cu111 torchvision==0.9.1+cu111 torchaudio===0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+        torch==${VERSION}+cu113 torchvision==0.11.1+cu113 torchaudio==0.10.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 
 # dependencies for torchaudio, openslide, opencv
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -14,16 +14,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir \
-        torchtext==0.9.1 \
-        botorch==0.4.0 \
+        torchtext==0.11.0 \
+        botorch==0.5.1 \
         ignite==1.1.0 \
-        matplotlib==3.3.4 \
-        seaborn==0.11.1 \
-        pandas==1.2.3 \
-        scikit-learn==0.24.1 \
-        scikit-image==0.18.1 \
+        matplotlib==3.5.0 \
+        seaborn==0.11.2 \
+        pandas==1.3.4 \
+        scikit-learn==1.0.1 \
+        scikit-image==0.18.3 \
         openslide-python==1.1.2 \
-        opencv-python==4.5.1.48 \
+        opencv-python==4.5.4.60 \
         sox jupyter ipykernel ipywidgets pyqt5-tools
         
 # pytorch-lightning: need bleeding edge for compatibility with torchtext
@@ -32,7 +32,7 @@ RUN pip install --no-cache-dir https://github.com/PyTorchLightning/pytorch-light
 RUN apt-get update && apt-get install -y --no-install-recommends lsof && \
     rm -rf /var/lib/apt/lists/*
 
-FROM python:3.8.8-slim-buster
+FROM python:3.8-slim-buster
 COPY --from=py /usr/local/lib/python3.8/site-packages /usr/local/lib/python3.8/site-packages
 #COPY --from=py /usr/local/lib/libpython3.8m.so.1.0 /usr/local/lib/libpython3.8m.so.1.0
 COPY --from=py /lib/x86_64-linux-gnu/libpcre.so.3 /lib/x86_64-linux-gnu/libpcre.so.3
