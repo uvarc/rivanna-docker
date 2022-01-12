@@ -20,4 +20,4 @@ Major differences:
 
 ## Usage on HPC via Singularity
 
-Please visit https://www.rc.virginia.edu/userinfo/rivanna/software/alphafold/
+This image is fully compatible with Singularity. Please visit https://www.rc.virginia.edu/userinfo/rivanna/software/alphafold/ for instructions.
