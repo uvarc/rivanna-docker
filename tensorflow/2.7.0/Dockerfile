@@ -170,7 +170,7 @@ COPY --from=py \
     /usr/lib/x86_64-linux-gnu/libzstd.so.1\
     /usr/lib/x86_64-linux-gnu/
 
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH \
+ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH \
     LC_ALL=C.UTF-8
 
 LABEL maintainer=rs7wz@virginia.edu \

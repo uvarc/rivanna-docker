@@ -6,26 +6,6 @@ ARG CUDNN_MAJOR_VERSION=8
 ARG NVINFER_MAJOR_VERSION=7
 ARG NVINFER_VERSION=${NVINFER_MAJOR_VERSION}.2.3-1
 
-FROM python:3.9-slim-bullseye AS py
-ARG VERSION
-
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir \
-        tensorflow==$VERSION \
-        numpy==1.21.4 \
-        scipy==1.7.3 \
-        keras==2.7.0 \
-        xgboost==1.5.1 \
-        matplotlib==3.5.0 \
-        seaborn==0.11.2 \
-        pandas==1.3.4 \
-        scikit-learn==1.0.1 \
-        category-encoders==2.3.0 \
-        shap==0.40.0 \
-        ipykernel
-
-ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-
 FROM nvidia/cuda:${CUDA_VERSION}.2-cudnn${CUDNN_MAJOR_VERSION}-devel-ubuntu18.04 AS lib
 ARG CUDA_MAJOR_VERSION
 ARG NVINFER_MAJOR_VERSION
@@ -36,14 +16,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 FROM python:3.9-slim-bullseye
+ARG VERSION
 ARG CUDA_MAJOR_VERSION
 ARG CUDA_VERSION
 ARG CUDNN_MAJOR_VERSION
 ARG NVINFER_MAJOR_VERSION
 ARG NVINFER_VERSION
-
-# Python packages and libopenslide
-COPY --from=py /usr/local/lib /usr/local/lib
 
 # CUDA libraries
 COPY --from=lib /usr/local/cuda/compat /usr/local/cuda/compat
@@ -75,6 +53,28 @@ COPY --from=lib \
     /usr/lib/x86_64-linux-gnu/libnvinfer.so.$NVINFER_MAJOR_VERSION \
     /usr/lib/x86_64-linux-gnu/libnvinfer_plugin.so.$NVINFER_MAJOR_VERSION \
     /usr/lib/x86_64-linux-gnu/
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir \
+        tensorflow==$VERSION \
+        numpy==1.21.4 \
+        scipy==1.7.3 \
+        keras==2.7.0 \
+        xgboost==1.5.1 \
+        matplotlib==3.5.0 \
+        seaborn==0.11.2 \
+        pandas==1.3.4 \
+        scikit-learn==1.0.1 \
+        category-encoders==2.3.0 \
+        shap==0.40.0 \
+        spacy==3.2.1 \
+        tqdm==4.62.3 \
+        textblob==0.17.1 \
+        NRCLex==3.0.0 \
+        gensim==4.1.2 \
+        ipykernel
+
+RUN pip install --no-cache-dir dill==0.3.4
 
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH \
     LC_ALL=C.UTF-8

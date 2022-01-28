@@ -12,11 +12,11 @@ Major differences:
 
 ## Versions
 
-| Package\AlphaFold| 2.0.1, 2.1.1 | 2.0.0 |
-|---|---|---|
-|python      | 3.8.12 | 3.8.10 |
-|cudatoolkit | 11.0.3 | 11.0.3 |
-|tensorflow  | 2.5.0  | 2.4.1 |
+| Package\AlphaFold| 2.1.2 | 2.0.1, 2.1.1 | 2.0.0 |
+|---|---|---|---|
+|python      | 3.8.12 | 3.8.12 | 3.8.10 |
+|cudatoolkit | 11.1   | 11.0.3 | 11.0.3 |
+|tensorflow  | 2.5.0  | 2.5.0  | 2.4.1 |
 
 ## Usage on HPC via Singularity
 
