@@ -6,8 +6,29 @@ ARG CUDNN_VERSION=${CUDNN_MAJOR_VERSION}.0.2.39-1
 ARG LIBNVINFER_MAJOR_VERSION=7
 ARG LIBNVINFER_VERSION=${LIBNVINFER_MAJOR_VERSION}.2.2-1
 
-FROM python:3.7.4-slim-buster AS py
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN_MAJOR_VERSION}-devel-ubuntu18.04 AS lib
+ARG CUDA_MAJOR_VERSION
+ARG LIBNVINFER_MAJOR_VERSION
+ARG LIBNVINFER_VERSION
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
+        libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
+        libhdf5-serial-dev \
+        libzmq3-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libgl1 libsm6 libxext6 libxrender1 libgtk-3-dev libavcodec-dev libavformat-dev libswscale-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+FROM python:3.7-slim-buster AS py
 ARG VERSION
+ARG CUDA_MAJOR_VERSION
+ARG CUDA_VERSION
+ARG CUDNN_MAJOR_VERSION
+ARG LIBNVINFER_MAJOR_VERSION
+ARG LIBNVINFER_VERSION
+
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir \
         tensorflow==$VERSION
@@ -29,32 +50,6 @@ RUN pip install --no-cache-dir \
         nbformat==5.0.8 \
         pydot==1.4.1 \
         typing_extensions==3.7.4.3
-
-FROM nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN_MAJOR_VERSION}-devel-ubuntu18.04 AS lib
-ARG CUDA_MAJOR_VERSION
-ARG LIBNVINFER_MAJOR_VERSION
-ARG LIBNVINFER_VERSION
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
-        libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER_VERSION}+cuda${CUDA_MAJOR_VERSION}.0 \
-        libhdf5-serial-dev \
-        libzmq3-dev && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        libgl1 libsm6 libxext6 libxrender1 libgtk-3-dev libavcodec-dev libavformat-dev libswscale-dev && \
-    rm -rf /var/lib/apt/lists/*
-
-# Python version 3.7.3
-FROM gcr.io/distroless/python3-debian10
-ARG CUDA_MAJOR_VERSION
-ARG CUDA_VERSION
-ARG CUDNN_MAJOR_VERSION
-ARG LIBNVINFER_MAJOR_VERSION
-ARG LIBNVINFER_VERSION
-
-# Python packages
-COPY --from=py /usr/local/lib/python3.7/site-packages /site-packages
 
 # CUDA libraries
 COPY --from=lib /usr/local/cuda/compat /usr/local/cuda/compat
@@ -148,9 +143,9 @@ COPY --from=lib \
     /lib/x86_64-linux-gnu/libbsd.so.0 \
     /usr/lib/x86_64-linux-gnu/
 
-ENV PYTHONPATH=/site-packages:$PYTHONPATH \
-    LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH \
-    LANG=C.UTF-8
+
+ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH \
+    LC_ALL=C.UTF-8
 
 LABEL maintainer=rs7wz@virginia.edu \
       homepage=https://www.tensorflow.org \
@@ -158,4 +153,4 @@ LABEL maintainer=rs7wz@virginia.edu \
       gpu=true \
       moduleclass=data
 
-ENTRYPOINT ["/usr/bin/python"]
+ENTRYPOINT ["python"]
