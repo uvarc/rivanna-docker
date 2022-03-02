@@ -65,6 +65,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install Python 3.7.7 from source
 ARG PYTHON_VERSION=3.7.7
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libbz2-dev && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /opt
 RUN curl -LO https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
     tar -xf Python-${PYTHON_VERSION}.tgz && \
