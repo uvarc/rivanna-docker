@@ -76,6 +76,12 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 RUN pip install --no-cache-dir dill==0.3.4
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        graphviz && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir dtreeviz==1.3.2
+
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH \
     LC_ALL=C.UTF-8
 
