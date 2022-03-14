@@ -3,17 +3,16 @@ ARG VERSION=0.6
 FROM uvarc/pytorch:1.10.0 AS PY
 ARG VERSION
 
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential \
+RUN apt-get update && apt-get install -y --no-install-recommends gcc g++ \
 && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir --upgrade pip && \
-pip install --no-cache-dir detectron2==$VERSION -f \
-        https://dl.fbaipublicfiles.com/detectron2/wheels/cu102/torch1.10/index.html
+    pip install --no-cache-dir detectron2==$VERSION -f \
+        https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
 
-LABEL maintainer=uvahrc \
+LABEL maintainer=hpc-support@virginia.edu \
       homepage=https://ai.facebook.com/tools/detectron2/ \
-      description="Detectron2 is Facebook AI Research's next generation library that provides state-of-the-art \
-                   detection and segmentation algorithms. It is the successor of Detectron and maskrcnn-benchmark." \
+      description="Detectron2 is Facebook AI Research's next generation library that provides state-of-the-art detection and segmentation algorithms. It is the successor of Detectron and maskrcnn-benchmark." \
       gpu=true \
       moduleclass=data
 
