@@ -56,6 +56,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --no-cache-dir ipykernel opencv-python
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        g++ && \
+    rm -rf /var/lib/apt/lists/*
+
 LABEL maintainer=rs7wz@virginia.edu \
       homepage=https://github.com/facebookresearch/maskrcnn-benchmark \
       description="Fast, modular reference implementation of Instance Segmentation and Object Detection algorithms in PyTorch." \
