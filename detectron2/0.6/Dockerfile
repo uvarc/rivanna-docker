@@ -6,7 +6,7 @@ ARG VERSION
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential \
 && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir --upgrade pip && \
+RUN pupip install --no-cache-dir --upgrade pip && \
 pip install --no-cache-dir detectron2==$VERSION -f \
         https://dl.fbaipublicfiles.com/detectron2/wheels/cu102/torch1.10/index.html
 
