@@ -82,6 +82,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --no-cache-dir dtreeviz==1.3.2
 
+# 2022-03-23
+RUN pip install --no-cache-dir ipywidgets
+
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH \
     LC_ALL=C.UTF-8
 
