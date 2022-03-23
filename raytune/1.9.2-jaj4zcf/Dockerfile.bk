@@ -1,0 +1,67 @@
+FROM mambaorg/micromamba:0.22.0 AS build
+USER root
+
+COPY requirements.txt .
+COPY environment.yml .
+
+RUN micromamba create -p /raytune -f environment.yml && \
+    micromamba clean -ay
+
+ENV PATH=/raytune/bin:$PATH
+
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04 AS lib
+ARG LIBNVINFER=6.0.1-1
+ARG LIBNVINFER_MAJOR_VERSION=6
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda10.1 \
+        libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda10.1 && \
+    rm -rf /var/lib/apt/lists/*
+
+FROM debian:buster-slim
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libhdf5-serial-dev \
+        libzmq3-dev \
+        libsm6 libxext6 libxrender1 && \
+    rm -rf /var/lib/apt/lists/*
+
+# CUDA libraries
+COPY --from=lib /usr/local/cuda/compat /usr/local/cuda/compat
+COPY --from=lib /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+COPY --from=lib \
+    /usr/local/cuda/lib64/libcudart.so.10.1 \
+    /usr/local/cuda/lib64/libcufft.so.10 \
+    /usr/local/cuda/lib64/libcufftw.so.10 \
+    /usr/local/cuda/lib64/libcuinj64.so.10.1 \
+    /usr/local/cuda/lib64/libcurand.so.10 \
+    /usr/local/cuda/lib64/libcusolver.so.10 \
+    /usr/local/cuda/lib64/libcusolverMg.so.10 \
+    /usr/local/cuda/lib64/libcusparse.so.10 \
+    /usr/local/cuda/lib64/libnvrtc.so.10.1 \
+    /usr/local/cuda/lib64/libnvrtc-builtins.so.10.1 \
+    /usr/local/cuda/lib64/
+COPY --from=lib \
+    /usr/lib/x86_64-linux-gnu/libcublas.so.10 \
+    /usr/lib/x86_64-linux-gnu/libcublasLt.so.10 \
+    /usr/lib/x86_64-linux-gnu/libcudnn.so.7 \
+    /usr/lib/x86_64-linux-gnu/libnvinfer.so.6 \
+    /usr/lib/x86_64-linux-gnu/libnvinfer_plugin.so.6 \
+    /usr/lib/x86_64-linux-gnu/
+COPY --from=lib /usr/local/cuda/extras/CUPTI/lib64 /usr/local/cuda/extras/CUPTI/lib64
+
+COPY --from=build /raytune /raytune
+
+ENV PATH=/raytune/bin:$PATH \
+    LD_LIBRARY_PATH=/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:$LD_LIBRARY_PATH \
+    PYTHONPATH=/raytune/lib/python3.8/site-packages \
+    LC_ALL=C.UTF-8
+
+LABEL maintainer=hpc-support@virginia.edu \
+      homepage=https://docs.ray.io/en/latest/ \
+      description="Ray is an open-source project developed at UC Berkeley RISE Lab. As a general-purpose and universal distributed compute framework, you can flexibly run any compute-intensive Python workload from distributed training or hyperparameter tuning to deep reinforcement learning and production model serving." \
+      gpu=true \
+      moduleclass=data
+
+ENTRYPOINT ["python"]
