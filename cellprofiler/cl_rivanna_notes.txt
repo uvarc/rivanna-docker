@@ -1,0 +1,26 @@
+#pt8bm@virginia.edu good
+#dt4tx@virginia.edu good
+#yp8xd@virginia.edu good
+#as9qn@virginia.edu good
+#nm2fs@virginia.edu good
+#wqp2cf@virginia.edu good
+#yz6k@virginia.edu good
+#qy5sy@virginia.edu good
+#cep7j@virginia.edu good
+#jcr5wj@virginia.edu good
+#xfj3tk@virginia.edu good
+#lss4f@virginia.edu good
+#sjs7w@virginia.edu good
+
+# Point out that $ is used to designate variables.
+# unix recognizes any white space as splitting apart arguments.
+# Either use _ or use quotations when naming anything that has a space
+# bash command
+# distinction betwenn > and |, file to command vs command to command
+# idea of path w regard to executables, how this relates to enviornments.
+# large jobs run on home are killed
+# &&
+# sudo
+# current dir can also be refered to as nothing, with regard to ls, touch, mv, etc, excpet for cd command
+# requesting paralell resources on works if code is written to take advantage of them
+# the less resource you request the sooner the scheduler will fit you in
