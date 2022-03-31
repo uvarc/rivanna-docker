@@ -32,7 +32,7 @@
 # DEALINGS IN THE SOFTWARE.
 #
 # 2021-11-11
-# Modified from DeepMind's Dockerfile_old by Ruoshi Sun, UVA Research Computing
+# Modified from DeepMind's Dockerfile by Ruoshi Sun, UVA Research Computing
 #
 # Summary of changes:
 #   [Official] -> [Current]
