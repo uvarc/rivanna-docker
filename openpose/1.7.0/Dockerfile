@@ -24,6 +24,7 @@ RUN mkdir build && cd build && cmake .. && make -j `nproc`
 FROM ubuntu:20.04
 COPY --from=build /openpose/build/examples/openpose/openpose.bin /openpose/build/examples/openpose/openpose.bin
 COPY --from=build /openpose/models /openpose/models
+COPY --from=build /openpose/examples /openpose/examples
 COPY --from=build /openpose/LICENSE /openpose/LICENSE
 COPY --from=build /openpose/build/caffe/lib/libcaffe.so.1.0.0 /openpose/build/caffe/lib/libcaffe.so.1.0.0
 COPY --from=build /openpose/build/src/openpose/libopenpose.so.1.7.0 /openpose/build/src/openpose/libopenpose.so.1.7.0
