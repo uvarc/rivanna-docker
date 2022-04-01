@@ -296,6 +296,13 @@ COPY --from=build \
 
 COPY --from=build /usr/local/cuda/targets/x86_64-linux/lib/libOpenCL.so.1 /usr/local/cuda/targets/x86_64-linux/lib/libOpenCL.so.1
 
+COPY --from=build /lib/x86_64-linux-gnu/libcudnn_ops_infer.so.8 /lib/x86_64-linux-gnu/libcudnn_ops_infer.so.8
+
+COPY --from=build \
+    /lib/x86_64-linux-gnu/libcudnn_adv_infer.so.8 \
+    /lib/x86_64-linux-gnu/libcudnn_cnn_infer.so.8 \
+    /lib/x86_64-linux-gnu/
+
 ENV PATH=/openpose/build/examples/openpose:$PATH \
     LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib:$LD_LIBRARY_PATH \
     LC_ALL=C.UTF-8
