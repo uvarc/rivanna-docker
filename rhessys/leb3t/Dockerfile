@@ -53,6 +53,12 @@ RUN locale-gen en_US.UTF-8
 
 RUN R -e 'install.packages(c("sp", "XML", "rgdal"))'
 RUN R -e 'install.packages("rgrass7")'
+
+# netCDF Operator
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        nco && \
+    rm -rf /var/lib/apt/lists/*
+
 ENV LC_ALL=en_US.UTF-8
 
 LABEL maintainer=rs7wz@virginia.edu
