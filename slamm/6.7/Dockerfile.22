@@ -1,0 +1,24 @@
+FROM ubuntu:20.04
+RUN dpkg --add-architecture i386 
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        wget software-properties-common gpg-agent dirmngr && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key && \
+    apt-key add winehq.key && \
+    apt-get update
+
+RUN wget -nc https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources && \
+    mv winehq-jammy.sources /etc/apt/sources.list.d/
+
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 76F1A20FF987672F
+#RUN add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
+
+RUN apt-get update && apt-get install -y --install-recommends \
+        winehq-stable && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget --no-check-certificate \
+        https://github.com/WarrenPinnacle/SLAMM6.7/blob/master/EXE/64-bit/slamm6.exe \
+        https://github.com/WarrenPinnacle/SLAMM6.7/blob/master/EXE/64-bit/SLAMM6.INI
