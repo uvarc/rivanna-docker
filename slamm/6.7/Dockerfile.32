@@ -1,0 +1,7 @@
+FROM i386/ubuntu:20.04
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        wine32 wine wget && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget --no-check-certificate https://github.com/WarrenPinnacle/SLAMM6.7/raw/master/INSTALL/Release/Single/SLAMM6.7_64-bit.exe && \
+    wine SLAMM6.7_64-bit.exe 
