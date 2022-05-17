@@ -1,0 +1,26 @@
+ARG FEDORA=35
+
+FROM fedora:${FEDORA}
+ARG FEDORA
+
+RUN dnf -y update && dnf -y install dnf-plugins-core && dnf clean all
+
+RUN dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/${FEDORA}/winehq.repo && \
+    dnf -y install \
+        winehq-stable wine-mono wget && \
+    dnf clean all
+
+RUN wget --no-check-certificate \
+        https://github.com/WarrenPinnacle/SLAMM6.7/blob/master/EXE/64-bit/slamm6.exe \
+        https://github.com/WarrenPinnacle/SLAMM6.7/blob/master/EXE/64-bit/SLAMM6.INI \
+        https://raw.githubusercontent.com/WarrenPinnacle/SLAMM6.7/master/EXE/SLAMM_License.txt
+
+ENV WINEDEBUG=fixme-all \
+    WINEARCH=win64
+
+RUN wget https://dl.winehq.org/wine/wine-mono/7.0.0/wine-mono-7.0.0-x86.msi && \
+    wineboot -u && \
+    msiexec /i wine-mono-7.0.0-x86.msi /q && \
+    rm wine-mono-7.0.0-x86.msi
+
+ENTRYPOINT ["wine", "slamm6.exe"]
