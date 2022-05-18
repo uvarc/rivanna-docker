@@ -18,9 +18,4 @@ RUN wget --no-check-certificate \
 ENV WINEDEBUG=fixme-all \
     WINEARCH=win64
 
-RUN wget https://dl.winehq.org/wine/wine-mono/7.0.0/wine-mono-7.0.0-x86.msi && \
-    wineboot -u && \
-    msiexec /i wine-mono-7.0.0-x86.msi /q && \
-    rm wine-mono-7.0.0-x86.msi
-
 ENTRYPOINT ["wine", "slamm6.exe"]
