@@ -59,6 +59,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         nco && \
     rm -rf /var/lib/apt/lists/*
 
+RUN micromamba install -p /env -c conda-forge nodejs && \
+    micromamba clean -ya && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-leaflet
+
+RUN pip install --no-cache-dir earthengine-api==0.1.315
+
 ENV LC_ALL=en_US.UTF-8
 
 LABEL maintainer=rs7wz@virginia.edu
