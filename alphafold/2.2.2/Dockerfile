@@ -75,7 +75,7 @@ RUN cmake -DCMAKE_INSTALL_PREFIX=/opt/hhsuite .. \
 RUN micromamba create -p $CONDADIR -c conda-forge -c nvidia \
       python=3.8 \
       openmm=7.5.1 \
-      cudatoolkit=${CUDA} \
+      cudatoolkit=${CUDA}.1 \
       cudnn=${CUDNN} \
       pdbfixer \
       pip \
@@ -93,13 +93,13 @@ RUN wget -q -P /app/alphafold/alphafold/common/ \
 # Install pip packages.
 RUN $CONDADIR/bin/pip install --upgrade --no-cache-dir pip \
     && $CONDADIR/bin/pip install --no-cache-dir -r /app/alphafold/requirements.txt
-RUN $CONDADIR/bin/pip install --upgrade --no-cache-dir jax==0.2.14 jaxlib==0.1.69+cuda${CUDA/./} -f https://storage.googleapis.com/jax-releases/jax_releases.html
+RUN $CONDADIR/bin/pip install --upgrade --no-cache-dir jax==0.2.14 jaxlib==0.1.69+cuda${CUDA/./} -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
 # Apply OpenMM patch.
 WORKDIR $CONDADIR/lib/python3.8/site-packages
 RUN patch -p0 < /app/alphafold/docker/openmm.patch
 
-FROM nvidia/cuda:${CUDA}-devel-ubuntu18.04 AS lib
+FROM nvidia/cuda:${CUDA}.1-devel-ubuntu18.04 AS lib
 
 FROM debian:bullseye-slim
 ARG CONDADIR
