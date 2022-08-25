@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: isaacgym
+Version: 1.0rc4
+Summary: GPU-accelerated simulation and reinforcement learning toolkit
+Home-page: http://developer.nvidia.com/isaac-gym
+Author: NVIDIA CORPORATION
+Author-email: 
+License: Copyright (c) 2020-2022, NVIDIA CORPORATION.  All rights reserved.
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.6,<3.9
