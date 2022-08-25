@@ -53,13 +53,9 @@ COPY --from=build /opt/RNAEditor-RNAEditor_v1.0 /opt/RNAEditor
 # Java
 COPY --from=build /opt/jdk1.7.0_80/ /usr/local/java
 
-# Python
-COPY --from=py /opt/RNAEditor-env /opt/RNAEditor-env
-
 ENV JAVA_HOME=/usr/local/java \
     JRE_HOME=/usr/local/java \
-    PATH=$PATH:$JAVA_HOME/bin \
-    PYTHONPATH=/opt/RNAEditor-env/lib/python2.7/site-packages
+    PATH=$PATH:$JAVA_HOME/bin
 
 RUN update-alternatives --install "/usr/bin/java" "java" "/usr/local/java/bin/java" 1 && \
     update-alternatives --install "/usr/bin/javac" "javac" "/usr/local/java/bin/javac" 1 && \
@@ -67,6 +63,13 @@ RUN update-alternatives --install "/usr/bin/java" "java" "/usr/local/java/bin/ja
     update-alternatives --set java /usr/local/java/bin/java && \
     update-alternatives --set javac /usr/local/java/bin/javac && \
     update-alternatives --set javaws /usr/local/java/bin/javaws
+
+# Python
+COPY --from=py /opt/RNAEditor-env /opt/RNAEditor-env
+
+ENV PATH=/opt/RNAEditor:/opt/RNAEditor-env/bin:$PATH \
+    LD_LIBRARY_PATH=/opt/RNAEditor-env/lib:$PATH \
+    PYTHONPATH=/opt/RNAEditor-env/lib/python3.6/site-packages
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         perl && \
@@ -80,10 +83,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/RNAEditor
-RUN sed -i 's/07/0o7/g' RNAEditor.py
 
-ENV PATH=/opt/RNAEditor:/opt/RNAEditor-env/bin:$PATH \
-    LD_LIBRARY_PATH=/opt/RNAEditor-env/lib:$PATH
+# 0755 -> 0o755
+RUN sed -i 's/07/0o7/g' RNAEditor.py
 
 LABEL maintainer=rs7wz@virginia.edu \
       homepage=https://github.com/djhn75/RNAEditor \
