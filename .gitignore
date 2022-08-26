@@ -1,4 +1,5 @@
 pytorch/1.6.0/Dockerfile.src
+isaacgym-src
 *.swp
 *.tar.*
 .DS_Store
