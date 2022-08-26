@@ -42,8 +42,8 @@ ENV LANG=C.UTF-8 \
     LD_LIBRARY_PATH=/opt/isaacgym/python/isaacgym/_bindings/linux-x86_64:$LD_LIBRARY_PATH
 
 LABEL maintainer=rs7wz@virginia.edu \
-      homepage=https://www.pytorch.org \
-      description="PyTorch is a deep learning framework that puts Python first. It provides Tensors and Dynamic neural networks in Python with strong GPU acceleration." \
+      homepage=https://developer.nvidia.com/isaac-gym \
+      description="NVIDIA’s physics simulation environment for reinforcement learning research." \
       gpu=true \
       moduleclass=data
 
