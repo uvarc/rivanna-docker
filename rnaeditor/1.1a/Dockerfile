@@ -26,24 +26,50 @@ RUN wget https://downloads.sourceforge.net/project/picard/picard-tools/1.119/pic
     mv picard-tools-1.119/*.jar /usr/local/bin/picard-tools
 
 # BLAT
-RUN wget -P /usr/local/bin https://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/blat/blat
+RUN wget -P /usr/local/bin https://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/blat/blat && \
+    chmod +x /usr/local/bin/blat
 
 # GATK
+RUN mkdir /usr/local/bin/GATK
 RUN wget https://storage.googleapis.com/gatk-software/package-archive/gatk/GenomeAnalysisTK-3.5-0-g36282e4.tar.bz2 && \
     tar xf GenomeAnalysisTK-3.5-0-g36282e4.tar.bz2 && \
-    mv GenomeAnalysisTK.jar /usr/local/bin && \
+    mv GenomeAnalysisTK.jar /usr/local/bin/GATK && \
     rm GenomeAnalysisTK-3.5-0-g36282e4.tar.bz2
 
+# Bedtools
+RUN wget -P /usr/local/bin -O bedtools \
+        https://github.com/arq5x/bedtools2/releases/download/v2.30.0/bedtools.static.binary && \
+    chmod +x bedtools
+
+# Samtools
+RUN wget https://github.com/samtools/samtools/releases/download/1.5/samtools-1.5.tar.bz2 && \
+    tar xf samtools-1.5.tar.bz2 && rm samtools-1.5.tar.bz2
+RUN cd samtools-1.5 && ./configure && make && make install
+
 # RNAEditor
-RUN wget https://github.com/djhn75/RNAEditor/archive/refs/tags/RNAEditor_v1.1_alpha.tar.gz && \
-    tar xf RNAEditor_v1.1_alpha.tar.gz && rm RNAEditor_v1.1_alpha.tar.gz
+#RUN wget https://github.com/djhn75/RNAEditor/archive/refs/tags/RNAEditor_v1.1_alpha.tar.gz && \
+    #tar xf RNAEditor_v1.1_alpha.tar.gz && rm RNAEditor_v1.1_alpha.tar.gz
+RUN wget https://github.com/djhn75/RNAEditor/archive/refs/heads/master.zip && \
+    unzip master.zip && rm master.zip
 
 # Java
 ADD jdk-7u80-linux-x64.tar.gz .
 
 FROM ubuntu:20.04
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        perl \
+        python3-numpy python3-pysam python3-matplotlib python3-pip python3-tk \
+        libgl1-mesa-glx libglib2.0-0 libnss3 libxcomposite1 libxdamage1 \
+        libxrender1 libxrandr2 libxcursor1 libxi6 libxtst6 libxkbcommon0 \
+        libdbus-1-3 libasound2 libfontconfig1 \
+        libcurl4 \
+        qt5-default && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /usr/local/bin /usr/local/bin
-COPY --from=build /opt/RNAEditor-RNAEditor_v1.1_alpha /opt/RNAEditor
+#COPY --from=build /opt/RNAEditor-RNAEditor_v1.1_alpha /opt/RNAEditor
+COPY --from=build /opt/RNAEditor-master /opt/RNAEditor
 
 # Java
 COPY --from=build /opt/jdk1.7.0_80/ /usr/local/java
@@ -59,23 +85,11 @@ RUN update-alternatives --install "/usr/bin/java" "java" "/usr/local/java/bin/ja
     update-alternatives --set javac /usr/local/java/bin/javac && \
     update-alternatives --set javaws /usr/local/java/bin/javaws
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        perl \
-        python3-numpy python3-pysam python3-matplotlib python3-pip && \
-    rm -rf /var/lib/apt/lists/*
-
 RUN pip install --no-cache-dir PyQt5 PyQtWebEngine
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        libgl1-mesa-glx libglib2.0-0 libnss3 libxcomposite1 libxdamage1 \
-        libxrender1 libxrandr2 libxcursor1 libxi6 libxtst6 libxkbcommon0 \
-        libdbus-1-3 libasound2 libfontconfig1 \
-        qt5-default && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        python3-tk && \
-    rm -rf /var/lib/apt/lists/*
+#
+RUN ln -s /usr/bin/java /usr/local/bin/java
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 WORKDIR /opt/RNAEditor
 ENV PATH=/opt/RNAEditor:$PATH
