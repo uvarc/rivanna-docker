@@ -92,6 +92,10 @@ RUN ln -s /usr/bin/java /usr/local/bin/java
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 WORKDIR /opt/RNAEditor
+# debug
+#RUN sed -i '195a\            Helper.error("%s %s" % (os.system("which java"), os.system("java -version")), self.logFile,self.textField)' RNAEditor.py
+RUN sed -i '195,196d' RNAEditor.py
+
 ENV PATH=/opt/RNAEditor:$PATH
 
 LABEL maintainer=rs7wz@virginia.edu \
