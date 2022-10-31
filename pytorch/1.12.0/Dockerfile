@@ -29,8 +29,21 @@ RUN pip install --no-cache-dir \
 # pytorch-lightning: need bleeding edge for compatibility with torchtext
 RUN pip install --no-cache-dir https://github.com/PyTorchLightning/pytorch-lightning/archive/master.zip
 
+# RIV-9432: PyG
+RUN pip install --no-cache-dir \
+        torch-scatter==2.0.9 \
+        torch-sparse==0.6.15 \
+        torch-cluster==1.6.0 \
+        torch-spline-conv==1.2.1 \
+        torch-geometric==2.1.0 \
+        -f https://data.pyg.org/whl/torch-${VERSION}+cu113.html
+
+RUN pip install --no-cache-dir torch_geometric_temporal==0.54.0
+
 RUN apt-get update && apt-get install -y --no-install-recommends lsof && \
     rm -rf /var/lib/apt/lists/*
+
+FROM nvidia/cuda:11.3.1-runtime-ubuntu20.04 AS lib
 
 FROM python:3.9.13-slim-bullseye
 COPY --from=py /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
@@ -116,7 +129,10 @@ COPY --from=py \
     /usr/lib/x86_64-linux-gnu/libsox.so.3 \
     /usr/lib/x86_64-linux-gnu/
 
-ENV LD_LIBRARY_PATH=/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/local/lib:$LD_LIBRARY_PATH \
+# PyG
+COPY --from=lib /usr/local/cuda/lib64/libcusparse.so.11 /usr/local/cuda/lib64/libcusparse.so.11
+
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/local/lib:$LD_LIBRARY_PATH \
     LANG=C.UTF-8
 
 LABEL maintainer=rs7wz@virginia.edu \
