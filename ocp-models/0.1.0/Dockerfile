@@ -62,6 +62,7 @@ RUN pip install --no-cache-dir setuptools==57.5.0 && \
         demjson
 
 WORKDIR /opt
+ARG VERSION
 RUN wget https://github.com/Open-Catalyst-Project/ocp/archive/refs/tags/v${VERSION}.tar.gz && \
     tar xf v${VERSION}.tar.gz && rm v${VERSION}.tar.gz
 
@@ -95,8 +96,7 @@ ENV PATH=$DIR/bin:$PATH \
 
 # missing dependencies, functions, libraries
 RUN pip install --no-cache-dir ray
-COPY --from=build $SRC/ocpmodels/models/gemnet /ocp-models/lib/python${PYTHON_VERSION}/site-packages/ocpmodels/models/gemnet
-COPY --from=build $SRC/ocpmodels/models/utils  /ocp-models/lib/python${PYTHON_VERSION}/site-packages/ocpmodels/models/utils
+COPY --from=build $SRC/ocpmodels/models /ocp-models/lib/python${PYTHON_VERSION}/site-packages/ocpmodels/models
 COPY --from=lib /usr/local/cuda/lib64/libcusparse.so.11 /usr/local/cuda/lib64/libcusparse.so.11
 COPY --from=lib /usr/local/cuda/lib64/libcudart.so.11.0 /usr/local/cuda/lib64/libcudart.so.11.0
 
