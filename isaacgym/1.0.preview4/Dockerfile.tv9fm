@@ -1,0 +1,21 @@
+FROM uvarc/isaacgym:1.0.preview4
+
+# RIV-10164 "No such file or directory: Xvfb"
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        xvfb && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir xvfbwrapper pyvirtualdisplay
+
+ENV LANG=C.UTF-8 \
+    NVIDIA_VISIBLE_DEVICES=all \
+    NVIDIA_DRIVER_CAPABILITIES=all \
+    LD_LIBRARY_PATH=/opt/isaacgym/python/isaacgym/_bindings/linux-x86_64:/usr/local/cuda/targets/x86_64-linux/lib:$LD_LIBRARY_PATH
+
+LABEL maintainer=rs7wz@virginia.edu \
+      homepage=https://developer.nvidia.com/isaac-gym \
+      description="NVIDIA’s physics simulation environment for reinforcement learning research." \
+      gpu=true \
+      moduleclass=data
+
+ENTRYPOINT ["python"]
