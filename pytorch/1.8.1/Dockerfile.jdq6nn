@@ -1,6 +1,0 @@
-# RIV-10250
-FROM uvarc/pytorch:1.8.1
-RUN apt-get update && apt-get install -y --no-install-recommends g++ && \
-    rm -rf /var/lib/apt/lists/*
-
-ENTRYPOINT ["python"]
