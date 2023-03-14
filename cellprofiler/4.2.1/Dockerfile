@@ -25,10 +25,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ENV PATH=/cp4/bin:$PATH \
     JAVA_HOME=/cp4
 
+RUN pip install --no-cache-dir pyzmq==24.0.1
 RUN pip install --no-cache-dir cellprofiler==4.2.1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        lsof && \
+        libxxf86vm lsof && \
     rm -rf /var/lib/apt/lists/*
 
 FROM debian:bullseye-slim
