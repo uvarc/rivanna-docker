@@ -134,6 +134,7 @@ python /app/alphafold/run_alphafold.py "$@"' > /app/run_alphafold.sh \
   && chmod +x /app/run_alphafold.sh
 
 ENV PATH=$CONDADIR/bin:$PATH \
+    LD_LIBRARY_PATH=$CONDADIR/lib:$LD_LIBRARY_PATH \
     PYTHONPATH=$CONDADIR/lib/python3.8/site-packages \
     LC_ALL=C.UTF-8
 
