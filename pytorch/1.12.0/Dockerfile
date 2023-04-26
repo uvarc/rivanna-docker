@@ -5,12 +5,13 @@ RUN pip install --no-cache-dir -U pip numpy==1.23.1 scipy==1.8.1 && \
     pip install --no-cache-dir \
         torch==${VERSION}+cu113 torchvision==0.13.0+cu113 torchaudio==0.12.0+cu113 --extra-index-url https://download.pytorch.org/whl/cu113
 
-# dependencies for torchaudio, openslide, opencv
+# dependencies for torchaudio, openslide, opencv, poppler
 RUN apt-get update && apt-get install -y --no-install-recommends \
         sox \
         libsndfile1 \
         gcc libc6-dev openslide-tools \
-        libgl1 libsm6 libxext6 libxrender1 libgtk-3-dev libavcodec-dev libavformat-dev libswscale-dev && \
+        libgl1 libsm6 libxext6 libxrender1 libgtk-3-dev libavcodec-dev libavformat-dev libswscale-dev \
+        libpoppler-cpp-dev && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir \
@@ -38,7 +39,14 @@ RUN pip install --no-cache-dir \
         torch-geometric==2.1.0 \
         -f https://data.pyg.org/whl/torch-${VERSION}+cu113.html
 
-RUN pip install --no-cache-dir torch_geometric_temporal==0.54.0
+# dependencies for poppler
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        g++ && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir \
+        torch_geometric_temporal==0.54.0 \
+        python-poppler==0.4.0
 
 RUN apt-get update && apt-get install -y --no-install-recommends lsof && \
     rm -rf /var/lib/apt/lists/*
@@ -131,6 +139,11 @@ COPY --from=py \
 
 # PyG
 COPY --from=lib /usr/local/cuda/lib64/libcusparse.so.11 /usr/local/cuda/lib64/libcusparse.so.11
+
+# SUP-3040: poppler; add gcc/g++ for user pip installations
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libpoppler-cpp0v5 gcc g++ && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/local/lib:$LD_LIBRARY_PATH \
     LANG=C.UTF-8
