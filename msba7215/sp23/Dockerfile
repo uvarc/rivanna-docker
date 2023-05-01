@@ -25,7 +25,8 @@ RUN apt-get update && apt-get install git-lfs && rm -rf /var/lib/apt/lists/*
 
 # RIV-10993 "Error displaying widget: model not found"
 RUN pip install --no-cache-dir \
-        jupyterlab_widgets==1.0.2 ipywidgets==7.6.5
+        jupyterlab_widgets==1.0.2 ipywidgets==7.6.5 \
+        datasets==2.12.0
 
 LABEL maintainer=rs7wz@virginia.edu
 
