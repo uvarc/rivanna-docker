@@ -151,6 +151,7 @@ COPY --from=build \
 
 COPY --from=build /opt/LISF-${VERSION}-public/LICENSE.txt /LICENSE.txt
 COPY --from=build /opt/LISF-${VERSION}-public/lis/LICENSES /LICENSES
+COPY --from=build /opt/LISF-${VERSION}-public/ldt/LICENSES/UCSB_FAME_bias_correction_and_metrics_License.docx /LICENSES
 
 ENV PATH=/:/opt/esmf/bin/binO/Linux.gfortran.64.mpiuni.default:$PATH \
     LD_LIBRARY_PATH=/opt/esmf/lib/libO/Linux.gfortran.64.mpiuni.default:$LD_LIBRARY_PATH
