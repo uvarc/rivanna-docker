@@ -28,9 +28,22 @@ USER $MAMBA_USER
 COPY --chown=$MAMBA_USER:$MAMBA_USER env.yaml /tmp/env.yaml
 RUN micromamba install -n base -f /tmp/env.yaml && micromamba clean -ya
 
+WORKDIR /opt
+
+# RIV-6264
+ARG SCALA=2.13 \
+    KAFKA=2.8.2
+ARG KAFKA_TGZ=kafka_${SCALA}-${KAFKA}.tgz
+
+USER root
+RUN wget -q https://archive.apache.org/dist/kafka/${KAFKA}/${KAFKA_TGZ} && \
+    tar xf $KAFKA_TGZ && \
+    rm $KAFKA_TGZ
+
+USER $MAMBA_USER
 WORKDIR $HOME
 
-ENV PATH=/opt/conda/bin:$PATH \
+ENV PATH=/opt/conda/bin:/opt/kafka_${SCALA}-${KAFKA}/bin:$PATH \
     LD_LIBRARY_PATH=/opt/conda/lib:$LD_LIBRARY_PATH \
     PYTHONPATH=/opt/conda/lib/python3.7/site-packages \
     LC_ALL=C.UTF-8 \
