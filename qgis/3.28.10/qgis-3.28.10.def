@@ -1,0 +1,24 @@
+# RIV-12180
+Bootstrap: docker
+From: ubuntu:23.10
+
+%labels
+    Maintainer rs7wz@virginia.edu
+
+%post
+    apt update
+    apt install -y --no-install-recommends \
+        wget ca-certificates \
+        qgis qgis-plugin-grass \
+        openmpi-bin
+    rm -rf /var/lib/apt/lists/*
+
+# SWAT
+    wget https://plus.swat.tamu.edu/downloads/2.3/2.3.1/swatplus-linux-installer-2.3.1.tgz
+    rm -rf /var/lib/apt/lists/*
+    tar xf swatplus-linux-installer-2.3.1.tgz
+    ./installforall.sh
+    rm *.sh
+
+%runscript
+    exec qgis "$@"
