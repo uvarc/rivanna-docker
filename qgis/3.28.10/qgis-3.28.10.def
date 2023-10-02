@@ -2,9 +2,6 @@
 Bootstrap: docker
 From: ubuntu:23.10
 
-%labels
-    Maintainer rs7wz@virginia.edu
-
 %post
     apt update
     apt install -y --no-install-recommends \
@@ -22,3 +19,9 @@ From: ubuntu:23.10
 
 %runscript
     exec qgis "$@"
+
+%environment
+    export QSWAT_PROJECT=/usr/share/qgis/python/plugins/QSWATPlusLinux3_64
+
+%labels
+    Maintainer rs7wz@virginia.edu
