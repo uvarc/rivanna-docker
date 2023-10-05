@@ -1,6 +1,6 @@
 # RIV-12180
 Bootstrap: docker
-From: ubuntu:23.10
+From: ubuntu:22.04
 
 %post
     apt-get update
@@ -16,15 +16,17 @@ From: ubuntu:23.10
     tar xf swatplus-linux-installer-2.3.1.tgz
     ./installforall.sh
     rm *.sh
+
     chmod -R o+rx /usr/share/qgis/python/plugins/QSWATPlusLinux3_64
-    chmod -R o+rx /usr/local/share/SWATPlus
+
+# https://stackoverflow.com/questions/63627955/cant-load-shared-library-libqt5core-so-5
+    strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
 
 %runscript
     exec qgis "$@"
 
 %environment
     export QSWAT_PROJECT=/usr/share/qgis/python/plugins/QSWATPlusLinux3_64
-    export LC_ALL=C.UTF-8
 
 %labels
     Maintainer rs7wz@virginia.edu
