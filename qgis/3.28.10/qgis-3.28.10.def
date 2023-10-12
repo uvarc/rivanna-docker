@@ -7,17 +7,23 @@ From: ubuntu:23.10
     apt-get install -y --no-install-recommends \
         wget ca-certificates \
         qgis qgis-plugin-grass \
-        openmpi-bin
+        openmpi-bin \
+        libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libpango-1.0-0 \
+        libxcomposite1 libxdamage1 libxrandr2 libasound2 libatspi2.0-0
     rm -rf /var/lib/apt/lists/*
 
 # SWAT
-    wget https://plus.swat.tamu.edu/downloads/2.3/2.3.1/swatplus-linux-installer-2.3.1.tgz
+    wget -q https://plus.swat.tamu.edu/downloads/2.3/2.3.1/swatplus-linux-installer-2.3.1.tgz
     rm -rf /var/lib/apt/lists/*
     tar xf swatplus-linux-installer-2.3.1.tgz
     ./installforall.sh
     rm *.sh
     chmod -R o+rx /usr/share/qgis/python/plugins/QSWATPlusLinux3_64
     chmod -R o+rx /usr/local/share/SWATPlus
+    chmod 4755 /usr/local/share/SWATPlus/SWATPlusEditor/chrome-sandbox
+
+# soil model
+    wget -q https://bitbucket.org/swatplus/swatplus.editor/downloads/swatplus_soils.sqlite -P /usr/local/share/SWATPlus/Databases
 
 # $ /usr/local/share/SWATPlus/TauDEM5Bin/pitremove 
 # ./pitremove: error while loading shared libraries: libgdal.so.30: cannot open shared object file: No such file or directory
@@ -28,6 +34,7 @@ From: ubuntu:23.10
 
 %environment
     export QSWAT_PROJECT=/usr/share/qgis/python/plugins/QSWATPlusLinux3_64
+    export LD_LIBRARY_PATH=/usr/local/share/SWATPlus/SWATPlusEditor:$LD_LIBRARY_PATH
     export LC_ALL=C.UTF-8
 
 %labels
