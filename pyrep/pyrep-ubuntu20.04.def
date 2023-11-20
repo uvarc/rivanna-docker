@@ -1,0 +1,34 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%post
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive TZ=America/New_York apt-get install -y --no-install-recommends tzdata
+    apt-get install -y --no-install-recommends \
+        wget ca-certificates git xz-utils \
+        gcc python3-dev python3-pip \
+        qt5-default libsodium23 \
+        xorg libxcb-randr0-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-0 libavcodec-dev libavformat-dev libswscale-dev
+    rm -rf /var/lib/apt/lists/*
+
+    cd /opt
+    wget -q https://www.coppeliarobotics.com/files/CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz
+    tar xf CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz
+    rm CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz
+
+    export COPPELIASIM_ROOT=/opt/CoppeliaSim_Edu_V4_1_0_Ubuntu20_04 \
+           LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$COPPELIASIM_ROOT \
+           QT_QPA_PLATFORM_PLUGIN_PATH=$COPPELIASIM_ROOT
+    git clone https://github.com/stepjam/PyRep.git
+    cd PyRep
+    pip3 install -r requirements.txt
+    pip3 install .
+
+%environment
+    export COPPELIASIM_ROOT=/opt/CoppeliaSim_Edu_V4_1_0_Ubuntu20_04
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$COPPELIASIM_ROOT
+    export QT_QPA_PLATFORM_PLUGIN_PATH=$COPPELIASIM_ROOT
+    export QT_PLUGIN_PATH=/usr/lib/x86_64-linux-gnu/qt5/plugins
+
+%runscript
+    python3
