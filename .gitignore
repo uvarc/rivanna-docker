@@ -6,3 +6,4 @@ isaacgym-src
 .DS_Store
 echolocator/*
 lammps
+*.core
