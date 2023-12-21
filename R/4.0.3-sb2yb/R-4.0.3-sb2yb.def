@@ -1,0 +1,30 @@
+Bootstrap: docker
+From: rocker/r-ver:4.0.3
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        libxml2 libglpk40
+    rm -rf /var/lib/apt/lists/*
+    R -e "install.packages('dplyr')"
+    R -e "install.packages('tidyr')"
+    R -e "install.packages('splitstackshape')"
+    R -e "install.packages('foreach')"
+    R -e "install.packages('doParallel')"
+    R -e "install.packages('lme4')"
+    R -e "install.packages('doRNG')"
+    R -e "install.packages('Rlab')"
+    R -e "install.packages('remotes')"
+    R -e 'remotes::install_github("MaxMenssen/predint")'
+
+    export LD_LIBRARY_PATH=/usr/local/lib/R/lib:$LD_LIBRARY_PATH
+    R -e 'remotes::install_github("BS1125/CMAverse")'
+
+%environment
+    export LD_LIBRARY_PATH=/usr/local/lib/R/lib:$LD_LIBRARY_PATH
+
+%labels
+    Maintainer rs7wz@virginia.edu
+
+%help
+    Custom container solution for sb2yb in RIV-12981
