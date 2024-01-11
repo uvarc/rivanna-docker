@@ -29,8 +29,8 @@ Each version should reside in its own directory with a `README.md`. Here is a su
 
 Usage on Rivanna:
 ```
-module load singularity
-singularity pull docker://uvarc/<app>:<tag>
+module load apptainer
+apptainer pull docker://uvarc/<app>:<tag>
 ./<app>_<tag>.sif
 ```
 ````
