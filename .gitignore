@@ -7,3 +7,5 @@ isaacgym-src
 echolocator/*
 lammps
 *.core
+*.zip
+*.rpm
