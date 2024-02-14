@@ -1,0 +1,44 @@
+Bootstrap: docker
+From: ubuntu:16.04
+Stage: devel
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        gcc cmake build-essential \
+        libopenmpi-dev openmpi-bin wget ca-certificates
+    rm -rf /var/lib/apt/lists/*
+
+    wget https://github.com/gromacs/gromacs/archive/refs/tags/v2016.3.tar.gz
+    tar xf v2016.3.tar.gz
+    rm v2016.3.tar.gz
+    cd gromacs-2016.3
+    mkdir build
+    cd build
+    cmake .. -DGMX_BUILD_OWN_FFTW=on -DGMX_MPI=on
+    make
+    make install
+
+Bootstrap: docker
+From: ubuntu:16.04
+Stage: final
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        gcc libopenmpi-dev openmpi-bin
+    rm -rf /var/lib/apt/lists/*
+
+%files from devel
+    /usr/local/gromacs /usr/local/gromacs
+
+%environment
+    export PATH=/usr/local/gromacs/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/gromacs/lib:$LD_LIBRARY_PATH
+
+%runscript
+    source /usr/local/gromacs/bin/GMXRC
+    gmx_mpi "$@"
+
+%labels
+    Author rs7wz@virginia.edu
