@@ -24,18 +24,18 @@ From: nvidia/cuda:11.3.1-runtime-ubuntu20.04
     wget https://github.com/haosulab/ManiSkill2/raw/main/docker/nvidia_layers.json -P /etc/vulkan/implicit_layer.d
 
     wget https://github.com/haosulab/ManiSkill2/raw/main/requirements.txt
-	pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt
     rm requirements.txt
 
     pip install --no-cache-dir mani-skill2==0.5.3
 
-	pip install --no-cache-dir matplotlib seaborn diffusers threadpoolctl scikit-learn ipykernel
+    pip install --no-cache-dir matplotlib seaborn diffusers threadpoolctl scikit-learn ipykernel
 
 %environment
     export NVIDIA_DRIVER_CAPABILITIES=all
 
 %runscript
-	python "$@"
+    python "$@"
 
 %labels
-	Author Ruoshi Sun
+    Author Ruoshi Sun
