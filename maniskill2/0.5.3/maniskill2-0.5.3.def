@@ -1,0 +1,41 @@
+Bootstrap: docker
+From: nvidia/cuda:11.3.1-runtime-ubuntu20.04
+
+%post
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        ca-certificates \
+        libegl1 \
+        libxext6 \
+        libjpeg62 \
+        libglib2.0-0 \
+        libpng-dev  \
+        libvulkan1 \
+        vulkan-utils \
+        wget \
+        xvfb \
+        python3.8-minimal python3-pip
+    rm -rf /var/lib/apt/lists/*
+
+    ln -s /usr/bin/python3 /usr/bin/python
+
+# https://github.com/haosulab/ManiSkill/issues/9
+    wget https://github.com/haosulab/ManiSkill2/raw/main/docker/nvidia_icd.json -P /usr/share/vulkan/icd.d
+    wget https://github.com/haosulab/ManiSkill2/raw/main/docker/nvidia_layers.json -P /etc/vulkan/implicit_layer.d
+
+    wget https://github.com/haosulab/ManiSkill2/raw/main/requirements.txt
+	pip install --no-cache-dir -r requirements.txt
+    rm requirements.txt
+
+    pip install --no-cache-dir mani-skill2==0.5.3
+
+	pip install --no-cache-dir matplotlib seaborn diffusers threadpoolctl scikit-learn ipykernel
+
+%environment
+    export NVIDIA_DRIVER_CAPABILITIES=all
+
+%runscript
+	python "$@"
+
+%labels
+	Author Ruoshi Sun
