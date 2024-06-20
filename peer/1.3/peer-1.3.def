@@ -1,0 +1,32 @@
+Bootstrap: docker
+From: python:2.7-slim-jessie
+
+%post
+    sed -i -e 's/deb.debian.org/archive.debian.org/g' \
+           -e 's/security.debian.org/archive.debian.org/g' \
+           -e 's/jessie-updates/jessie/g' \
+        /etc/apt/sources.list
+
+    apt-get update
+    apt-get install -y --force-yes --no-install-recommends \
+        cmake gcc build-essential \
+        wget unzip swig
+    rm -rf /var/lib/apt/lists/*
+
+    pip install --no-cache-dir numpy
+
+    cd /opt
+    wget https://github.com/PMBio/peer/archive/refs/heads/master.zip
+    unzip master.zip
+    cd peer-master
+    mkdir build
+    cd build
+    cmake ..
+    make
+    make install
+
+%runscript
+    python "$@"
+
+%labels
+    Maintainer rs7wz@virginia.edu
