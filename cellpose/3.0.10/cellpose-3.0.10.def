@@ -57,8 +57,7 @@ From: pytorch/pytorch:latest
 
     pip install --no-cache-dir cellpose[gui]==3.0.10
  
-    /opt/conda/bin/conda install  pyqt && \
-    /opt/conda/bin/conda install -c conda-forge libstdcxx-ng && \
+    /opt/conda/bin/conda install -c conda-forge pyqt ipykernel libstdcxx-ng && \
     /opt/conda/bin/conda clean -ya
 
 %environment
