@@ -1,0 +1,23 @@
+FROM python:3.6.8-slim-stretch
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        gcc g++ make \
+        git ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/chr1shr/voro.git
+RUN cd voro && sed -i 's/Wall/Wall -fPIC/' config.mk && \
+    make && make install
+
+RUN git clone https://github.com/richardjgowers/zeoplusplus.git
+RUN cd zeoplusplus && make dylib
+
+RUN pip install --no-cache-dir numpy pymatgen scikit-learn networkx
+RUN pip install --no-cache-dir cython==0.29.5
+
+RUN cd zeoplusplus/cython_wrapper && \
+    sed -i -e '11s#]$#, "/usr/local/include/voro++"]#' \
+           -e '12s#]$#, "/usr/local/lib"]#' \
+           setup_alt.py && \
+    python setup_alt.py develop
