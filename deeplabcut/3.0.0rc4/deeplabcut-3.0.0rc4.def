@@ -1,0 +1,44 @@
+Bootstrap: docker
+From: mambaorg/micromamba:1.5.9
+
+%post
+    # https://github.com/DeepLabCut/DeepLabCut/issues/2140#issuecomment-1441884723
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        fonts-noto git \
+        freeglut3-dev \
+        libgtk-3-dev libgstreamer1.0-dev \
+        libjpeg-dev libpng-dev libtiff-dev \
+        libnotify-dev \
+        libsdl2-dev \
+        libsm-dev \
+        libxkbcommon-x11-0 \
+        libxcb-icccm4 \
+        libxcb-image0 \
+        libxcb-keysyms1 \
+        libxcb-randr0 \
+        libxcb-render-util0 \
+        libxcb-shape0
+
+    rm -rf /var/lib/apt/lists/*
+
+    micromamba install -n base -c conda-forge \
+        python=3.10 ffmpeg pytables==3.8.0
+    micromamba clean -ya
+
+    export PATH=/opt/conda/bin:$PATH
+    pip install --no-cache-dir git+https://github.com/DeepLabCut/DeepLabCut.git@pytorch_dlc#egg=deeplabcut[gui,modelzoo,wandb]
+    pip install --no-cache-dir anipose==1.1.9
+
+    pip uninstall -y opencv-python opencv-python-headless
+    pip install --no-cache-dir opencv-python-headless
+
+%environment
+    export PATH=/opt/conda/bin:$PATH
+    export LC_ALL=C.UTF-8
+
+%runscript
+    python -m deeplabcut $@
+
+%labels
+    Maintainer rs7wz@virginia.edu

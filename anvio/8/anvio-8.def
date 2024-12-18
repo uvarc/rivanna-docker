@@ -1,0 +1,34 @@
+Bootstrap: docker
+From: mambaorg/micromamba:1.5.9
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        gcc wget build-essential \
+        libssl-dev libgsl0-dev \
+        bedtools mummer perl
+    rm -rf /var/lib/apt/lists/*
+
+    micromamba install -n base -c conda-forge -c bioconda python=3.10 \
+        sqlite prodigal idba mcl muscle=3.8.1551 famsa hmmer diamond \
+        blast megahit spades bowtie2 bwa graphviz "samtools>=1.9" \
+        trimal iqtree trnascan-se fasttree vmatch r-base r-tidyverse \
+        r-optparse r-stringi r-magrittr bioconductor-qvalue meme ghostscript \
+        fastani
+    micromamba clean -ya
+
+    export PATH=/opt/conda/bin:$PATH
+
+    wget https://github.com/merenlab/anvio/releases/download/v8/anvio-8.tar.gz
+    pip install --no-cache-dir anvio-8.tar.gz
+    rm anvio-8.tar.gz
+    pip install --no-cache-dir matplotlib==3.5.1
+
+    anvi-self-test --no-interactive --suite mini
+
+%environment
+    export PATH=/opt/conda/bin:$PATH
+    export LC_ALL=C
+
+%labels
+    Maintainer rs7wz@virginia.edu
