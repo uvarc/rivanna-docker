@@ -1,0 +1,11 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/rapidsai/base:24.06-cuda12.2-py3.11
+
+%post
+    pip install --no-cache-dir ipykernel
+
+%runscript
+    python "$@"
+
+%labels
+    Maintainer rs7wz@virginia.edu

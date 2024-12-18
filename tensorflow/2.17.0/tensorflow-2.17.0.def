@@ -1,0 +1,23 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/tensorflow:24.11-tf2-py3
+
+%post
+    # dependencies for openslide, opencv
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        openslide-tools \
+        libgl1 libsm6 libxext6 libxrender1 libgtk-3-dev libavcodec-dev libavformat-dev libswscale-dev
+    rm -rf /var/lib/apt/lists/*
+
+    pip install --no-cache-dir \
+        seaborn==0.13.2 \
+        scikit-image==0.24.0 \
+        openslide-python==1.4.1 \
+        opencv-python==4.10.0.84 \
+        sox ipywidgets 
+
+%runscript
+    /opt/nvidia/nvidia_entrypoint.sh python "$@"
+
+%labels
+    Maintainer rs7wz@virginia.edu
