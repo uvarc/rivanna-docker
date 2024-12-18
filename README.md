@@ -1,6 +1,8 @@
 # rivanna-docker
 
-This repository contains Dockerfiles and Apptainer definition files for containers deployed on Rivanna, the high-performance computing cluster at the University of Virginia.
+This repository contains Dockerfiles (before 2024) and Apptainer definition files for containers deployed on the high-performance computing cluster at the University of Virginia.
+
+Since 2024 we can build Apptainer containers natively on the cluster, which eliminates the need for Docker.
 
 ## Structure
 
@@ -11,29 +13,12 @@ This repository contains Dockerfiles and Apptainer definition files for containe
 │   │   ├── Dockerfile
 │   │   └── README.md
 │   └── version2
-│       ├── Dockerfile
-│       └── README.md
+│       └── app1-version2.def
 └── app2
     └── version1
         ├── Dockerfile
         └── README.md
 </pre>
-
-Each version should reside in its own directory with a `README.md`. Here is a suggested template:
-````
-<name of main app> <version> <any other important info>
-
-<homepage of main app>
-
-<any other apps/packages>
-
-Usage on Rivanna:
-```
-module load apptainer
-apptainer pull docker://uvarc/<app>:<tag>
-./<app>_<tag>.sif
-```
-````
 
 Individual `README.md` files are used as the Docker Hub repository overview.
 
