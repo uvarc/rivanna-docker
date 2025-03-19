@@ -1,0 +1,15 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+%post
+apt-get update
+apt-get install -y --no-install-recommends wget ca-certificates unzip
+rm -rf /var/lib/apt/lists/*
+
+wget https://github.com/wdecoster/chopper/releases/download/v0.9.1/chopper-linux.zip
+unzip chopper-linux.zip
+rm chopper-linux.zip
+mv chopper /usr/local/bin
+
+%runscript
+chopper "$@"
