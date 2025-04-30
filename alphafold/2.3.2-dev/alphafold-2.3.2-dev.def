@@ -1,0 +1,83 @@
+# Modified from DeepMind Dockerfile by Ruoshi Sun, UVA Research Computing
+# 2025-04-29
+Bootstrap: docker
+From: ubuntu:22.04
+
+%arguments
+    #VERSION=2.3.2
+    COMMIT=020cd6d6cb16540114a084f9dbb8f21f811f9d21
+    CONDADIR=/opt/alphafoldenv
+
+%post
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        tzdata \
+        build-essential cmake libc6-dev \
+        git curl wget ca-certificates unzip \
+        hmmer kalign
+    rm -rf /var/lib/apt/lists/*
+
+# HHsuite
+    cd /opt
+    git clone --branch v3.3.0 https://github.com/soedinglab/hh-suite.git
+    cd hh-suite
+    mkdir build && cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/opt/hhsuite ..
+    make -j 4 && make install
+    ln -s /opt/hhsuite/bin/* /usr/bin
+    rm -rf /opt/hh-suite
+
+# conda
+    cd /opt
+    wget -q https://github.com/mamba-org/micromamba-releases/releases/download/1.5.12-0/micromamba-linux-64 -O micromamba
+    chmod +x micromamba
+    ./micromamba create -qy -p {{ CONDADIR }} -c conda-forge -c nvidia \
+        python=3.11 pip cuda=12.4 cudnn=8.9 cuda-nvcc=12.4 \
+        openmm=8.0.0 scipy=1.11 \
+        pdbfixer
+    ./micromamba clean -ya
+
+# alphafold
+    mkdir /app
+    cd /app
+    wget -q https://github.com/google-deepmind/alphafold/archive/{{ COMMIT }}.zip
+    unzip {{ COMMIT }}.zip
+    rm {{ COMMIT }}.zip
+    mv alphafold-{{ COMMIT }} alphafold
+
+    wget -q -P /app/alphafold/alphafold/common/ \
+    https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt
+
+# pip
+    export PATH={{ CONDADIR }}/bin:$PATH
+    cd /app/alphafold
+    sed -i -e '/docker/d' -e '/numpy/d' -e '/scipy/d' requirements.txt
+    pip install --no-cache-dir -r requirements.txt
+    pip install --upgrade --no-cache-dir \
+        jax==0.4.26 jaxlib==0.4.26+cuda12.cudnn89 \
+        -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+
+# Add SETUID bit to the ldconfig binary so that non-root users can run it.
+    chmod u+s /sbin/ldconfig.real
+
+# Currently needed to avoid undefined_symbol error.
+    #ln -sf /usr/lib/x86_64-linux-gnu/libffi.so.7 /opt/conda/lib/libffi.so.7
+
+    cat > /app/run_alphafold.sh <<EOF
+#!/bin/bash
+ldconfig
+python /app/alphafold/run_alphafold.py "\$@"
+EOF
+
+    chmod +x /app/run_alphafold.sh
+
+%environment
+    export PATH={{ CONDADIR }}/bin:$PATH
+    export LD_LIBRARY_PATH={{ CONDADIR }}/lib:$LD_LIBRARY_PATH
+    export LC_ALL=C.UTF-8
+
+%labels
+    Author rs7wz@virginia.edu
+
+%runscript
+    /app/run_alphafold.sh "$@"
