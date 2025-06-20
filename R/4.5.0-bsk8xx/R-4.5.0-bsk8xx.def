@@ -1,0 +1,13 @@
+Bootstrap: docker
+From: rocker/r-ver:4.5.0
+
+%post
+    R -e "install.packages('BiocManager')"
+    R -e "BiocManager::install('Rgraphviz')"
+    R -e "install.packages('scOntoMatch')"
+
+%runscript
+    R "$@"
+
+%labels
+    Maintainer rs7wz@virginia.edu

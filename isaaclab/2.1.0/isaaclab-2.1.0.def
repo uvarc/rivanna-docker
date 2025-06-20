@@ -1,0 +1,16 @@
+Bootstrap: docker
+From: ubuntu:25.04
+
+%arguments
+    CONDADIR=/opt/ilenv
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends wget ca-certificates
+    wget -q https://github.com/mamba-org/micromamba-releases/releases/download/1.5.12-0/micromamba-linux-64 -O micromamba
+    chmod +x micromamba
+    ./micromamba create -p {{ CONDADIR }} -c conda-forge python=3.10
+    export PATH={{ CONDADIR }}/bin:$PATH
+    pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu121
+    pip install 'isaacsim[all,extscache]==4.5.0' --extra-index-url https://pypi.nvidia.com
+
