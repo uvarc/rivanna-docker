@@ -1,4 +1,0 @@
-#!/bin/bash
-ml apptainer
-CONDADIR=/opt/ilenv
-apptainer shell --env PATH=$CONDADIR/bin:$PATH --env LD_LIBRARY_PATH=$CONDADIR/lib:$CONDADIR/lib/python3.10/site-packages/isaacsim/extscache/omni.usd.libs-1.0.1+d02c707b.lx64.r.cp310/bin:$LD_LIBRARY_PATH -B /scratch/rs7wz/EULA_ACCEPTED:/opt/ilenv/lib/python3.10/site-packages/omni/EULA_ACCEPTED isaaclab-2.1.0.sif
