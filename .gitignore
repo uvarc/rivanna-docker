@@ -10,3 +10,4 @@ lammps
 *.zip
 *.rpm
 *.out
+*.slurm
