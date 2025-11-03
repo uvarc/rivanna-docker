@@ -9,3 +9,4 @@ lammps
 *.core
 *.zip
 *.rpm
+*.out
