@@ -1,0 +1,33 @@
+Bootstrap: docker
+From: r-base:3.5.3
+
+%post
+# System setup
+    apt-get update && apt-get install -y --no-install-recommends \
+        apt-transport-https git ca-certificates gnupg \
+        python3-pip libpython3-dev python3-dev python3-setuptools \
+        build-essential gosu \
+    && rm -rf /var/lib/apt/lists/*
+
+# R package dependencies
+    apt-get update && apt-get install -y \
+        libcurl4 libcurl4-openssl-dev libmagick++-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# App setup
+    cd /opt
+    git clone https://github.com/DrewWham/Perceptual_tSNE.git
+    cd Perceptual_tSNE
+# install app specific packages
+    Rscript required/requirements.R
+    pip3 install --no-cache-dir wheel \
+	&& pip3 install --no-cache-dir -r required/requirements.txt
+
+%environment
+    export LC_ALL=C
+
+%labels
+    Author rs7wz@virginia.edu
+
+%runscript
+    Rscript $@

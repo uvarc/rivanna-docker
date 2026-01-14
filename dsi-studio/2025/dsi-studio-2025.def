@@ -1,0 +1,18 @@
+Bootstrap: docker
+From: dsistudio/dsistudio:hou-2025-12-08
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        libxcb-cursor0 libxcb-image0 libxcb-keysyms1 libxcb-randr0 \
+        libxcb-render0 libxcb-shape0 libxcb-render0 libxcb-icccm4
+    rm -rf /var/lib/apt/lists/*
+
+%environment
+    export QT_PLUGIN_PATH=/opt/qt6/6.5.0/gcc_64/plugins
+    
+%runscript
+    /opt/dsi-studio/dsi_studio "$@"
+
+%labels
+    Maintainer rs7wz@virginia.edu
