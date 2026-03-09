@@ -1,0 +1,11 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/jax:26.01-maxtext-py3
+
+%post
+    pip install --no-cache-dir ipykernel
+
+%runscript
+    /opt/nvidia/nvidia_entrypoint.sh python "$@"
+
+%labels
+    Maintainer rs7wz@virginia.edu
