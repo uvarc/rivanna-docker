@@ -1,0 +1,30 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+%arguments
+    VERSION=8.2.0
+
+%files
+    freesurfer_ubuntu24-{{ VERSION }}_amd64.deb /opt
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        wget ca-certificates /opt/freesurfer_ubuntu24-{{ VERSION }}_amd64.deb
+    rm -rf /var/lib/apt/lists/* /opt/freesurfer_ubuntu24-{{ VERSION }}_amd64.deb
+
+    # patch
+    wget https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/{{ VERSION }}/fs820_updates.sh
+    FREESURFER_HOME=/usr/local/freesurfer/{{ VERSION }} bash fs820_updates.sh
+    rm fs820_updates.sh
+
+%environment
+    export FREESURFER_HOME=/usr/local/freesurfer/{{ VERSION }}
+    export PATH=$FREESURFER_HOME/bin:$FREESURFER_HOME/fsfast/bin:$PATH
+    export LD_LIBRARY_PATH=$FREESURFER_HOME/lib:$LD_LIBRARY_PATH
+
+%labels
+    Author rs7wz@virginia.edu
+
+%runscript
+    freesurfer "$@"

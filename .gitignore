@@ -11,3 +11,4 @@ lammps
 *.rpm
 *.out
 *.slurm
+*.deb
