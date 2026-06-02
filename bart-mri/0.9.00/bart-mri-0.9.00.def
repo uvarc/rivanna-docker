@@ -1,0 +1,13 @@
+Bootstrap: docker
+From: ubuntu:26.04
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends bart
+    rm -rf /var/lib/apt/lists/*
+
+%runscript
+    bart "$@"
+
+%labels
+    Maintainer rs7wz@virginia.edu
