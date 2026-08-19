@@ -1,0 +1,18 @@
+Bootstrap: docker
+From: astral/uv:python3.12-bookworm-slim
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        libbsd0 \
+        libncurses6 \
+        libpanel-1-1
+    rm -rf /var/lib/apt/lists/*
+
+    uv pip install --system mojo==1.0.0
+
+%labels
+    Maintainer rs7wz@virginia.edu
+
+%runscript
+    mojo "$@"
