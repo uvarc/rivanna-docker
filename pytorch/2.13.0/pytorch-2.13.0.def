@@ -1,0 +1,29 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/pytorch:26.08-py3
+
+%post
+    # dependencies for openslide, opencv, poppler
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        openslide-tools \
+        libgl1 libsm6 libxext6 libxrender1 libgtk-3-dev libavcodec-dev libavformat-dev libswscale-dev \
+        libpoppler-cpp-dev
+    rm -rf /var/lib/apt/lists/*
+
+    pip install --no-cache-dir \
+        seaborn==0.13.2 \
+        scikit-image==0.26.0 \
+        openslide-python==1.4.6 \
+        opencv-python==5.0.0.93 \
+        torch-geometric==2.8.0 \
+        lightning==2.6.5 \
+        python-poppler==0.4.1 \
+        pyqt6==6.11.0 \
+        datasets==5.0.1 \
+        sox ipywidgets 
+
+%runscript
+    /opt/nvidia/nvidia_entrypoint.sh python "$@"
+
+%labels
+    Maintainer rs7wz@virginia.edu
