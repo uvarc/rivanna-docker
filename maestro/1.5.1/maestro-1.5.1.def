@@ -1,20 +1,25 @@
 Bootstrap: docker
-From: mambaorg/micromamba:1.5.9
+From: mambaorg/micromamba:2.10.0
 
 %post
+    # eMudhra mitigation
     apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates \
         zlib1g-dev libbz2-dev libcurl4-openssl-dev libssl-dev
     rm -rf /var/lib/apt/lists/*
+    update-ca-certificates
 
-    micromamba install -n base -c liulab-dfci -c bioconda -c conda-forge python=3.8 maestro=1.3.0
+    micromamba install -n base -c liulab-dfci -c bioconda -c conda-forge python=3.8 maestro=1.5.1
     micromamba clean -ya
+
+    rm -rf /opt/conda/lib/python3.8/site-packages/{pip,certifi}*
 
 %environment
     export PATH=/opt/conda/bin:$PATH
     export LC_ALL=C
 
 %runscript
-    MAESTRO $@
+    MAESTRO "$@"
 
 %labels
     Maintainer rs7wz@virginia.edu

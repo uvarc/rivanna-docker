@@ -1,0 +1,18 @@
+Bootstrap: docker
+From: python:3.14.10
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        libbsd0 \
+        libncurses6 \
+        libpanel-1-1
+    rm -rf /var/lib/apt/lists/*
+
+    pip install --no-cache-dir mojo==1.2.0
+
+%labels
+    Maintainer rs7wz@virginia.edu
+
+%runscript
+    mojo "$@"

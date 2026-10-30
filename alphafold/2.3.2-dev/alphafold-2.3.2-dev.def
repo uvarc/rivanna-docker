@@ -8,6 +8,9 @@ From: ubuntu:22.04
     COMMIT=020cd6d6cb16540114a084f9dbb8f21f811f9d21
     CONDADIR=/opt/alphafoldenv
 
+%files
+    stereo_chemical_props.txt /stereo_chemical_props.txt
+
 %post
     apt-get update
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -38,15 +41,16 @@ From: ubuntu:22.04
     ./micromamba clean -ya
 
 # alphafold
-    mkdir /app
+    mkdir -p /app
     cd /app
     wget -q https://github.com/google-deepmind/alphafold/archive/{{ COMMIT }}.zip
     unzip {{ COMMIT }}.zip
     rm {{ COMMIT }}.zip
     mv alphafold-{{ COMMIT }} alphafold
 
-    wget -q -P /app/alphafold/alphafold/common/ \
-    https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt
+    #wget -q -P /app/alphafold/alphafold/common/ \
+    #https://git.scicore.unibas.ch/schwede/openstructure/-/raw/7102c63615b64735c4941278d92b554ec94415f8/modules/mol/alg/src/stereo_chemical_props.txt
+    mv /stereo_chemical_props.txt /app/alphafold/alphafold/common/stereo_chemical_props.txt
 
 # pip
     export PATH={{ CONDADIR }}/bin:$PATH

@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: afni/afni_make_build:AFNI_26.2.05
+
+%post
+    # eMudhra mitigation
+    sed -i \
+        -e 's|^mozilla/emSign_ECC_Root_CA_-_G3.crt|!&|' \
+        -e 's|^mozilla/Comodo_AAA_Services_root.crt|!&|' \
+        /etc/ca-certificates.conf && update-ca-certificates
+
+    rm -rf /opt/user_pip_packages/lib/python3.6/site-packages/{pip,certifi}*
+
+%runscript
+    tini -g start.sh --
+
+%labels
+    Maintainer rs7wz@virginia.edu
